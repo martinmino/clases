@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DB244B24-360F-4279-ACBF-9EF2D9A586BA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Clases</RootNamespace>
+    <AssemblyName>Clases</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Clases.xml</DocumentationFile>
+    <NoWarn>
+    </NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Clases.xml</DocumentationFile>
+    <NoWarn>
+    </NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Articulo.vb" />
+    <Compile Include="ArticuloCliente.vb" />
+    <Compile Include="Barrios.vb" />
+    <Compile Include="Bloqueo.vb" />
+    <Compile Include="Bomd.vb" />
+    <Compile Include="Callejero.vb" />
+    <Compile Include="Camioneta.vb" />
+    <Compile Include="Carrito.vb" />
+    <Compile Include="Cliente.vb" />
+    <Compile Include="ComentariosVencimientos.vb" />
+    <Compile Include="Comision.vb" />
+    <Compile Include="CondicionPago.vb" />
+    <Compile Include="ContratoEventArgs.vb" />
+    <Compile Include="Contratos.vb" />
+    <Compile Include="ContratoServicio.vb" />
+    <Compile Include="Cotizacion.vb" />
+    <Compile Include="Correo.vb" />
+    <Compile Include="CorreoElectronico.vb" />
+    <Compile Include="CotizacionInterna.vb" />
+    <Compile Include="Devolucion.vb" />
+    <Compile Include="Documento.vb" />
+    <Compile Include="Expreso.vb" />
+    <Compile Include="Factura.vb" />
+    <Compile Include="Feriados.vb" />
+    <Compile Include="Impresora.vb" />
+    <Compile Include="Impuesto.vb" />
+    <Compile Include="Intervencion.vb" />
+    <Compile Include="IRuteable.vb" />
+    <Compile Include="itmmvt.vb" />
+    <Compile Include="Licitacion.vb" />
+    <Compile Include="Logs.vb" />
+    <Compile Include="MenuLocal.vb" />
+    <Compile Include="ModoEntrega.vb" />
+    <Compile Include="Module1.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Numerador.vb" />
+    <Compile Include="Orders.vb" />
+    <Compile Include="Pacto.vb" />
+    <Compile Include="Padron.vb" />
+    <Compile Include="Pais.vb" />
+    <Compile Include="Parque.vb" />
+    <Compile Include="ParteCobranza.vb" />
+    <Compile Include="Pedido.vb" />
+    <Compile Include="Percepciones.vb" />
+    <Compile Include="Permisos.vb" />
+    <Compile Include="PersonaContacto.vb" />
+    <Compile Include="Planta.vb" />
+    <Compile Include="Presupuesto.vb" />
+    <Compile Include="PresupuestoAnual.vb" />
+    <Compile Include="Proveedor.vb" />
+    <Compile Include="Puesto.vb" />
+    <Compile Include="Remito.vb" />
+    <Compile Include="Ruta.vb" />
+    <Compile Include="RutaAviso.vb" />
+    <Compile Include="Sector.vb" />
+    <Compile Include="Segto2.vb" />
+    <Compile Include="Seguimiento.vb" />
+    <Compile Include="SeguimientoPrestamos.vb" />
+    <Compile Include="Sms.vb" />
+    <Compile Include="Sociedad.vb" />
+    <Compile Include="Solicitud.vb" />
+    <Compile Include="Sucursal.vb" />
+    <Compile Include="SucursalCollection.vb" />
+    <Compile Include="TablaVaria.vb" />
+    <Compile Include="Tarifa.vb" />
+    <Compile Include="Temporal.vb" />
+    <Compile Include="Tercero.vb" />
+    <Compile Include="Ticket.vb" />
+    <Compile Include="Transportistas.vb" />
+    <Compile Include="Usuario.vb" />
+    <Compile Include="Utiles.vb" />
+    <Compile Include="Vendedor.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
