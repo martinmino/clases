@@ -191,6 +191,9 @@ Public Class Usuario
         End Get
     End Property
     Public ReadOnly Property PermisoAltaCliente() As Integer
+        '1.- No tienen habilitado el boton de alta cliente.
+        '2.- Tiene habilitado el boton de alta cliente y deben completar todos los campos para dar un alta.
+        '3.- Tiene habilitado el boton de alta cliente, hay campos que pueden dejar vacio
         Get
             Dim dr As DataRow = dt.Rows(0)
             Return CInt(dr("xaltabpc_0"))

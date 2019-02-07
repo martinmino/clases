@@ -562,7 +562,8 @@ Public Class Cotizacion
         ElseIf ModoEntrega = "1" Then
             Dim itn As New Intervencion(cn)
             If IntervencionRechazo.ToString <> " " AndAlso itn.Abrir(IntervencionRechazo.ToString) Then
-                If itn.Sector = "CTD" Or itn.Sector = "ADM" Then
+                If itn.Sector = "CTD" Or itn.Sector = "ADM" Or itn.Sector = "SRV" Then
+                    'No validar nada
                 Else
                     If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO AndAlso TieneArticulosTipoCotizacion() AndAlso ExisteFleteYAcarreo() = False Then
                         txt = "-> Importe mínimo para Entrega Georgia es " & IMPORTE_MINIMO_PEDIDO.ToString("N2")
