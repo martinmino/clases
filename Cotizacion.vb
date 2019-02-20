@@ -548,13 +548,13 @@ Public Class Cotizacion
         FaltanArticulosRelacionados(_Alertas)
 
         If ModoEntrega = "1" AndAlso H Then
-            If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO_H1 Then
+            If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO_H1 And bpc.EsAbonado = False AndAlso bpc.TipoAbcStr.Contains("A") = False Then
                 txt = "-> Importe mínimo para H y Entrega Georgia es " & IMPORTE_MINIMO_PEDIDO_H1.ToString("N2")
                 _Alertas.Add(txt)
             End If
 
         ElseIf ModoEntrega <> "1" AndAlso H Then
-            If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO_H2 Then
+            If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO_H2 AndAlso bpc.EsAbonado = False AndAlso bpc.TipoAbcStr.Contains("A") = False Then
                 txt = "-> Importe mínimo para H y Retira Cliente es " & IMPORTE_MINIMO_PEDIDO_H2.ToString("N2")
                 _Alertas.Add(txt)
             End If
@@ -565,13 +565,23 @@ Public Class Cotizacion
                 If itn.Sector = "CTD" Or itn.Sector = "ADM" Or itn.Sector = "SRV" Then
                     'No validar nada
                 Else
-                    If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO AndAlso TieneArticulosTipoCotizacion() AndAlso ExisteFleteYAcarreo() = False Then
+                    If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO AndAlso _
+                       bpc.EsAbonado = False AndAlso _
+                       bpc.TipoAbcStr.Contains("A") = False _
+                       AndAlso TieneArticulosTipoCotizacion() AndAlso _
+                       ExisteFleteYAcarreo() = False Then
+
                         txt = "-> Importe mínimo para Entrega Georgia es " & IMPORTE_MINIMO_PEDIDO.ToString("N2")
                         _Alertas.Add(txt)
                     End If
                 End If
             Else
-                If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO AndAlso TieneArticulosTipoCotizacion() AndAlso ExisteFleteYAcarreo() = False Then
+                If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO AndAlso _
+                   bpc.EsAbonado = False AndAlso _
+                   bpc.TipoAbcStr.Contains("A") = False AndAlso _
+                   TieneArticulosTipoCotizacion() AndAlso _
+                   ExisteFleteYAcarreo() = False Then
+
                     txt = "-> Importe mínimo para Entrega Georgia es " & IMPORTE_MINIMO_PEDIDO.ToString("N2")
                     _Alertas.Add(txt)
                 End If
