@@ -17,7 +17,6 @@ Public Class Cotizacion
     Private cn As OracleConnection
     Private dah As OracleDataAdapter 'Adaptador Tabla Cabecera
     Private dad As OracleDataAdapter 'Adaptador Tabla Detalle
-    Private dap As OracleDataAdapter 'Adaptador Tabla Precios
     Private ds As New DataSet
     Private dth As DataTable 'Tabla cabecera
     Private WithEvents dtd As DataTable 'Tabla detalle
@@ -61,11 +60,6 @@ Public Class Cotizacion
 
         ds.Tables.Add(dth)
         ds.Tables.Add(dtd)
-
-        'Precios
-        Sql = "SELECT * FROM xprecios WHERE itmref_0 = :itmref ORDER BY qty_0 DESC"
-        dap = New OracleDataAdapter(Sql, cn)
-        dap.SelectCommand.Parameters.Add("itmref", OracleType.VarChar)
 
         tar = New Tarifa(cn)
 
@@ -1055,14 +1049,8 @@ Public Class Cotizacion
         Return p
 
     End Function
-    Public Function ExisteArticulo(ByVal articulo As String) As Boolean
-        Dim dt As New DataTable
-
-        dap.SelectCommand.Parameters("itmref").Value = articulo
-        dap.Fill(dt)
-
-        Return dt.Rows.Count > 0
-
+    Public Function ExisteArticulo(ByVal Articulo As String) As Boolean
+        Return tar.ExisteArticulo(Articulo)
     End Function
     
     'PROPIEDADES

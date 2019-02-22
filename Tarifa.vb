@@ -351,6 +351,14 @@ Public Class Tarifa
         Return f
 
     End Function
+    Public Function ExisteArticulo(ByVal Articulo As String) As Boolean
+        Dim dt As New DataTable
+
+        dap.SelectCommand.Parameters("itmref").Value = Articulo
+        dap.Fill(dt)
+
+        Return dt.Rows.Count > 0
+    End Function
 
     Public ReadOnly Property CotizacionDolar() As Double
         Get
