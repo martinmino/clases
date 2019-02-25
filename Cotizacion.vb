@@ -192,6 +192,7 @@ Public Class Cotizacion
 
                 dr.BeginEdit()
                 dr("nro_0") = 0
+                dr("dat_0") = Date.Today
                 dr("sqh_0") = " "
                 dr("soh_0") = " "
                 dr("typ_0") = "0"
