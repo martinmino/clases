@@ -1057,13 +1057,13 @@ Public Class Contratos
             dr.EndEdit()
         End Set
     End Property
-    Public Property ImporteAnual() As Long
+    Public Property ImporteAnual() As Double
         Get
             Dim dr As DataRow
             dr = dth.Rows(0)
             Return CLng(dr("IMPANUAL_0"))
         End Get
-        Set(ByVal value As Long)
+        Set(ByVal value As Double)
             Dim dr As DataRow
             dr = dth.Rows(0)
             dr.BeginEdit()
@@ -1071,13 +1071,13 @@ Public Class Contratos
             dr.EndEdit()
         End Set
     End Property
-    Public Property ImporteMensual() As Long
+    Public Property ImporteMensual() As Double
         Get
             Dim dr As DataRow
             dr = dth.Rows(0)
             Return CLng(dr("IMPMES_0"))
         End Get
-        Set(ByVal value As Long)
+        Set(ByVal value As Double)
             Dim dr As DataRow
             dr = dth.Rows(0)
             dr.BeginEdit()
