@@ -1,5 +1,6 @@
 ﻿Imports System.Data.OracleClient
 Imports System.IO
+Imports CrystalDecisions.CrystalReports.Engine
 
 Public Class Remito
     Implements IRuteable
@@ -11,7 +12,8 @@ Public Class Remito
     Private dt2 As New DataTable
     Private da3 As OracleDataAdapter
     Private dt3 As DataTable
-
+    Public Const DB_USR As String = "GEOPROD"
+    Public Const DB_PWD As String = "tiger"
     Private bpa As Sucursal = Nothing
 
     Private l_Equipos As Integer
@@ -710,4 +712,89 @@ Public Class Remito
             Return dr("sohnum_0").ToString
         End Get
     End Property
+    Public Sub EnvioMailAvisoMostrador()
+        Dim txt As String = ""
+        Dim eMail As New CorreoElectronico
+        Dim sih As New Factura(cn)
+        Dim rep As New Vendedor(cn)
+
+        'Salgo si no encuentro la factura
+        If Not sih.Abrir(Me.Factura) Then
+            Exit Sub
+        End If
+        If sih.Sociedad.Codigo <> "DNY" Then Exit Sub
+        rep = Me.Cliente.Vendedor 'Obtengo vendedor
+
+        If Me.Pedido.Referencia = "H" Then
+            txt &= "<p>rep.Nombre</p> "
+            txt &= "<p>Estimado, le informamos que el cliente Me.Cliente.Nombre , tiene un pedido (Me.Pedido.Numero) listo para retirar </p> "
+            Try
+                With eMail
+                    .Remitente("noreply@matafuegosgeorgia.com")
+                    .AgregarDestinatario(rep.Mail)
+                    .Asunto = "Aviso de pedido listo"
+                    .EsHtml = True
+                    .Cuerpo = txt
+                    If .CantidadTo > 0 Then .Enviar(True)
+                End With
+
+            Catch ex As Exception
+            End Try
+        Else
+            txt &= "<p>Me.Cliente.Nombre</p> "
+            txt &= "<p>Me comunico desde Matafuegos Georgia para notificarle que el pedido esta listo para ser retirado<strong>, "
+            txt &= "</strong>para lo cual deber&aacute; anunciarse en Manuel A. Rodr&iacute;guez 2838, donde le har&aacute;n entrega "
+            txt &= "de su documentaci&oacute;n para&nbsp;retirar por nuestro dep&oacute;sito de lunes a viernes, en el&nbsp; "
+            txt &= "<strong>horario de 9 a 12.30 y de 14 a 16.30 hs</strong>.</p> "
+            txt &= "<p>Cordialmente,</p> "
+            txt &= "<p>{vendedor}</p> "
+            txt &= "<p>Matafuegos Georgia</p> "
+
+            ' rep = Me.Cliente.Vendedor 'Obtengo vendedor
+
+            'Reemplazo de marcas
+            'txt = txt.Replace("{fecha}", Me..ToString("dd/MM/yyyy"))
+            txt = txt.Replace("{itn}", Me.Numero)
+            If rep.Codigo = "17" Then
+                txt = txt.Replace("{vendedor}", rep.Analista.Nombre.ToUpper)
+                txt = txt.Replace("{interno}", "")
+            Else
+                txt = txt.Replace("{vendedor}", rep.Nombre.ToUpper)
+                txt = txt.Replace("{interno}", rep.Interno)
+            End If
+
+            Dim rpt As New ReportDocument
+            With rpt
+                .Load(RPTX3 & "XFACT_ELEC.rpt") 'Reporte normal
+                .SetDatabaseLogon(DB_USR, DB_PWD)
+                .SetParameterValue("facturedeb", sih.Numero)
+                .SetParameterValue("facturefin", sih.Numero)
+                .SetParameterValue("CERO", False)
+                .SetParameterValue("OCULTAR_BARRAS", True)
+                .SetParameterValue("ENVIAR", True)
+                .ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, sih.Numero & ".pdf")
+            End With
+
+            Try
+                With eMail
+                    .Remitente(rep.Mail, rep.Nombre)
+                    '.AgregarDestinatario(Me.Cliente.MailFC)
+                    '.AgregarDestinatarioCopia(rep.Mail)
+                    .AgregarDestinatario("ioeyen@matafuegosgeorgia")
+                    .Asunto = "Aviso de pedido listo"
+                    .EsHtml = True
+                    .Cuerpo = txt
+                    .AdjuntarArchivo(sih.Numero & ".pdf")
+                    If .CantidadTo > 0 Then .Enviar(True)
+                End With
+
+            Catch ex As Exception
+            End Try
+            Try
+                File.Delete(sih.Numero & ".pdf")
+
+            Catch ex As Exception
+            End Try
+        End If
+    End Sub
 End Class
