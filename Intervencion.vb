@@ -697,7 +697,17 @@ Public Class Intervencion
             txt = txt.Replace("{vendedor}", rep.Nombre.ToUpper)
             txt = txt.Replace("{interno}", rep.Interno)
         End If
-
+        Dim rpt As New ReportDocument
+        With rpt
+            .Load(RPTX3 & "XFACT_ELEC.rpt") 'Reporte normal
+            .SetDatabaseLogon(DB_USR, DB_PWD)
+            .SetParameterValue("facturedeb", sih.Numero)
+            .SetParameterValue("facturefin", sih.Numero)
+            .SetParameterValue("CERO", False)
+            .SetParameterValue("OCULTAR_BARRAS", True)
+            .SetParameterValue("ENVIAR", True)
+            .ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, sih.Numero & ".pdf")
+        End With
         Try
             With eMail
                 .Remitente(rep.Mail, rep.Nombre)
@@ -707,6 +717,7 @@ Public Class Intervencion
                 .Asunto = "Aviso de recargas listas"
                 .EsHtml = True
                 .Cuerpo = txt
+                .AdjuntarArchivo(sih.Numero & ".pdf")
                 If .CantidadTo > 0 Then .Enviar(True)
             End With
 
