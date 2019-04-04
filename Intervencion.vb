@@ -711,9 +711,8 @@ Public Class Intervencion
         Try
             With eMail
                 .Remitente(rep.Mail, rep.Nombre)
-                '.AgregarDestinatario(Me.Cliente.MailFC)
-                ' .AgregarDestinatarioCopia(rep.Mail)
-                .AgregarDestinatario("ioeyen@matafuegosgeorgia.com", False)
+                .AgregarDestinatario(Me.Cliente.MailFC)
+                .AgregarDestinatarioCopia(rep.Mail)
                 .Asunto = "Aviso de recargas listas"
                 .EsHtml = True
                 .Cuerpo = txt

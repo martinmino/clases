@@ -780,7 +780,7 @@ Public Class Remito
                     .Remitente(rep.Mail, rep.Nombre)
                     '.AgregarDestinatario(Me.Cliente.MailFC)
                     '.AgregarDestinatarioCopia(rep.Mail)
-                    .AgregarDestinatario("ioeyen@matafuegosgeorgia")
+                    .AgregarDestinatario("ioeyen@matafuegosgeorgia.com")
                     .Asunto = "Aviso de pedido listo"
                     .EsHtml = True
                     .Cuerpo = txt
