@@ -726,8 +726,8 @@ Public Class Remito
         rep = Me.Cliente.Vendedor 'Obtengo vendedor
 
         If Me.Pedido.Referencia = "H" Then
-            txt &= "<p>rep.Nombre</p> "
-            txt &= "<p>Estimado, le informamos que el cliente Me.Cliente.Nombre , tiene un pedido (Me.Pedido.Numero) listo para retirar </p> "
+            txt &= "<p>" & rep.Nombre & "</p> "
+            txt &= "<p>Le informamos que el cliente " & Me.Cliente.Nombre & ", tiene un pedido (" & Me.Pedido.Numero & ") listo para retirar </p> "
             Try
                 With eMail
                     .Remitente("noreply@matafuegosgeorgia.com")
@@ -741,7 +741,7 @@ Public Class Remito
             Catch ex As Exception
             End Try
         Else
-            txt &= "<p>Me.Cliente.Nombre</p> "
+            txt &= "<p>" & Me.Cliente.Nombre & "</p> "
             txt &= "<p>Me comunico desde Matafuegos Georgia para notificarle que el pedido esta listo para ser retirado<strong>, "
             txt &= "</strong>para lo cual deber&aacute; anunciarse en Manuel A. Rodr&iacute;guez 2838, donde le har&aacute;n entrega "
             txt &= "de su documentaci&oacute;n para&nbsp;retirar por nuestro dep&oacute;sito de lunes a viernes, en el&nbsp; "
