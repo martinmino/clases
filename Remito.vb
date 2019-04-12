@@ -750,8 +750,6 @@ Public Class Remito
             txt &= "<p>{vendedor}</p> "
             txt &= "<p>Matafuegos Georgia</p> "
 
-            ' rep = Me.Cliente.Vendedor 'Obtengo vendedor
-
             'Reemplazo de marcas
             'txt = txt.Replace("{fecha}", Me..ToString("dd/MM/yyyy"))
             txt = txt.Replace("{itn}", Me.Numero)
@@ -778,9 +776,8 @@ Public Class Remito
             Try
                 With eMail
                     .Remitente(rep.Mail, rep.Nombre)
-                    '.AgregarDestinatario(Me.Cliente.MailFC)
-                    '.AgregarDestinatarioCopia(rep.Mail)
-                    .AgregarDestinatario("ioeyen@matafuegosgeorgia.com")
+                    .AgregarDestinatario(Me.Cliente.MailFC)
+                    .AgregarDestinatarioCopia(rep.Mail)
                     .Asunto = "Aviso de pedido listo"
                     .EsHtml = True
                     .Cuerpo = txt
