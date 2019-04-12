@@ -125,6 +125,7 @@
     <Compile Include="Padron.vb" />
     <Compile Include="Pais.vb" />
     <Compile Include="Parque.vb" />
+    <Compile Include="ParqueCollection.vb" />
     <Compile Include="ParteCobranza.vb" />
     <Compile Include="Pedido.vb" />
     <Compile Include="Percepciones.vb" />
@@ -135,10 +136,12 @@
     <Compile Include="PresupuestoAnual.vb" />
     <Compile Include="Proveedor.vb" />
     <Compile Include="Puesto.vb" />
+    <Compile Include="Puestos.vb" />
     <Compile Include="Remito.vb" />
     <Compile Include="Ruta.vb" />
     <Compile Include="RutaAviso.vb" />
     <Compile Include="Sector.vb" />
+    <Compile Include="Sectores.vb" />
     <Compile Include="Segto2.vb" />
     <Compile Include="Seguimiento.vb" />
     <Compile Include="SeguimientoPrestamos.vb" />

@@ -166,7 +166,11 @@ Public Class Sector
         End If
 
     End Function
-
+    Public Function PuestosEnSector() As Puestos
+        Dim p As New Puestos(cn)
+        p.AbrirPuestos(Me.ID)
+        Return p
+    End Function
     Public ReadOnly Property ID() As Long
         Get
             Dim dr As DataRow = dt.Rows(0)
