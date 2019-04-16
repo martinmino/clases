@@ -346,7 +346,7 @@ Public Class Pedido
 
         For Each dr In ctz.Lineas.Rows
             If itm.Abrir(dr("itmref_0").ToString) Then
-                'Si el articulo no es permitido para pedidor, salto al proximo registro
+                'Si el articulo no es permitido para pedidos, salto al proximo registro
                 If Not itm.ArticuloParaPedido Then Continue For
 
                 AgregarLinea(itm, CDbl(dr("qty_0")), CDbl(dr("precio_0")), ctz)
