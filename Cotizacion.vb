@@ -1550,7 +1550,7 @@ Public Class Cotizacion
         Dim sw As StreamWriter
         Dim linea As String
 
-        Sql = "SELECT * FROM xprecio2"
+        Sql = "SELECT * FROM xprecios"
         da = New OracleDataAdapter(Sql, cn)
 
         Try
@@ -1604,7 +1604,7 @@ Public Class Cotizacion
         Dim l As Integer = 0
         Dim itm As New Articulo(cn)
 
-        Sql = "SELECT * FROM xprecio2"
+        Sql = "SELECT * FROM xprecios"
         da = New OracleDataAdapter(Sql, cn)
         da.InsertCommand = New OracleCommandBuilder(da).GetInsertCommand
         da.DeleteCommand = New OracleCommandBuilder(da).GetDeleteCommand

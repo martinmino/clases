@@ -108,7 +108,7 @@ Public Class Articulo
         Dim da As OracleDataAdapter
         Dim dt As New DataTable
 
-        Sql = "SELECT * FROM xprecio2 WHERE itmref_0 = :itmref AND ped_0 = 2"
+        Sql = "SELECT * FROM xprecios WHERE itmref_0 = :itmref AND ped_0 = 2"
         da = New OracleDataAdapter(Sql, cn)
         da.SelectCommand.Parameters.Add("itmref", OracleType.VarChar).Value = Codigo
         da.Fill(dt)

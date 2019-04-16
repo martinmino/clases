@@ -83,7 +83,7 @@ Public Class Tarifa
         da.Dispose()
 
         'Precios
-        Sql = "SELECT * FROM xprecio2 WHERE itmref_0 = :itmref ORDER BY qty_0 DESC"
+        Sql = "SELECT * FROM xprecios WHERE itmref_0 = :itmref ORDER BY qty_0 DESC"
         dap = New OracleDataAdapter(Sql, cn)
         dap.SelectCommand.Parameters.Add("itmref", OracleType.VarChar)
 
