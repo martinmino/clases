@@ -13,7 +13,7 @@ Public Class Puestos
 
         Me.cn = cn
 
-        Sql = "SELECT * FROM xpuestos WHERE sector_0 = :sector_0"
+        Sql = "SELECT * FROM xpuestos WHERE sector_0 = :sector"
         da = New OracleDataAdapter(Sql, cn)
         da.SelectCommand.Parameters.Add("sector", OracleType.Number)
     End Sub
