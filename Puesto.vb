@@ -204,10 +204,10 @@ Public Class Puesto
 
     End Function
 
-    Public ReadOnly Property ID() As Long
+    Public ReadOnly Property Id() As Integer
         Get
             Dim dr As DataRow = dt.Rows(0)
-            Return CLng(dr("regid_0"))
+            Return CInt(dr("regid_0"))
         End Get
     End Property
     Public Property Sector() As Long
