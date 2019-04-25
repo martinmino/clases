@@ -19,6 +19,9 @@ Public Class Intervencion
     Private l_RechazosMan As Integer = 0
     Private l_TieneCarro As Boolean = False
 
+    Private l_Cliente As Cliente = Nothing
+    Private l_Sucursal As Sucursal = Nothing
+
     Private WithEvents da1 As OracleDataAdapter 'Intervencion (INTERVEN)
     Private WithEvents da2 As OracleDataAdapter 'Detalle (YITNDET)
     Private WithEvents da3 As OracleDataAdapter 'HD6Clob
@@ -943,6 +946,9 @@ Public Class Intervencion
             RaiseEvent IntervencionAbierta(Me)
         End If
 
+        l_Cliente = Nothing
+        l_Sucursal = Nothing
+
         Return (dt1.Rows.Count = 1)
 
     End Function
@@ -956,6 +962,9 @@ Public Class Intervencion
         da.SelectCommand.Parameters.Add("ysdhdeb", OracleType.VarChar).Value = Numero
         da.Fill(dt)
         da.Dispose()
+
+        l_Cliente = Nothing
+        l_Sucursal = Nothing
 
         If dt.Rows.Count = 0 Then
             Return False
@@ -1000,6 +1009,9 @@ Public Class Intervencion
         dt1.Clear()
         dt2.Clear()
         dt3.Clear()
+
+        l_Cliente = Nothing
+        l_Sucursal = Nothing
 
         'Valido si la sucursal es de entrega
         If Suc.SucursalEntregaActiva Then
@@ -1385,7 +1397,13 @@ Public Class Intervencion
     End Property
     Public ReadOnly Property Sucursal() As Sucursal Implements IRuteable.Sucursal
         Get
-            Return New Sucursal(cn, Me.Cliente.Codigo, Me.SucursalCodigo)
+            If l_Sucursal Is Nothing Then
+                l_Sucursal = New Sucursal(cn)
+                l_Sucursal.Abrir(Me.Cliente.Codigo, Me.SucursalCodigo)
+            End If
+
+            Return l_Sucursal
+
         End Get
     End Property
     Public ReadOnly Property SucursalCodigo() As String
@@ -1426,10 +1444,14 @@ Public Class Intervencion
     End Property
     Public ReadOnly Property Cliente() As Cliente Implements IRuteable.Cliente
         Get
-            Dim dr As DataRow = dt1.Rows(0)
-            Dim bpc As New Cliente(cn)
-            bpc.Abrir(dr("bpc_0").ToString)
-            Return bpc
+            If l_Cliente Is Nothing Then
+                Dim dr As DataRow = dt1.Rows(0)
+
+                l_Cliente = New Cliente(cn)
+                l_Cliente.Abrir(dr("bpc_0").ToString)
+            End If
+
+            Return l_Cliente
         End Get
     End Property
     Public Property Tipo() As String Implements IRuteable.Tipo

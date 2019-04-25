@@ -168,10 +168,10 @@ Public Class Sector
     End Function
     Public Function PuestosEnSector() As Puestos
         Dim p As New Puestos(cn)
-        p.AbrirPuestos(Me.ID)
+        p.AbrirPuestos(Me.id)
         Return p
     End Function
-    Public ReadOnly Property ID() As Long
+    Public ReadOnly Property id() As Long
         Get
             Dim dr As DataRow = dt.Rows(0)
             Return CLng(dr("regid_0"))

@@ -244,7 +244,11 @@ Public Class Sucursal
         dr2 = dt2.Rows(0)
 
     End Sub
-
+    Public Function Parque() As ParqueCollection
+        Dim p As New ParqueCollection(cn)
+        p.AbrirParqueCliente(Codigo, Sucursal)
+        Return p
+    End Function
     'FUNCTION
 
     'PROPERTY
