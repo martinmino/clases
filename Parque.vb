@@ -73,7 +73,7 @@ Public Class Parque
         Sql &= "macbpcdat_0=:macbpcdat_0, macitnlnd_0=:macitnlnd_0, fcyitn_0=:fcyitn_0, ple_0=:ple_0, macori_0=:macori_0, macoritxt_0=:macoritxt_0, macorivcr_0=:macorivcr_0, "
         Sql &= "macorivcrl_0=:macorivcrl_0, preori_0=:preori_0, preorivcr_0=:preorivcr_0, preorivcrl_0=:preorivcrl_0, creusr_0=:creusr_0, credat_0=:credat_0, updusr_0=:updusr_0, "
         Sql &= "upddat_0=:upddat_0, ynrocil_0=:ynrocil_0, yfabdat_0=:yfabdat_0, ymaccob_0=:ymaccob_0, xitn_0=:xitn_0, xbajamotiv_0=:xbajamotiv_0, xbajaobs_0=:xbajaobs_0, "
-        Sql &= "recargador_0 = :recargador_0, patente_0 = :patente_0, tipomanga_0 = :tipomanga_0, lngnomi_0 = :lngnomi_0, lngreal_0 = :lngreal_0, diametro_0 = :diametro_0 "
+        Sql &= "recargador_0 = :recargador_0, patente_0 = :patente_0, tipomanga_0 = :tipomanga_0, lngnomi_0 = :lngnomi_0, lngreal_0 = :lngreal_0, diametro_0 = :diametro_0, nromanga_0 = :nromanga_0 "
         Sql &= "WHERE macnum_0=:macnum_0"
         da1.UpdateCommand = New OracleCommand(Sql, cn)
 
@@ -81,7 +81,7 @@ Public Class Parque
         Sql &= "VALUES(:macnum_0, :salfcy_0, :cur_0, :macpdtcod_0, :macqty_0, :macsernum_0, :macbra_0, :macbracla_0, :macdes_0, :macitsdat_0, :macitntyp_0, :maccutbpc_0, "
         Sql &= ":bpcnum_0, :ccnnum_0, :macpurdat_0, :macrsl_0, :macitndat_0, :macsalpri_0, :macbpcpri_0, :macbpccur_0, :macbpcdat_0, :macitnlnd_0, :fcyitn_0, :ple_0, "
         Sql &= ":macori_0, :macoritxt_0, :macorivcr_0, :macorivcrl_0, :preori_0, :preorivcr_0, :preorivcrl_0, :creusr_0, :credat_0, :updusr_0, :upddat_0, :ynrocil_0, "
-        Sql &= ":yfabdat_0, :ymaccob_0, :xitn_0, :xbajamotiv_0, :xbajaobs_0, :recargador_0, :patente_0, :tipomanga_0, :lngnomi_0, :lngreal_0, :diametro_0) "
+        Sql &= ":yfabdat_0, :ymaccob_0, :xitn_0, :xbajamotiv_0, :xbajaobs_0, :recargador_0, :patente_0, :tipomanga_0, :lngnomi_0, :lngreal_0, :diametro_0, :nromanga_0) "
         da1.InsertCommand = New OracleCommand(Sql, cn)
 
         Sql = "DELETE FROM machines WHERE macnum_0 = :macnum_0"
@@ -137,6 +137,7 @@ Public Class Parque
             Parametro(.UpdateCommand, "lngnomi_0", OracleType.Number, DataRowVersion.Current)
             Parametro(.UpdateCommand, "lngreal_0", OracleType.Number, DataRowVersion.Current)
             Parametro(.UpdateCommand, "diametro_0", OracleType.Number, DataRowVersion.Current)
+            Parametro(.UpdateCommand, "nromanga_0", OracleType.Number, DataRowVersion.Current)
 
             Parametro(.InsertCommand, "macnum_0", OracleType.VarChar, DataRowVersion.Current)
             Parametro(.InsertCommand, "salfcy_0", OracleType.VarChar, DataRowVersion.Current)
@@ -185,6 +186,7 @@ Public Class Parque
             Parametro(.InsertCommand, "lngnomi_0", OracleType.Number, DataRowVersion.Current)
             Parametro(.InsertCommand, "lngreal_0", OracleType.Number, DataRowVersion.Current)
             Parametro(.InsertCommand, "diametro_0", OracleType.Number, DataRowVersion.Current)
+            Parametro(.InsertCommand, "nromanga_0", OracleType.Number, DataRowVersion.Current)
 
             Parametro(.DeleteCommand, "macnum_0", OracleType.VarChar, DataRowVersion.Original)
 
@@ -635,6 +637,7 @@ Public Class Parque
         dr("lngnomi_0") = 0
         dr("lngreal_0") = 0
         dr("diametro_0") = 0
+        dr("nromanga_0") = 0
         dt1.Rows.Add(dr)
 
     End Sub
