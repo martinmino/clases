@@ -581,74 +581,74 @@ Public Class Cotizacion
                     _Alertas.Add(txt)
                 End If
             End If
+        End If
+
+        'Verificacion de prioridad de condicion de pago
+        If Not Cliente.EsProspecto Then
+            Dim cp As New CondicionPago(cn)
+
+            cp.EstablecerCodigo(CondicionPago)
+
+            If Cliente.CondicionPago.Prioridad < cp.Prioridad Then
+                txt = "-> Condición de pago modificada es desfavorable"
+                _Alertas.Add(txt)
             End If
 
-            'Verificacion de prioridad de condicion de pago
-            If Not Cliente.EsProspecto Then
-                Dim cp As New CondicionPago(cn)
+            If Modo = 1 AndAlso bpa.Portero.Trim = "" Then
+                txt = "-> Nombre de contacto obligatorio"
+                _Alertas.Add(txt)
+            End If
+            If Modo = 1 AndAlso Not Utiles.ValidarTelefono(bpa.Telefono_Portero) Then
+                txt = "-> Teléfono de contacto inválido"
+                _Alertas.Add(txt)
+            End If
+        End If
 
-                cp.EstablecerCodigo(CondicionPago)
+        'Pedido / Entrega Georgia / Direccion Entrega
+        If Modo = 1 AndAlso ModoEntrega = "1" AndAlso bpa.EsDireccionEntrega Then
+            Dim e As String = ""
 
-                If Cliente.CondicionPago.Prioridad < cp.Prioridad Then
-                    txt = "-> Condición de pago modificada es desfavorable"
-                    _Alertas.Add(txt)
-                End If
+            If Not Utiles.ValidarFranjasHorarias(HoraMananaDesde, HoraMananaHasta, HoraTardeDesde, HoraTardeHasta, e) Then
+                _Alertas.Add("-> " & e)
+            End If
+        End If
 
-                If Modo = 1 AndAlso bpa.Portero.Trim = "" Then
-                    txt = "-> Nombre de contacto obligatorio"
-                    _Alertas.Add(txt)
-                End If
-                If Modo = 1 AndAlso Not Utiles.ValidarTelefono(bpa.Telefono_Portero) Then
-                    txt = "-> Teléfono de contacto inválido"
-                    _Alertas.Add(txt)
+        'Mantenimientos en el interior del pais
+        If bpa.Provincia <> "CFE" And bpa.Provincia <> "BUE" Then
+            If Me.TieneArticulo("551015") Or Me.TieneArticulo("551016") Then
+                _Alertas.Add("-> Mantenimientos en el interior debe ser aprobado por supervisor")
+            End If
+        End If
+
+        'No se puede crear pedido, si el presupuesto está vencido
+        If PresupuestoAdonix.Trim <> "" Then
+            Dim sqh As New Presupuesto(cn)
+
+            If sqh.Abrir(PresupuestoAdonix) Then
+                If sqh.Vencimiento.AddDays(15) <= Date.Today Then
+                    _Alertas.Add("-> El presupuesto está vencido")
+                Else
+                    'Elimino Alertas para crear pedido
+                    If sqh.Vencimiento < Date.Today Then _Alertas.Clear()
                 End If
             End If
+        End If
 
-            'Pedido / Entrega Georgia / Direccion Entrega
-            If Modo = 1 AndAlso ModoEntrega = "1" AndAlso bpa.EsDireccionEntrega Then
-                Dim e As String = ""
+        If Modo = 1 AndAlso Cliente.OC_obligatoria AndAlso Me.OC = " " Then
+            _Alertas.Add("-> OC obligatoria para éste cliente.")
+        End If
 
-                If Not Utiles.ValidarFranjasHorarias(HoraMananaDesde, HoraMananaHasta, HoraTardeDesde, HoraTardeHasta, e) Then
-                    _Alertas.Add("-> " & e)
-                End If
+        If Modo = 1 AndAlso PresupuestoAdonix.Trim <> "" Then
+
+            If Me.Presupuesto.TipoCambio > 0 AndAlso Me.Presupuesto.TipoCambio * 1.05 < tar.CotizacionDolar Then
+                txt = "La diferencia de cambio es superior al 5%" & vbCrLf & vbCrLf
+                txt &= Me.Presupuesto.TipoCambio.ToString("N2") & " <==> " & TipoCambio.ToString("N2")
+                _Alertas.Add(txt)
             End If
 
-            'Mantenimientos en el interior del pais
-            If bpa.Provincia <> "CFE" And bpa.Provincia <> "BUE" Then
-                If Me.TieneArticulo("551015") Or Me.TieneArticulo("551016") Then
-                    _Alertas.Add("-> Mantenimientos en el interior debe ser aprobado por supervisor")
-                End If
-            End If
+        End If
 
-            'No se puede crear pedido, si el presupuesto está vencido
-            If PresupuestoAdonix.Trim <> "" Then
-                Dim sqh As New Presupuesto(cn)
-
-                If sqh.Abrir(PresupuestoAdonix) Then
-                    If sqh.Vencimiento.AddDays(15) <= Date.Today Then
-                        _Alertas.Add("-> El presupuesto está vencido")
-                    Else
-                        'Elimino Alertas para crear pedido
-                        If sqh.Vencimiento < Date.Today Then _Alertas.Clear()
-                    End If
-                End If
-            End If
-
-            If Modo = 1 AndAlso Cliente.OC_obligatoria AndAlso Me.OC = " " Then
-                _Alertas.Add("-> OC obligatoria para éste cliente.")
-            End If
-
-            If Modo = 1 AndAlso PresupuestoAdonix.Trim <> "" Then
-
-                If Me.Presupuesto.TipoCambio > 0 AndAlso Me.Presupuesto.TipoCambio * 1.05 < tar.CotizacionDolar Then
-                    txt = "La diferencia de cambio es superior al 5%" & vbCrLf & vbCrLf
-                    txt &= Me.Presupuesto.TipoCambio.ToString("N2") & " <==> " & TipoCambio.ToString("N2")
-                    _Alertas.Add(txt)
-                End If
-
-            End If
-
-            Return _Alertas
+        Return _Alertas
 
     End Function
     Private Function TieneArticulosTipoCotizacion() As Boolean
