@@ -19,6 +19,7 @@ Public Class Sectores2
         da = New OracleDataAdapter(Sql, cn)
         da.SelectCommand.Parameters.Add("bpcnum", OracleType.VarChar)
         da.SelectCommand.Parameters.Add("fcyitn", OracleType.VarChar)
+
     End Sub
     Public Sub Abrir(ByVal Cliente As String, ByVal Sucursal As String)
         da.SelectCommand.Parameters("bpcnum").Value = Cliente
@@ -39,6 +40,25 @@ Public Class Sectores2
         For Each s As Sector2 In Me
             s.Grabar()
         Next
+    End Sub
+    Public Sub EliminarSectoresSinPuestos()
+        Dim Recargar As Boolean = False
+
+        For Each s As Sector2 In Me
+            If s.Puestos.Count = 0 Then
+                s.Eliminar()
+                s.Grabar()
+                Recargar = True
+            End If
+        Next
+
+        If Recargar Then
+            Me.Clear()
+
+            dt.Clear()
+            da.Fill(dt)
+            ArmarColeccion(dt)
+        End If
     End Sub
     Private Sub ArmarColeccion(ByVal dt As DataTable)
         Me.Clear()

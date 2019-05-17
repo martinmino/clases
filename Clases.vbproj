@@ -85,6 +85,7 @@
     <Compile Include="ContratoEventArgs.vb" />
     <Compile Include="Contratos.vb" />
     <Compile Include="ContratoServicio.vb" />
+    <Compile Include="Control.vb" />
     <Compile Include="Cotizacion.vb" />
     <Compile Include="Correo.vb" />
     <Compile Include="CorreoElectronico.vb" />
@@ -96,6 +97,8 @@
     <Compile Include="Feriados.vb" />
     <Compile Include="Impresora.vb" />
     <Compile Include="Impuesto.vb" />
+    <Compile Include="Inspeccion.vb" />
+    <Compile Include="InspeccionesCollection.vb" />
     <Compile Include="Intervencion.vb" />
     <Compile Include="IRuteable.vb" />
     <Compile Include="itmmvt.vb" />

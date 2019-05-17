@@ -3,11 +3,10 @@
 Public Class Sector2
     Private cn As OracleConnection
     Private da As OracleDataAdapter
-    Private dt As New DataTable
+    Private dt As DataTable
     Private dr As DataRow
 
     Public Sub New(ByVal cn As OracleConnection)
-        Dim da As OracleDataAdapter
         Dim Sql As String
 
         Me.cn = cn
@@ -23,6 +22,21 @@ Public Class Sector2
         da.DeleteCommand = New OracleCommandBuilder(da).GetDeleteCommand
 
     End Sub
+    Public Sub Nuevo(ByVal Cliente As String, ByVal Sucursal As String)
+        If dt Is Nothing Then
+            dt = New DataTable
+            da.SelectCommand.Parameters("id").Value = -1
+            da.Fill(dt)
+        End If
+        dt.Clear()
+        dr = dt.NewRow
+        dr("id_0") = 0
+        dr("numero_0") = " "
+        dr("sector_0") = " "
+        dr("bpcnum_0") = Cliente
+        dr("fcyitn_0") = Sucursal
+        dt.Rows.Add(dr)
+    End Sub
     Friend Function Abrir(ByVal dr2 As DataRow) As Boolean
         dt = Nothing
         dt = dr2.Table.Clone
@@ -30,7 +44,7 @@ Public Class Sector2
         dr = dt.NewRow
 
         For i = 0 To dt.Columns.Count - 1
-            Me.dr(i) = dr(i)
+            Me.dr(i) = dr2(i)
         Next
 
         dt.Rows.Add(Me.dr)
@@ -39,6 +53,7 @@ Public Class Sector2
         Return True
     End Function
     Public Function Abrir(ByVal id As Integer) As Boolean
+        If dt Is Nothing Then dt = New DataTable
         dt.Clear()
         da.SelectCommand.Parameters("id").Value = id
         da.Fill(dt)
@@ -49,12 +64,16 @@ Public Class Sector2
         p.Abrir(Me.id)
         Return p
     End Function
+    Public Sub Eliminar()
+        dr.Delete()
+    End Sub
     Public Sub Grabar()
-
-        If CInt(dr("id_0")) = 0 Then
-            dr.BeginEdit()
-            dr("id_0") = SiguienteId()
-            dr.EndEdit()
+        If dr.RowState <> DataRowState.Deleted Then
+            If CInt(dr("id_0")) = 0 Then
+                dr.BeginEdit()
+                dr("id_0") = SiguienteId()
+                dr.EndEdit()
+            End If
         End If
 
         da.Update(dt)

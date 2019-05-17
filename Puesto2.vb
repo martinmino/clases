@@ -19,21 +19,23 @@ Public Class Puesto2
         da.InsertCommand = New OracleCommandBuilder(da).GetInsertCommand
         da.UpdateCommand = New OracleCommandBuilder(da).GetInsertCommand
         da.DeleteCommand = New OracleCommandBuilder(da).GetDeleteCommand
-
-        da.SelectCommand.Parameters("id").Value = -1
-        da.Fill(dt)
-
     End Sub
     Public Function Nuevo(ByVal idSector As Integer, ByVal NroPuesto As String, ByVal Ubicacion As String, ByVal Tipo As Integer) As Boolean
+        If dt Is Nothing Then
+            dt = New DataTable
+            da.SelectCommand.Parameters("id").Value = -1
+            da.Fill(dt)
+        End If
+
         'Tipo: 1=Extintor | 2=Hidrante
         dt.Clear()
         dr = dt.NewRow
-        dr("id") = 0
+        dr("id_0") = 0
         dr("nropuesto_0") = " "
         dr("ubicacion_0") = " "
         dr("orden_0") = 0
-        dr("idSector") = idSector
-        dr("tipo") = Tipo
+        dr("idSector_0") = idSector
+        dr("tipo_0") = Tipo
         dr("agente_0") = " "
         dr("capacidad_0") = " "
         dr("equipo_0") = " "
@@ -41,6 +43,8 @@ Public Class Puesto2
         dt.Rows.Add(dr)
     End Function
     Public Function Abrir(ByVal id As Integer) As Boolean
+        If dt Is Nothing Then dt = New DataTable
+
         dt.Clear()
         dr = Nothing
 
@@ -58,7 +62,7 @@ Public Class Puesto2
         dr = dt.NewRow
 
         For i = 0 To dt.Columns.Count - 1
-            Me.dr(i) = dr(i)
+            Me.dr(i) = dr2(i)
         Next
 
         dt.Rows.Add(Me.dr)
@@ -67,13 +71,13 @@ Public Class Puesto2
         Return True
     End Function
     Public Sub Grabar()
-
-        If CInt(dr("id")) = 0 Then
-            dr.BeginEdit()
-            dr("id") = SiguienteId()
-            dr.EndEdit()
+        If dr.RowState <> DataRowState.Deleted Then
+            If CInt(dr("id_0")) = 0 Then
+                dr.BeginEdit()
+                dr("id_0") = SiguienteId()
+                dr.EndEdit()
+            End If
         End If
-
         da.Update(dt)
     End Sub
     Private Function SiguienteId() As Integer
@@ -95,7 +99,7 @@ Public Class Puesto2
     End Function
     Public ReadOnly Property id() As Integer
         Get
-            Return CInt(dr("id"))
+            Return CInt(dr("id_0"))
         End Get
     End Property
     Public Property NroPuesto() As String
