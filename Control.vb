@@ -29,7 +29,13 @@ Public Class Control
         da.SelectCommand.Parameters("itn").Value = Itn
         da.Fill(dt)
 
-        Return dt.Rows.Count > 0
+        If dt.Rows.Count > 0 Then
+            dr = dt.Rows(0)
+            Return True
+        End If
+
+        Return False
+
     End Function
     Public Sub Nuevo()
         If dt Is Nothing Then

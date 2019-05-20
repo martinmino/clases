@@ -32,7 +32,7 @@ Public Class Inspeccion
         dt.Clear()
         dr = dt.NewRow
         dr("id_0") = 0
-        dr("idcontrol_0") = 0
+        dr("itn_0") = " "
         dr("idpuesto_0") = 0
         dr("idsector_0") = 0
         dr("tipo_0") = 0
@@ -56,7 +56,7 @@ Public Class Inspeccion
         dr("altura_0") = 1
         dr("senal_0") = 1
         dr("senalalt_0") = 1
-        dr("senalbal_0") = 1
+        dr("senalbali_0") = 1
         dr("tarjeta_0") = 1
         dr("precinto_0") = 1
         dr("soporte_0") = 1
@@ -105,6 +105,7 @@ Public Class Inspeccion
     Public Sub Grabar()
         da.Update(dt)
     End Sub
+
     Public Property id() As Integer
         Get
             Return CInt(dr("id_0"))
@@ -115,33 +116,33 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Control() As Integer
+    Public Property Intervencion() As String
         Get
-            Return CInt(dr("idcontrol_0"))
+            Return dr("itn_0").ToString
         End Get
-        Set(ByVal value As Integer)
+        Set(ByVal value As String)
             dr.BeginEdit()
-            dr("idcontrol_0") = value
+            dr("itn_0") = value
             dr.EndEdit()
         End Set
     End Property
     Public Property Puesto() As Integer
-        Get
-            Return CInt(dr("idcontrol_0"))
-        End Get
-        Set(ByVal value As Integer)
-            dr.BeginEdit()
-            dr("idcontrol_0") = value
-            dr.EndEdit()
-        End Set
-    End Property
-    Public Property Sector() As Integer
         Get
             Return CInt(dr("idpuesto_0"))
         End Get
         Set(ByVal value As Integer)
             dr.BeginEdit()
             dr("idpuesto_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property Sector() As Integer
+        Get
+            Return CInt(dr("idsector_0"))
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("idsector_0") = value
             dr.EndEdit()
         End Set
     End Property
@@ -165,7 +166,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Nro() As String
+    Public Property Ubicacion() As String
         Get
             Return dr("ubicacion_0").ToString
         End Get
@@ -285,7 +286,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Carro() As Boolean
+    Public Property CarroDefectuoso() As Boolean
         Get
             Return CBool(IIf(CInt(dr("carro_0")) = 2, True, False))
         End Get
@@ -295,7 +296,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Usado() As Boolean
+    Public Property EquipoUsado() As Boolean
         Get
             Return CBool(IIf(CInt(dr("usado_0")) = 2, True, False))
         End Get
@@ -305,7 +306,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Despintado() As Boolean
+    Public Property EquipoDespintado() As Boolean
         Get
             Return CBool(IIf(CInt(dr("despintado_0")) = 2, True, False))
         End Get
@@ -315,7 +316,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Despresurizado() As Boolean
+    Public Property EquipoDespresurizado() As Boolean
         Get
             Return CBool(IIf(CInt(dr("despresu_0")) = 2, True, False))
         End Get
@@ -325,7 +326,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Altura() As Boolean
+    Public Property AlturaIncorrecta() As Boolean
         Get
             Return CBool(IIf(CInt(dr("altura_0")) = 2, True, False))
         End Get
@@ -335,17 +336,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Senalizacion() As Boolean
-        Get
-            Return CBool(IIf(CInt(dr("senal_0")) = 2, True, False))
-        End Get
-        Set(ByVal value As Boolean)
-            dr.BeginEdit()
-            dr("senal_0") = IIf(value, 2, 1)
-            dr.EndEdit()
-        End Set
-    End Property
-    Public Property SenalizacionAltura() As Boolean
+    Public Property FaltaSenalizacionAltura() As Boolean
         Get
             Return CBool(IIf(CInt(dr("senalalt_0")) = 2, True, False))
         End Get
@@ -355,13 +346,13 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property SenalizacionBaliza() As Boolean
+    Public Property FaltaSenalizacionBaliza() As Boolean
         Get
-            Return CBool(IIf(CInt(dr("senalbal_0")) = 2, True, False))
+            Return CBool(IIf(CInt(dr("senalbali_0")) = 2, True, False))
         End Get
         Set(ByVal value As Boolean)
             dr.BeginEdit()
-            dr("senalbal_0") = IIf(value, 2, 1)
+            dr("senalbali_0") = IIf(value, 2, 1)
             dr.EndEdit()
         End Set
     End Property
@@ -375,7 +366,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Precinto() As Boolean
+    Public Property FaltaPrecinto() As Boolean
         Get
             Return CBool(IIf(CInt(dr("precinto_0")) = 2, True, False))
         End Get
@@ -385,7 +376,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Soporte() As Boolean
+    Public Property SoporteDefectuoso() As Boolean
         Get
             Return CBool(IIf(CInt(dr("soporte_0")) = 2, True, False))
         End Get
@@ -395,7 +386,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Ruptura() As Boolean
+    Public Property MedioRuptura() As Boolean
         Get
             Return CBool(IIf(CInt(dr("ruptura_0")) = 2, True, False))
         End Get
@@ -405,7 +396,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Manguera() As Boolean
+    Public Property MangueraRota() As Boolean
         Get
             Return CBool(IIf(CInt(dr("manguera_0")) = 2, True, False))
         End Get
