@@ -1,7 +1,7 @@
 ﻿Imports System.Data.OracleClient
 Imports System.ComponentModel
 
-Public Class Puestos2
+Public Class Puestos2Collection
     Inherits BindingList(Of Puesto2)
 
     Private cn As OracleConnection
@@ -35,5 +35,14 @@ Public Class Puestos2
             p.Grabar()
         Next
     End Sub
+    Public Function BuscarPuestoPorId(ByVal id As Integer) As Puesto2
+        Dim p As Puesto2
+
+        For Each p In Me
+            If p.id = id Then Return p
+        Next
+
+        Return Nothing
+    End Function
 
 End Class

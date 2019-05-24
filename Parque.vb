@@ -720,6 +720,36 @@ Public Class Parque
         Grabar()
 
     End Sub
+    Public Sub setTipoExtintor(ByVal Agente As String, ByVal Capacidad As String)
+        Dim da As OracleDataAdapter
+        Dim sql As String
+        Dim dt As New DataTable
+        Dim dr As DataRow
+        Dim art As String = "112016"
+
+        sql = "SELECT itmref_0 " _
+            & "FROM itmmaster " _
+            & "WHERE tsicod_2 = :agente AND " _
+            & "      tsicod_1 = :capacidad " _
+            & "ORDER BY itmref_0"
+
+        da = New OracleDataAdapter(sql, cn)
+        da.SelectCommand.Parameters.Add("agente", OracleType.VarChar).Value = Agente
+        da.SelectCommand.Parameters.Add("capacidad", OracleType.VarChar).Value = Capacidad
+
+        da.Fill(dt)
+
+        If dt.Rows.Count > 0 Then
+            dr = dt.Rows(0)
+            art = dr(0).ToString
+        End If
+
+        SetArticulo(art)
+
+        da.Dispose()
+        dt.Dispose()
+
+    End Sub
 
     'FUNCTION
     Public Function Abrir(ByVal Serie As String) As Boolean
@@ -1124,11 +1154,14 @@ Public Class Parque
             RaiseEvent CambioFabricacion(Me, New EventArgs)
         End Set
     End Property
-    Public ReadOnly Property FabricacionLargo() As Date
+    Public Property FabricacionLargo() As Date
         Get
             Dim dr As DataRow = dt1.Rows(0)
             Return CDate(dr("yfabdat_0"))
         End Get
+        Set(ByVal value As Date)
+            Me.FabricacionCorto = value.Year
+        End Set
     End Property
     Public ReadOnly Property Cliente() As Cliente
         Get

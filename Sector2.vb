@@ -57,10 +57,16 @@ Public Class Sector2
         dt.Clear()
         da.SelectCommand.Parameters("id").Value = id
         da.Fill(dt)
-        Return dt.Rows.Count > 0
+
+        If dt.Rows.Count > 0 Then
+            dr = dt(0)
+            Return True
+        End If
+
+        Return False
     End Function
-    Public Function Puestos() As Puestos2
-        Dim p As New Puestos2(cn)
+    Public Function Puestos() As Puestos2Collection
+        Dim p As New Puestos2Collection(cn)
         p.Abrir(Me.id)
         Return p
     End Function

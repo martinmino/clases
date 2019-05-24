@@ -17,7 +17,7 @@ Public Class Puesto2
         da = New OracleDataAdapter(Sql, cn)
         da.SelectCommand.Parameters.Add("id", OracleType.Number)
         da.InsertCommand = New OracleCommandBuilder(da).GetInsertCommand
-        da.UpdateCommand = New OracleCommandBuilder(da).GetInsertCommand
+        da.UpdateCommand = New OracleCommandBuilder(da).GetUpdateCommand
         da.DeleteCommand = New OracleCommandBuilder(da).GetDeleteCommand
     End Sub
     Public Function Nuevo(ByVal idSector As Integer, ByVal NroPuesto As String, ByVal Ubicacion As String, ByVal Tipo As Integer) As Boolean
@@ -59,14 +59,18 @@ Public Class Puesto2
         dt = Nothing
         dt = dr2.Table.Clone
 
-        dr = dt.NewRow
+        dt.ImportRow(dr2)
 
-        For i = 0 To dt.Columns.Count - 1
-            Me.dr(i) = dr2(i)
-        Next
+        dr = dt.Rows(0)
 
-        dt.Rows.Add(Me.dr)
-        dt.AcceptChanges()
+        'dr = dt.NewRow
+
+        'For i = 0 To dt.Columns.Count - 1
+        '    dr(i) = dr2(i)
+        'Next
+
+        'dt.Rows.Add(dr)
+        'dt.AcceptChanges()
 
         Return True
     End Function
