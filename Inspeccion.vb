@@ -41,7 +41,7 @@ Public Class Inspeccion
         dr("luz_0") = 1
         dr("cartel_0") = 1
         dr("cinta_0") = 1
-        dr("equipo_0") = 1
+        dr("equipo_0") = " "
         dr("agente_0") = " "
         dr("capacidad_0") = " "
         dr("cilindro_0") = " "

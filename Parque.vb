@@ -65,130 +65,134 @@ Public Class Parque
         'TABLA MACHINES
         Sql = "SELECT * FROM machines WHERE macnum_0 = :macnum_0"
         da1 = New OracleDataAdapter(Sql, cn)
+        da1.SelectCommand.Parameters.Add("macnum_0", OracleType.VarChar)
+        da1.InsertCommand = New OracleCommandBuilder(da1).GetInsertCommand
+        da1.UpdateCommand = New OracleCommandBuilder(da1).GetUpdateCommand
+        da1.DeleteCommand = New OracleCommandBuilder(da1).GetDeleteCommand
 
-        Sql = "UPDATE machines "
-        Sql &= "SET salfcy_0=:salfcy_0, cur_0=:cur_0, macpdtcod_0=:macpdtcod_0, macqty_0=:macqty_0, macsernum_0=:macsernum_0, macbra_0=:macbra_0, macbracla_0=:macbracla_0, "
-        Sql &= "macdes_0=:macdes_0, macitsdat_0=:macitsdat_0, macitntyp_0=:macitntyp_0, maccutbpc_0=:maccutbpc_0, bpcnum_0=:bpcnum_0, ccnnum_0=:ccnnum_0, "
-        Sql &= "macpurdat_0=:macpurdat_0, macrsl_0=:macrsl_0, macitndat_0=:macitndat_0, macsalpri_0=:macsalpri_0, macbpcpri_0=:macbpcpri_0, macbpccur_0=:macbpccur_0, "
-        Sql &= "macbpcdat_0=:macbpcdat_0, macitnlnd_0=:macitnlnd_0, fcyitn_0=:fcyitn_0, ple_0=:ple_0, macori_0=:macori_0, macoritxt_0=:macoritxt_0, macorivcr_0=:macorivcr_0, "
-        Sql &= "macorivcrl_0=:macorivcrl_0, preori_0=:preori_0, preorivcr_0=:preorivcr_0, preorivcrl_0=:preorivcrl_0, creusr_0=:creusr_0, credat_0=:credat_0, updusr_0=:updusr_0, "
-        Sql &= "upddat_0=:upddat_0, ynrocil_0=:ynrocil_0, yfabdat_0=:yfabdat_0, ymaccob_0=:ymaccob_0, xitn_0=:xitn_0, xbajamotiv_0=:xbajamotiv_0, xbajaobs_0=:xbajaobs_0, "
-        Sql &= "recargador_0 = :recargador_0, patente_0 = :patente_0, tipomanga_0 = :tipomanga_0, lngnomi_0 = :lngnomi_0, lngreal_0 = :lngreal_0, diametro_0 = :diametro_0 "
-        Sql &= "WHERE macnum_0=:macnum_0"
-        da1.UpdateCommand = New OracleCommand(Sql, cn)
+        'Sql = "UPDATE machines "
+        'Sql &= "SET salfcy_0=:salfcy_0, cur_0=:cur_0, macpdtcod_0=:macpdtcod_0, macqty_0=:macqty_0, macsernum_0=:macsernum_0, macbra_0=:macbra_0, macbracla_0=:macbracla_0, "
+        'Sql &= "macdes_0=:macdes_0, macitsdat_0=:macitsdat_0, macitntyp_0=:macitntyp_0, maccutbpc_0=:maccutbpc_0, bpcnum_0=:bpcnum_0, ccnnum_0=:ccnnum_0, "
+        'Sql &= "macpurdat_0=:macpurdat_0, macrsl_0=:macrsl_0, macitndat_0=:macitndat_0, macsalpri_0=:macsalpri_0, macbpcpri_0=:macbpcpri_0, macbpccur_0=:macbpccur_0, "
+        'Sql &= "macbpcdat_0=:macbpcdat_0, macitnlnd_0=:macitnlnd_0, fcyitn_0=:fcyitn_0, ple_0=:ple_0, macori_0=:macori_0, macoritxt_0=:macoritxt_0, macorivcr_0=:macorivcr_0, "
+        'Sql &= "macorivcrl_0=:macorivcrl_0, preori_0=:preori_0, preorivcr_0=:preorivcr_0, preorivcrl_0=:preorivcrl_0, creusr_0=:creusr_0, credat_0=:credat_0, updusr_0=:updusr_0, "
+        'Sql &= "upddat_0=:upddat_0, ynrocil_0=:ynrocil_0, yfabdat_0=:yfabdat_0, ymaccob_0=:ymaccob_0, xitn_0=:xitn_0, xbajamotiv_0=:xbajamotiv_0, xbajaobs_0=:xbajaobs_0, "
+        'Sql &= "recargador_0 = :recargador_0, patente_0 = :patente_0, tipomanga_0 = :tipomanga_0, lngnomi_0 = :lngnomi_0, lngreal_0 = :lngreal_0, diametro_0 = :diametro_0 "
+        'Sql &= "WHERE macnum_0=:macnum_0"
+        'da1.UpdateCommand = New OracleCommand(Sql, cn)
 
-        Sql = "INSERT INTO machines "
-        Sql &= "VALUES(:macnum_0, :salfcy_0, :cur_0, :macpdtcod_0, :macqty_0, :macsernum_0, :macbra_0, :macbracla_0, :macdes_0, :macitsdat_0, :macitntyp_0, :maccutbpc_0, "
-        Sql &= ":bpcnum_0, :ccnnum_0, :macpurdat_0, :macrsl_0, :macitndat_0, :macsalpri_0, :macbpcpri_0, :macbpccur_0, :macbpcdat_0, :macitnlnd_0, :fcyitn_0, :ple_0, "
-        Sql &= ":macori_0, :macoritxt_0, :macorivcr_0, :macorivcrl_0, :preori_0, :preorivcr_0, :preorivcrl_0, :creusr_0, :credat_0, :updusr_0, :upddat_0, :ynrocil_0, "
-        Sql &= ":yfabdat_0, :ymaccob_0, :xitn_0, :xbajamotiv_0, :xbajaobs_0, :recargador_0, :patente_0, :tipomanga_0, :lngnomi_0, :lngreal_0, :diametro_0) "
-        da1.InsertCommand = New OracleCommand(Sql, cn)
+        'Sql = "INSERT INTO machines "
+        'Sql &= "VALUES(:macnum_0, :salfcy_0, :cur_0, :macpdtcod_0, :macqty_0, :macsernum_0, :macbra_0, :macbracla_0, :macdes_0, :macitsdat_0, :macitntyp_0, :maccutbpc_0, "
+        'Sql &= ":bpcnum_0, :ccnnum_0, :macpurdat_0, :macrsl_0, :macitndat_0, :macsalpri_0, :macbpcpri_0, :macbpccur_0, :macbpcdat_0, :macitnlnd_0, :fcyitn_0, :ple_0, "
+        'Sql &= ":macori_0, :macoritxt_0, :macorivcr_0, :macorivcrl_0, :preori_0, :preorivcr_0, :preorivcrl_0, :creusr_0, :credat_0, :updusr_0, :upddat_0, :ynrocil_0, "
+        'Sql &= ":yfabdat_0, :ymaccob_0, :xitn_0, :xbajamotiv_0, :xbajaobs_0, :recargador_0, :patente_0, :tipomanga_0, :lngnomi_0, :lngreal_0, :diametro_0) "
+        'da1.InsertCommand = New OracleCommand(Sql, cn)
 
-        Sql = "DELETE FROM machines WHERE macnum_0 = :macnum_0"
-        da1.DeleteCommand = New OracleCommand(Sql, cn)
+        'Sql = "DELETE FROM machines WHERE macnum_0 = :macnum_0"
+        'da1.DeleteCommand = New OracleCommand(Sql, cn)
 
-        With da1
-            .SelectCommand.Parameters.Add("macnum_0", OracleType.VarChar)
+        'With da1
+        '    .SelectCommand.Parameters.Add("macnum_0", OracleType.VarChar)
 
-            Parametro(.UpdateCommand, "macnum_0", OracleType.VarChar, DataRowVersion.Original)
-            Parametro(.UpdateCommand, "salfcy_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "cur_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macpdtcod_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macqty_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macsernum_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macbra_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macbracla_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macdes_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macitsdat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macitntyp_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "maccutbpc_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "bpcnum_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "ccnnum_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macpurdat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macrsl_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macitndat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macsalpri_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macbpcpri_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macbpccur_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macbpcdat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macitnlnd_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "fcyitn_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "ple_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macori_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macoritxt_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macorivcr_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "macorivcrl_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "preori_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "preorivcr_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "preorivcrl_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "creusr_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "credat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "updusr_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "upddat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "ynrocil_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "yfabdat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "ymaccob_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "xitn_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "xbajamotiv_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "xbajaobs_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "recargador_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "patente_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "tipomanga_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "lngnomi_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "lngreal_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.UpdateCommand, "diametro_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macnum_0", OracleType.VarChar, DataRowVersion.Original)
+        '    Parametro(.UpdateCommand, "salfcy_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "cur_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macpdtcod_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macqty_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macsernum_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macbra_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macbracla_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macdes_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macitsdat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macitntyp_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "maccutbpc_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "bpcnum_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "ccnnum_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macpurdat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macrsl_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macitndat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macsalpri_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macbpcpri_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macbpccur_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macbpcdat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macitnlnd_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "fcyitn_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "ple_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macori_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macoritxt_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macorivcr_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "macorivcrl_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "preori_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "preorivcr_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "preorivcrl_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "creusr_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "credat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "updusr_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "upddat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "ynrocil_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "yfabdat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "ymaccob_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "xitn_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "xbajamotiv_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "xbajaobs_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "recargador_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "patente_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "tipomanga_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "lngnomi_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "lngreal_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.UpdateCommand, "diametro_0", OracleType.Number, DataRowVersion.Current)
 
-            Parametro(.InsertCommand, "macnum_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "salfcy_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "cur_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macpdtcod_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macqty_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macsernum_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macbra_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macbracla_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macdes_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macitsdat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macitntyp_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "maccutbpc_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "bpcnum_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "ccnnum_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macpurdat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macrsl_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macitndat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macsalpri_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macbpcpri_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macbpccur_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macbpcdat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macitnlnd_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "fcyitn_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "ple_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macori_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macoritxt_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macorivcr_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "macorivcrl_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "preori_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "preorivcr_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "preorivcrl_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "creusr_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "credat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.InsertCommand, "updusr_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "upddat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.InsertCommand, "ynrocil_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "yfabdat_0", OracleType.DateTime, DataRowVersion.Current)
-            Parametro(.InsertCommand, "ymaccob_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "xitn_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "xbajamotiv_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "xbajaobs_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "recargador_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "patente_0", OracleType.VarChar, DataRowVersion.Current)
-            Parametro(.InsertCommand, "tipomanga_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "lngnomi_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "lngreal_0", OracleType.Number, DataRowVersion.Current)
-            Parametro(.InsertCommand, "diametro_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macnum_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "salfcy_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "cur_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macpdtcod_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macqty_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macsernum_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macbra_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macbracla_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macdes_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macitsdat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macitntyp_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "maccutbpc_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "bpcnum_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "ccnnum_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macpurdat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macrsl_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macitndat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macsalpri_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macbpcpri_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macbpccur_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macbpcdat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macitnlnd_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "fcyitn_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "ple_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macori_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macoritxt_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macorivcr_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "macorivcrl_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "preori_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "preorivcr_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "preorivcrl_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "creusr_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "credat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "updusr_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "upddat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "ynrocil_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "yfabdat_0", OracleType.DateTime, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "ymaccob_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "xitn_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "xbajamotiv_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "xbajaobs_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "recargador_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "patente_0", OracleType.VarChar, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "tipomanga_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "lngnomi_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "lngreal_0", OracleType.Number, DataRowVersion.Current)
+        '    Parametro(.InsertCommand, "diametro_0", OracleType.Number, DataRowVersion.Current)
 
-            Parametro(.DeleteCommand, "macnum_0", OracleType.VarChar, DataRowVersion.Original)
+        '    Parametro(.DeleteCommand, "macnum_0", OracleType.VarChar, DataRowVersion.Original)
 
-        End With
+        'End With
 
         'TABLA YMACITM
         Sql = "SELECT ymc.* "
@@ -635,6 +639,7 @@ Public Class Parque
         dr("lngnomi_0") = 0
         dr("lngreal_0") = 0
         dr("diametro_0") = 0
+        dr("nromanga_0") = 0
         dt1.Rows.Add(dr)
 
     End Sub
