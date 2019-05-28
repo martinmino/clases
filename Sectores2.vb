@@ -6,7 +6,7 @@ Public Class Sectores2
 
     Private cn As OracleConnection
     Private da As OracleDataAdapter
-    Private dt As New DataTable
+    Public dt As New DataTable
 
     Public Sub New(ByVal cn As OracleConnection)
         Me.cn = cn

@@ -303,6 +303,17 @@ Public Class Sucursal
             End If
         End Set
     End Property
+    Public ReadOnly Property CodigoNombre() As String
+        Get
+            Dim t As String
+
+            t = Me.Sucursal _
+              & " - " _
+              & Me.Direccion
+
+            Return t
+        End Get
+    End Property
     Public Property Nombre() As String
         Get
             Return dr1("bpades_0").ToString
