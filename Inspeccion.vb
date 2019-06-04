@@ -38,6 +38,8 @@ Public Class Inspeccion
         dr("tipo_0") = 0
         dr("nro_0") = " "
         dr("ubicacion_0") = " "
+        dr("nombre_0") = " "
+        dr("sector_0") = 1
         dr("luz_0") = 1
         dr("cartel_0") = 1
         dr("cinta_0") = 1
@@ -463,6 +465,28 @@ Public Class Inspeccion
         Set(ByVal value As Boolean)
             dr.BeginEdit()
             dr("llave_0") = IIf(value, 2, 1)
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property Nombre() As String
+        Get
+            Return dr("nombre_0").ToString
+        End Get
+        Set(ByVal value As String)
+            dr.BeginEdit()
+            dr("nombre_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property TieneSector() As Boolean
+        Get
+            Dim i As Integer
+            i = CInt(dr("sector_0"))
+            Return i = 2
+        End Get
+        Set(ByVal value As Boolean)
+            dr.BeginEdit()
+            dr("sector_0") = IIf(value, 2, 1)
             dr.EndEdit()
         End Set
     End Property

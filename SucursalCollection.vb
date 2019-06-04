@@ -4,7 +4,8 @@ Imports System.ComponentModel
 Public Class SucursalCollection
     Inherits BindingList(Of Sucursal)
 
-    Dim cn As OracleConnection
+    Private cn As OracleConnection
+    Public dt As New DataTable
 
     Public Sub New(ByVal cn As OracleConnection)
         Me.cn = cn
@@ -13,9 +14,8 @@ Public Class SucursalCollection
     Public Sub CargarSucursales(ByVal Codigo As String)
         Dim Sql As String
         Dim da As OracleDataAdapter
-        Dim dt As New DataTable
 
-        Sql = "SELECT bpanum_0, bpaadd_0 FROM bpaddress WHERE bpanum_0 = :bpanum ORDER BY bpaadd_0"
+        Sql = "SELECT bpanum_0, bpaadd_0, bpaaddlig_0, bpaadd_0 || ' - ' || bpaaddlig_0 as direccion FROM bpaddress WHERE bpanum_0 = :bpanum ORDER BY bpaadd_0"
         da = New OracleDataAdapter(Sql, Me.cn)
         da.SelectCommand.Parameters.Add("bpanum", OracleType.VarChar).Value = Codigo
 
@@ -24,7 +24,7 @@ Public Class SucursalCollection
 
             For Each dr As DataRow In dt.Rows
                 Dim s As New Sucursal(cn)
-                If s.Abrir(dr(0).ToString, dr(1).ToString) Then Me.Add(s)
+                If s.Abrir(dr("bpanum_0").ToString, dr("bpaadd_0").ToString) Then Me.Add(s)
             Next
 
         Catch ex As Exception

@@ -50,6 +50,7 @@ Public Class Control
         dr("dat_0") = #12/31/1599#
         dr("bpcnum_0") = " "
         dr("bpaadd_0") = " "
+        dr("estado_0") = 1
         dt.Rows.Add(dr)
     End Sub
     Public Sub Borrar()
@@ -58,13 +59,11 @@ Public Class Control
     Public Sub Grabar()
         da.Update(dt)
     End Sub
-
     Public Function Inspecciones() As InspeccionesCollection
         Dim i As New InspeccionesCollection(cn)
         i.Abrir(Me.id)
         Return i
     End Function
-
     Public Property id() As String
         Get
             Return dr("itn_0").ToString
@@ -102,6 +101,16 @@ Public Class Control
         Set(ByVal value As String)
             dr.BeginEdit()
             dr("bpaadd_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property Estado() As Integer
+        Get
+            Return CInt(dr("estado_0"))
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("estado_0") = value
             dr.EndEdit()
         End Set
     End Property

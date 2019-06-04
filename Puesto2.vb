@@ -31,8 +31,8 @@ Public Class Puesto2
         dt.Clear()
         dr = dt.NewRow
         dr("id_0") = 0
-        dr("nropuesto_0") = " "
-        dr("ubicacion_0") = " "
+        dr("nropuesto_0") = NroPuesto
+        dr("ubicacion_0") = Ubicacion
         dr("orden_0") = 0
         dr("idSector_0") = idSector
         dr("tipo_0") = Tipo
@@ -58,22 +58,14 @@ Public Class Puesto2
     Friend Function Abrir(ByVal dr2 As DataRow) As Boolean
         dt = Nothing
         dt = dr2.Table.Clone
-
         dt.ImportRow(dr2)
-
         dr = dt.Rows(0)
-
-        'dr = dt.NewRow
-
-        'For i = 0 To dt.Columns.Count - 1
-        '    dr(i) = dr2(i)
-        'Next
-
-        'dt.Rows.Add(dr)
-        'dt.AcceptChanges()
-
         Return True
     End Function
+    Public Sub Eliminar()
+        dr.Delete()
+    End Sub
+
     Public Sub Grabar()
         If dr.RowState <> DataRowState.Deleted Then
             If CInt(dr("id_0")) = 0 Then

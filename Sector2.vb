@@ -73,6 +73,7 @@ Public Class Sector2
     Public Sub Eliminar()
         dr.Delete()
     End Sub
+
     Public Sub Grabar()
         If dr.RowState <> DataRowState.Deleted Then
             If CInt(dr("id_0")) = 0 Then
