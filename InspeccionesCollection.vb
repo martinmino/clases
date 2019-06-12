@@ -5,6 +5,7 @@ Public Class InspeccionesCollection
     Inherits BindingList(Of Inspeccion)
 
     Private cn As OracleConnection
+    Public dt As New DataTable
 
     Public Sub New(ByVal cn As OracleConnection)
         Me.cn = cn
@@ -12,7 +13,6 @@ Public Class InspeccionesCollection
     Public Sub Abrir(ByVal Intervencion As String)
         Dim Sql As String
         Dim da As OracleDataAdapter
-        Dim dt As New DataTable
 
         Sql = "SELECT * " _
             & "FROM xinspeccio " _

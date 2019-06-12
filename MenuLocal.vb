@@ -82,16 +82,17 @@ Public Class MenuLocal
         dt.AcceptChanges()
 
     End Sub
-    Public Function Enlazar(ByVal cbo As DataGridViewComboBoxColumn) As DataGridViewComboBoxColumn
+    Public Sub Enlazar(ByVal cbo As DataGridViewComboBoxColumn, Optional ByVal Campo As String = "") 'As DataGridViewComboBoxColumn
         With cbo
             .DataSource = dt
             .DisplayMember = "lanmes_0"
             .ValueMember = "lannum_0"
+
+            If Campo <> "" Then
+                .DataPropertyName = Campo
+            End If
         End With
-
-        Return cbo
-
-    End Function
+    End Sub
     Public Sub Enlazar(ByRef lst As ListBox)
         With lst
             .DataSource = dt

@@ -39,7 +39,7 @@ Public Class Inspeccion
         dr("nro_0") = " "
         dr("ubicacion_0") = " "
         dr("nombre_0") = " "
-        dr("sector_0") = 1
+        dr("nombre_0") = " "
         dr("luz_0") = 1
         dr("cartel_0") = 1
         dr("cinta_0") = 1
