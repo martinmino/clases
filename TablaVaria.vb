@@ -63,11 +63,16 @@ Public Class TablaVaria
             .ValueMember = "ident2_0"
         End With
     End Sub
-    Public Sub EnlazarComboBox(ByVal cbo As DataGridViewComboBoxColumn)
+    Public Sub EnlazarComboBox(ByVal cbo As DataGridViewComboBoxColumn, Optional ByVal Campo As String = "")
         With cbo
             .DataSource = dt2
             .DisplayMember = "texte_0"
             .ValueMember = "ident2_0"
+
+            If Campo <> "" Then
+                .DataPropertyName = Campo
+            End If
+
         End With
     End Sub
     Public Sub EnlazarListBox(ByVal cbo As ListBox)

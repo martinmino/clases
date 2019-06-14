@@ -244,7 +244,11 @@ Public Class Sucursal
         dr2 = dt2.Rows(0)
 
     End Sub
-
+    Public Function Parque() As ParqueCollection
+        Dim p As New ParqueCollection(cn)
+        p.AbrirParqueCliente(Codigo, Sucursal)
+        Return p
+    End Function
     'FUNCTION
 
     'PROPERTY
@@ -298,6 +302,17 @@ Public Class Sucursal
                 dr.EndEdit()
             End If
         End Set
+    End Property
+    Public ReadOnly Property CodigoNombre() As String
+        Get
+            Dim t As String
+
+            t = Me.Sucursal _
+              & " - " _
+              & Me.Direccion
+
+            Return t
+        End Get
     End Property
     Public Property Nombre() As String
         Get

@@ -85,6 +85,7 @@
     <Compile Include="ContratoEventArgs.vb" />
     <Compile Include="Contratos.vb" />
     <Compile Include="ContratoServicio.vb" />
+    <Compile Include="Control.vb" />
     <Compile Include="Cotizacion.vb" />
     <Compile Include="Correo.vb" />
     <Compile Include="CorreoElectronico.vb" />
@@ -96,6 +97,8 @@
     <Compile Include="Feriados.vb" />
     <Compile Include="Impresora.vb" />
     <Compile Include="Impuesto.vb" />
+    <Compile Include="Inspeccion.vb" />
+    <Compile Include="InspeccionesCollection.vb" />
     <Compile Include="Intervencion.vb" />
     <Compile Include="IRuteable.vb" />
     <Compile Include="itmmvt.vb" />
@@ -125,6 +128,7 @@
     <Compile Include="Padron.vb" />
     <Compile Include="Pais.vb" />
     <Compile Include="Parque.vb" />
+    <Compile Include="ParqueCollection.vb" />
     <Compile Include="ParteCobranza.vb" />
     <Compile Include="Pedido.vb" />
     <Compile Include="Percepciones.vb" />
@@ -134,11 +138,13 @@
     <Compile Include="Presupuesto.vb" />
     <Compile Include="PresupuestoAnual.vb" />
     <Compile Include="Proveedor.vb" />
-    <Compile Include="Puesto.vb" />
+    <Compile Include="Puesto2.vb" />
+    <Compile Include="Puestos2Collection.vb" />
     <Compile Include="Remito.vb" />
     <Compile Include="Ruta.vb" />
     <Compile Include="RutaAviso.vb" />
-    <Compile Include="Sector.vb" />
+    <Compile Include="Sector2.vb" />
+    <Compile Include="Sectores2.vb" />
     <Compile Include="Segto2.vb" />
     <Compile Include="Seguimiento.vb" />
     <Compile Include="SeguimientoPrestamos.vb" />
