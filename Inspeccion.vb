@@ -56,7 +56,6 @@ Public Class Inspeccion
         dr("despintado_0") = 1
         dr("despresu_0") = 1
         dr("altura_0") = 1
-        dr("senal_0") = 1
         dr("senalalt_0") = 1
         dr("senalbali_0") = 1
         dr("tarjeta_0") = 1
@@ -70,6 +69,7 @@ Public Class Inspeccion
         dr("lanza_0") = 1
         dr("vidrio_0") = 1
         dr("llave_0") = 1
+        dr("obs_0") = " "
         dt.Rows.Add(dr)
 
     End Function
@@ -107,6 +107,11 @@ Public Class Inspeccion
     Public Sub Grabar()
         da.Update(dt)
     End Sub
+    Public Function Puesto() As Puesto2
+        Dim p As New Puesto2(cn)
+        If Not p.Abrir(Me.PuestoId) Then p = Nothing
+        Return p
+    End Function
 
     Public Property id() As Integer
         Get
@@ -128,7 +133,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Puesto() As Integer
+    Public Property PuestoId() As Integer
         Get
             Return CInt(dr("idpuesto_0"))
         End Get

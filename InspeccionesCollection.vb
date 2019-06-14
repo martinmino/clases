@@ -5,23 +5,31 @@ Public Class InspeccionesCollection
     Inherits BindingList(Of Inspeccion)
 
     Private cn As OracleConnection
+    Private da As OracleDataAdapter
     Public dt As New DataTable
 
     Public Sub New(ByVal cn As OracleConnection)
-        Me.cn = cn
-    End Sub
-    Public Sub Abrir(ByVal Intervencion As String)
         Dim Sql As String
-        Dim da As OracleDataAdapter
+
+        Me.cn = cn
 
         Sql = "SELECT * " _
             & "FROM xinspeccio " _
             & "WHERE itn_0 = :itn"
 
         da = New OracleDataAdapter(Sql, cn)
-        da.SelectCommand.Parameters.Add("itn", OracleType.VarChar).Value = Intervencion
+        da.SelectCommand.Parameters.Add("itn", OracleType.VarChar)
+        da.UpdateCommand = New OracleCommandBuilder(da).GetUpdateCommand
+        da.InsertCommand = New OracleCommandBuilder(da).GetInsertCommand
+        da.DeleteCommand = New OracleCommandBuilder(da).GetDeleteCommand
+    End Sub
+    Public Sub Abrir(ByVal Intervencion As String)
+
+        da.SelectCommand.Parameters("itn").Value = Intervencion
 
         Me.Clear()
+        dt.Clear()
+
         da.Fill(dt)
 
         ArmarColeccion(dt)
@@ -45,4 +53,7 @@ Public Class InspeccionesCollection
         Return Nothing
 
     End Function
+    Public Sub Grabar()
+        da.Update(dt)
+    End Sub
 End Class
