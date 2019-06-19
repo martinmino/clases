@@ -117,6 +117,34 @@ Public Class Articulo
         Return dt.Rows.Count > 0
 
     End Function
+    Public Function ArticuloParaParque(ByVal Agente As String, ByVal Capacidad As String) As String
+        Dim a As String = "112016"
+        Dim da As OracleDataAdapter
+        Dim dt As New DataTable
+        Dim sql As String
+
+        sql = "SELECT itmref_0 "
+        sql &= "FROM itmmaster "
+        sql &= "WHERE xparque_0 = 2 AND "
+        sql &= "      tsicod_2 = :agente AND "
+        sql &= "      tsicod_1 = :capacidad "
+        da = New OracleDataAdapter(sql, cn)
+        da.SelectCommand.Parameters.Add("agente", OracleType.VarChar).Value = Agente
+        da.SelectCommand.Parameters.Add("capacidad", OracleType.VarChar).Value = Capacidad
+        da.Fill(dt)
+
+        If dt.Rows.Count > 0 Then
+            Dim dr As DataRow
+            dr = dt.Rows(0)
+            a = dr(0).ToString
+        End If
+
+        dt.Dispose()
+        da.Dispose()
+
+        Return a
+
+    End Function
 
     'PROPERTY
     Public ReadOnly Property Categoria() As String

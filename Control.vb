@@ -21,6 +21,7 @@ Public Class Control
         da.InsertCommand = New OracleCommandBuilder(da).GetInsertCommand
         da.UpdateCommand = New OracleCommandBuilder(da).GetUpdateCommand
         da.DeleteCommand = New OracleCommandBuilder(da).GetDeleteCommand
+
     End Sub
     Public Function Abrir(ByVal Itn As String) As Boolean
         If dt Is Nothing Then dt = New DataTable

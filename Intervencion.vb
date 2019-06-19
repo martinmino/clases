@@ -2428,7 +2428,6 @@ Public Class Intervencion
             txt = txt.Replace("{cantidad}", (Math.Round(CantidadEquiposTeoricos / 2).ToString))
         End If
 
-
         'Grabo archivo
         st = File.Open(Archivo, FileMode.Create, FileAccess.Write, FileShare.None)
         sw = New StreamWriter(st)
@@ -2512,4 +2511,5 @@ Public Class Intervencion
         Return flg
 
     End Function
+
 End Class
