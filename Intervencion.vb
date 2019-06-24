@@ -629,7 +629,7 @@ Public Class Intervencion
         txt &= "<p>&nbsp;</p>" & vbCrLf
         txt &= "<p>Cordialmente,</p>" & vbCrLf
         txt &= "<p>Matafuegos Georgia<br>"
-        txt &= "4585-4400 int. 103</p>"
+        txt &= "4585-4400 int. 1103</p>"
 
         'Incluyo el importe de la factura
         txt = txt.Replace("{importe}", sih.ImporteII.ToString("N2"))
