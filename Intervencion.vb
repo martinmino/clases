@@ -2384,63 +2384,6 @@ Public Class Intervencion
         Next
 
     End Sub
-    Public Function EtiquetasEntrega(ByVal Archivo As String, ByVal columnas As Integer) As Boolean
-
-        Dim txt As String = ""
-        Dim st As Stream
-        Dim sw As StreamWriter
-        'Cabecera del archivo ZEBRA
-        If columnas = 1 Then
-            txt = "I8,A,001" & vbCrLf
-            txt &= "Q240,024 " & vbCrLf
-            txt &= "q831" & vbCrLf
-            txt &= "rN" & vbCrLf
-            txt &= "S3" & vbCrLf
-            txt &= "D7" & vbCrLf
-            txt &= "ZT" & vbCrLf
-            txt &= "JF" & vbCrLf
-            txt &= "O" & vbCrLf
-            txt &= "R263,0" & vbCrLf
-            txt &= "f100" & vbCrLf
-            txt &= "N" & vbCrLf
-            txt &= "A258,233,2,5,1,3,N,""{itn}""" & vbCrLf
-            txt &= "P{cantidad}" & vbCrLf
-            txt = txt.Replace("{itn}", Numero.Substring(5))
-            txt = txt.Replace("{cantidad}", (CantidadEquiposTeoricos).ToString)
-
-        ElseIf columnas = 2 Then
-            txt = " I8, A, 1" & vbCrLf
-            txt &= "Q240, 24" & vbCrLf
-            txt &= "q831" & vbCrLf
-            txt &= "rN" & vbCrLf
-            txt &= "S4" & vbCrLf
-            txt &= "D7" & vbCrLf
-            txt &= "ZT" & vbCrLf
-            txt &= "JF" & vbCrLf
-            txt &= "OD" & vbCrLf
-            txt &= "R96, 0" & vbCrLf
-            txt &= "f100" & vbCrLf
-            txt &= "N" & vbCrLf
-            txt &= "A124,203,2,5,1,4,N,""{itn}""" & vbCrLf
-            txt &= "A450,203,2,5,1,4,N,""{itn}""" & vbCrLf
-            txt &= "P{cantidad}" & vbCrLf
-            txt = txt.Replace("{itn}", Numero.Substring(5))
-            txt = txt.Replace("{cantidad}", (Math.Round(CantidadEquiposTeoricos / 2).ToString))
-        End If
-
-        'Grabo archivo
-        st = File.Open(Archivo, FileMode.Create, FileAccess.Write, FileShare.None)
-        sw = New StreamWriter(st)
-        sw.Write(txt)
-        sw.Close()
-        st.Close()
-
-        'Puerto de impresora destino
-        Dim prn As New Impresora(cn, "LOGISTICA")
-
-        File.Copy(Archivo, prn.RecursoRed)
-
-    End Function
     Public ReadOnly Property Equipos() As Integer Implements IRuteable.Equipos
         Get
             Return l_Equipos

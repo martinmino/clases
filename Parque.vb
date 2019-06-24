@@ -1039,7 +1039,7 @@ Public Class Parque
         Get
             Dim dr As DataRow = dt1.Rows(0)
 
-            If CDate(dr("yfabdat_0")) < CDate(dr("credat_0")) Then
+            If CDate(dr("yfabdat_0")) < #1/1/1970# Then
                 Me.FabricacionLargo = CDate(dr("credat_0"))
             End If
 
@@ -1195,7 +1195,7 @@ Public Class Parque
             Dim dr As DataRow = dt1.Rows(0)
 
             aa = TiempoVidaUtil
-            Return Me.FabricacionLargo.Year + aa
+            Return CDate(dr("yfabdat_0")).Year + aa
 
         End Get
     End Property
