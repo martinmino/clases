@@ -52,7 +52,7 @@ Public Class EtiquetaService
             'Envio archivo de salida a la impresora
             Dim prn As New Impresora(cn, "LOGISTICA")
 
-            File.Copy(ArchivoSalida, "\\mmino-pc\zebra") 'prn.RecursoRed)
+            File.Copy(ArchivoSalida, prn.RecursoRed)
 
         Catch ex As Exception
 
