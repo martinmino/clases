@@ -495,5 +495,15 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
+    Public Property Observaciones() As String
+        Get
+            Return dr("obs_0").ToString.Trim
+        End Get
+        Set(ByVal value As String)
+            dr.BeginEdit()
+            dr("obs_0") = IIf(value.Trim = "", " ", value.Trim)
+            dr.EndEdit()
+        End Set
+    End Property
 
 End Class
