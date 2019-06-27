@@ -143,6 +143,7 @@
     <Compile Include="Puesto2.vb" />
     <Compile Include="Puestos2Collection.vb" />
     <Compile Include="Remito.vb" />
+    <Compile Include="ReporteVentaAnual.vb" />
     <Compile Include="Ruta.vb" />
     <Compile Include="RutaAviso.vb" />
     <Compile Include="Sector.vb" />
