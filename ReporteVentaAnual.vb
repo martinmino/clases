@@ -24,6 +24,7 @@ Public Class ReporteVentaAnual
     End Sub
     Public Sub Nuevo(ByVal Anio As Integer, ByVal TipoReporte As Integer)
         AnoConsulta = Anio
+        Me.TipoReporte = TipoReporte
 
         If AnoConsulta < 2009 Then AnoConsulta = Today.Year
 
