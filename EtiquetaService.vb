@@ -58,4 +58,11 @@ Public Class EtiquetaService
 
         End Try
     End Sub
+    Public Sub Eliminar()
+        Try
+            IO.File.Delete(ETIQUETA)
+
+        Catch ex As Exception
+        End Try
+    End Sub
 End Class
