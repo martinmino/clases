@@ -612,29 +612,15 @@ Public Class Intervencion
 
     End Sub
     Public Sub EnvioMailAvisoCordinacion()
-        Dim txt As String = ""
-
         Dim eMail As New CorreoElectronico
         Dim sih As New Factura(cn)
+        Dim rpt As New ReportDocument
 
         ' Salgo si no encuentro la factura
         If Not sih.AbrirPorSolicitud(Me.SolicitudAsociada.Numero) Then
             Exit Sub
         End If
 
-        txt &= "<p>" & Me.Cliente.Nombre & "</p>" & vbCrLf
-        txt &= "<p>Nos comunicamos desde Matafuegos Georgia para informarle que sus equipos ya se encuentran listos. Con el fin de facilitarnos su entrega, le pedimos, por favor, tenga a bien informarnos (respondiéndonos a este mismo mail) el horario en que considera conveniente que pase nuestro personal logístico (en lo posible, dentro de una franja horaria en que pueda recibirlos).  Nuestras camionetas entregan dentro de Capital Federal, desde las 8:00 hasta las 15 Hs. Y en GBA, desde las 8:00 hasta las 14 hs.</p>" & vbCrLf
-        txt &= "<p>Por favor, no olvide tener los matafuegos de préstamo que le hayamos dejado (en el caso de haberlos solicitado) y el importe de ${importe} para abonar la factura, al momento de la entrega.</p>" & vbCrLf
-        txt &= "<p>En caso que no se pueda entregar la mercadería y debamos volver a realizar la entrega se facturará un monto adicional</p>" & vbCrLf
-        txt &= "<p>&nbsp;</p>" & vbCrLf
-        txt &= "<p>Cordialmente,</p>" & vbCrLf
-        txt &= "<p>Matafuegos Georgia<br>"
-        txt &= "4585-4400 int. 1103</p>"
-
-        'Incluyo el importe de la factura
-        txt = txt.Replace("{importe}", sih.ImporteII.ToString("N2"))
-
-        Dim rpt As New ReportDocument
         With rpt
             .Load(RPTX3 & "XFACT_ELEC.rpt") 'Reporte normal
             .SetDatabaseLogon(DB_USR, DB_PWD)
@@ -651,11 +637,16 @@ Public Class Intervencion
             .AgregarDestinatario("contados@matafuegosgeorgia.com", True)
             .ResponderA("contados@matafuegosgeorgia.com")
             .AgregarDestinatario(Me.Cliente.MailFC)
+
             .Asunto = "Entrega de Recargas"
             .EsHtml = True
-            .Cuerpo = txt
+            .CuerpoDesdeArchivo("plantillas\entrega-de-recargas.html")
+            .Cuerpo = .Cuerpo.Replace("{cliente}", Me.Cliente.Nombre)
+            .Cuerpo = .Cuerpo.Replace("{importe}", sih.ImporteII.ToString("N2"))
             .AdjuntarArchivo(sih.Numero & ".pdf")
-            If .CantidadTo > 0 Then .Enviar(True)
+
+            If .CantidadTo > 0 Then .Enviar()
+
             .Dispose()
         End With
 
@@ -664,7 +655,6 @@ Public Class Intervencion
 
         Catch ex As Exception
         End Try
-
 
     End Sub
     Public Sub EnvioMailAvisoMostrador()
