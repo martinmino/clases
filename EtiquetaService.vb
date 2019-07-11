@@ -60,7 +60,7 @@ Public Class EtiquetaService
     End Sub
     Public Sub Eliminar()
         Try
-            IO.File.Delete(ETIQUETA)
+            IO.File.Delete(ArchivoSalida)
 
         Catch ex As Exception
         End Try
