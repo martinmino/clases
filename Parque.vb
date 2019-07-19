@@ -398,10 +398,10 @@ Public Class Parque
         'Cargo modelo de etiqueta segun tipo de parque
 
         If EsManguera Then
-            st = File.Open(Path & "\etiqueta_manguera.txt", FileMode.Open, FileAccess.Read, FileShare.Read)
+            st = File.Open(Path & "\PLANTILLAS\etiqueta_manguera.txt", FileMode.Open, FileAccess.Read, FileShare.Read)
 
         Else
-            st = File.Open(Path & "\etiqueta_extintor.txt", FileMode.Open, FileAccess.Read, FileShare.Read)
+            st = File.Open(Path & "\PLANTILLAS\etiqueta_extintor.txt", FileMode.Open, FileAccess.Read, FileShare.Read)
 
         End If
 
