@@ -386,7 +386,7 @@ Public Class Parque
         RaiseEvent TarjetaImpresa(Me, New EventArgs)
 
     End Sub
-    Public Sub ImprimirEtiqueta(ByVal Intervencion As String, ByVal Path As String, ByVal Puerto As String)
+    Public Sub ImprimirEtiqueta(ByVal Intervencion As String, ByVal Path As String, ByVal Puerto As String, ByVal Puesto As String)
         Dim dr As DataRow = dt1.Rows(0)
 
         Dim Etiqueta As String
@@ -428,6 +428,7 @@ Public Class Parque
         Etiqueta = Etiqueta.Replace("%cilindro%", Cilindro)
         Etiqueta = Etiqueta.Replace("%fecha_actual%", Date.Now.ToString("dd/MM/yy HH:mm"))
         Etiqueta = Etiqueta.Replace("%fabricacion%", FabricacionCorto.ToString)
+        Etiqueta = Etiqueta.Replace("%puesto%", Puesto)
 
         'Grabo archivo
         st = File.Open(Archivo, FileMode.Create, FileAccess.Write, FileShare.None)
