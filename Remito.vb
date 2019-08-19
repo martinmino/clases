@@ -487,7 +487,7 @@ Public Class Remito
             dr = dt.Rows(0)
 
             If Not (IsDBNull(dr(0)) OrElse IsDBNull(dr(1))) Then
-                flg = CInt(dr(1)) >= CInt(dr(0))
+                flg = CDbl(dr(1)) >= CDbl(dr(0))
             End If
 
             da.Dispose() : da = Nothing
