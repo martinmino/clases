@@ -22,6 +22,9 @@ Public Class Parque
     Public Event CambioArticulo(ByVal sender As Object, ByVal e As CambioArticuloEventArgs)
     Public Event CambioVencimiento(ByVal sender As Object, ByVal e As CambioVencimientoEvenArgs)
 
+    Private bpc As Cliente = Nothing
+    Private bpa As Sucursal = Nothing
+
     'NEW
     Public Sub New(ByVal cn As OracleConnection)
         Me.cn = cn
@@ -519,6 +522,9 @@ Public Class Parque
         dr("nromanga_0") = 0
         dt1.Rows.Add(dr)
 
+        bpc = Nothing
+        bpa = Nothing
+
     End Sub
     Private Sub SetArticulo(ByVal Codigo As String)
 
@@ -679,6 +685,9 @@ Public Class Parque
             Return False
 
         End Try
+
+        bpc = Nothing
+        bpa = Nothing
 
     End Function
     Private Function NuevoNumeroSerie() As String
@@ -1052,12 +1061,24 @@ Public Class Parque
     End Property
     Public ReadOnly Property Cliente() As Cliente
         Get
-            Dim dr As DataRow = dt1.Rows(0)
-            Dim bpc As New Cliente(cn)
-            bpc.Abrir(dr("bpcnum_0").ToString)
+            If bpc Is Nothing Then
+                bpc = New Cliente(cn)
+                bpc.Abrir(Me.ClienteNumero)
+            End If
+
             Return bpc
         End Get
     End Property
+    Public ReadOnly Property Sucursal() As Sucursal
+        Get
+            If bpa Is Nothing Then
+                bpa = bpc.Sucursal(Me.SucursalNumero)
+            End If
+
+            Return bpa
+        End Get
+    End Property
+
     Public Property ClienteNumero() As String
         Get
             Dim dr As DataRow = dt1.Rows(0)
