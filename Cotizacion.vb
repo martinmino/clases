@@ -763,12 +763,12 @@ Public Class Cotizacion
             Case "MON"
                 If Not Me.H Then _Errores.Add("La sociedad MON solo se puede usar en H")
 
-            Case "LIA"
+            Case "SCH"
                 If bpc.RegimenImpuesto = "RI" OrElse bpc.RegimenImpuesto = "RIE" Then
-                    _Errores.Add("La sociedad LIA no puede usarse con clientes RI")
+                    _Errores.Add("La sociedad SCH no puede usarse con clientes RI")
                 End If
 
-            Case "GRU"
+            Case "GRU", "LIA"
                 _Errores.Add("No se puede usar la sociedad " & Me.SociedadCodigo)
 
         End Select
@@ -822,7 +822,7 @@ Public Class Cotizacion
             _Errores.Add("Condición de pago no permitida para pedidos")
         End If
 
-        If SociedadCodigo = "LIA" And PrecioTotalII > IMPORTE_MAXIMO_LIA Then
+        If SociedadCodigo = "SCH" And PrecioTotalII > IMPORTE_MAXIMO_LIA Then
             txt = "No se pude facturar más de {0} en sociedad {1}"
             txt = txt.Replace("{0}", IMPORTE_MAXIMO_LIA.ToString("N2"))
             txt = txt.Replace("{1}", SociedadCodigo)
