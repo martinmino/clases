@@ -761,7 +761,7 @@ Public Class Cliente
         'daAbonados
         Sql = "SELECT conenddat_0 "
         Sql &= "FROM contserv "
-        Sql &= "WHERE fddflg_0 = 1 AND rsiflg_0 = 1 AND conbpc_0 = :conbpc_0 AND conenddat_0 >= to_date(:dat_0, 'dd/mm/yyyy') "
+        Sql &= "WHERE fddflg_0 <> 2 AND rsiflg_0 <> 2 AND conbpc_0 = :conbpc_0 AND conenddat_0 >= to_date(:dat_0, 'dd/mm/yyyy') "
         Sql &= "ORDER BY conenddat_0"
 
         da = New OracleDataAdapter(Sql, cn)
@@ -1167,7 +1167,7 @@ Public Class Cliente
             dr.EndEdit()
         End Set
     End Property
-    Public ReadOnly Property ContratoActivo() As Boolean
+    Public ReadOnly Property ContratoActivo(ByVal Fecha As Date) As Boolean
         Get
             'Función que indica si el cliente tiene un contrato de servicio vigente
             Dim Sql As String
@@ -1177,15 +1177,16 @@ Public Class Cliente
             'daAbonados
             Sql = "SELECT connum_0 " & _
                   "FROM contserv " & _
-                  "WHERE fddflg_0 = 1 AND rsiflg_0 = 1 AND conbpc_0 = :p1 AND " & _
-                  "constrdat_0 <= to_date(:p2, 'dd/mm/yyyy') AND conenddat_0 >= to_date(:p3, 'dd/mm/yyyy')"
+                  "WHERE fddflg_0 <> 2 AND " & _
+                  "      rsiflg_0 <> 2 AND " & _
+                  "      conbpc_0 = :p1 AND " & _
+                  "      :p2 between constrdat_0 and conenddat_0"
 
             da1 = New OracleDataAdapter(Sql, cn)
 
             With da1.SelectCommand.Parameters
                 .Add("p1", OracleType.VarChar).Value = Codigo
-                .Add("p2", OracleType.VarChar).Value = Date.Today.ToShortDateString
-                .Add("p3", OracleType.VarChar).Value = Date.Today.ToShortDateString
+                .Add("p2", OracleType.DateTime).Value = Fecha
             End With
 
             dt1 = New DataTable

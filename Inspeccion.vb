@@ -183,36 +183,195 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Luz() As Boolean
+    Public Property Observaciones() As String
         Get
-            Return CBool(IIf(CInt(dr("luz_0")) = 2, True, False))
+            Return dr("obs_0").ToString.Trim
         End Get
-        Set(ByVal value As Boolean)
+        Set(ByVal value As String)
             dr.BeginEdit()
-            dr("luz_0") = IIf(value, 2, 1)
+            dr("obs_0") = IIf(value.Trim = "", " ", value.Trim)
             dr.EndEdit()
         End Set
     End Property
-    Public Property Cartel() As Boolean
+    'INSPECCION PUESTO SECTOR
+    '--GABINETES Y BALIZAS
+    Public Property Balizas() As Integer
         Get
-            Return CBool(IIf(CInt(dr("cartel_0")) = 2, True, False))
+            If IsDBNull(dr("balizas_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("balizas_0"))
+            End If
+
         End Get
-        Set(ByVal value As Boolean)
+        Set(ByVal value As Integer)
             dr.BeginEdit()
-            dr("cartel_0") = IIf(value, 2, 1)
+            dr("balizas_0") = value
             dr.EndEdit()
         End Set
     End Property
-    Public Property Cinta() As Boolean
+    Public Property Gabinetes() As Integer
         Get
-            Return CBool(IIf(CInt(dr("cinta_0")) = 2, True, False))
+            If IsDBNull(dr("gabinetes_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("gabinetes_0"))
+            End If
         End Get
-        Set(ByVal value As Boolean)
+        Set(ByVal value As Integer)
             dr.BeginEdit()
-            dr("cinta_0") = IIf(value, 2, 1)
+            dr("gabinetes_0") = value
             dr.EndEdit()
         End Set
     End Property
+
+    '--CARTELES
+    Public Property CartelSalida() As Integer
+        Get
+            If IsDBNull(dr("cartel_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("cartel_0"))
+            End If
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("cartel_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property CartelSalidaEmergencia() As Integer
+        Get
+            If IsDBNull(dr("emergencia_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("emergencia_0"))
+            End If
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("emergencia_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property CartelEscaleras() As Integer
+        Get
+            If IsDBNull(dr("escalera_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("escalera_0"))
+            End If
+
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("escalera_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property CartelRiesgoElectrico() As Integer
+        Get
+            If IsDBNull(dr("riesgo_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("riesgo_0"))
+            End If
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("riesgo_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property CartelAscensor() As Integer
+        Get
+            If IsDBNull(dr("ascensor_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("ascensor_0"))
+            End If
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("ascensor_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property CartelAltura() As Integer
+        Get
+            If IsDBNull(dr("altura_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("altura_0"))
+            End If
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("altura_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    '--OTROS ACCESORIOS
+    Public Property Baldes() As Integer
+        Get
+            If IsDBNull(dr("baldes_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("baldes_0"))
+            End If
+
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("baldes_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property Martillos() As Integer
+        Get
+            If IsDBNull(dr("martillos_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("martillos_0"))
+            End If
+
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("martillos_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property Luces() As Integer
+        Get
+            If IsDBNull(dr("luz_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("luz_0"))
+            End If
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("luz_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property Cinta() As Integer
+        Get
+            If IsDBNull(dr("cinta_0")) Then
+                Return 0
+            Else
+                Return CInt(dr("cinta_0"))
+            End If
+        End Get
+        Set(ByVal value As Integer)
+            dr.BeginEdit()
+            dr("cinta_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+
+    'INSPECCION PUESTO EXTINTOR
     Public Property Equipo() As String
         Get
             Return dr("equipo_0").ToString
@@ -423,6 +582,7 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
+    'INSPECCION SECTOR HIDRANTE
     Public Property Valvula() As Boolean
         Get
             Return CBool(IIf(CInt(dr("valvula_0")) = 2, True, False))
@@ -495,15 +655,5 @@ Public Class Inspeccion
             dr.EndEdit()
         End Set
     End Property
-    Public Property Observaciones() As String
-        Get
-            Return dr("obs_0").ToString.Trim
-        End Get
-        Set(ByVal value As String)
-            dr.BeginEdit()
-            dr("obs_0") = IIf(value.Trim = "", " ", value.Trim)
-            dr.EndEdit()
-        End Set
-    End Property
-
+    
 End Class

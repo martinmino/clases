@@ -81,6 +81,7 @@
     <Compile Include="Cliente.vb" />
     <Compile Include="ComentariosVencimientos.vb" />
     <Compile Include="Comision.vb" />
+    <Compile Include="ComisionAgua.vb" />
     <Compile Include="CondicionPago.vb" />
     <Compile Include="ContratoEventArgs.vb" />
     <Compile Include="Contratos.vb" />
@@ -96,6 +97,7 @@
     <Compile Include="Expreso.vb" />
     <Compile Include="Factura.vb" />
     <Compile Include="Feriados.vb" />
+    <Compile Include="Foto.vb" />
     <Compile Include="Impresora.vb" />
     <Compile Include="Impuesto.vb" />
     <Compile Include="Inspeccion.vb" />

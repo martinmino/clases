@@ -647,6 +647,9 @@ Public Class Parque
         da2.SelectCommand.Parameters("macnum_0").Value = Serie
         da4.SelectCommand.Parameters("macnum_0").Value = Serie
 
+        bpc = Nothing
+        bpa = Nothing
+
         If dt1 Is Nothing Then
             dt1 = New DataTable
             dt2 = New DataTable
@@ -685,9 +688,6 @@ Public Class Parque
             Return False
 
         End Try
-
-        bpc = Nothing
-        bpa = Nothing
 
     End Function
     Private Function NuevoNumeroSerie() As String
