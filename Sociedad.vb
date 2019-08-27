@@ -104,6 +104,8 @@ Public Class Sociedad
                     Return "G01"
                 Case "LIA"
                     Return "L01"
+                Case "SCH"
+                    Return "S01"
                 Case Else
                     Return " "
             End Select
@@ -120,6 +122,8 @@ Public Class Sociedad
                     Return "G01"
                 Case "LIA"
                     Return "L01"
+                Case "SCH"
+                    Return "S01"
                 Case Else
                     Return " "
             End Select

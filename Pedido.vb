@@ -973,6 +973,18 @@ Public Class Pedido
             dr.EndEdit()
         End Set
     End Property
+    Public Property PresupuestoNumero() As String
+        Get
+            Dim dr As DataRow = dth.Rows(0)
+            Return dr("sqhnum_0").ToString
+        End Get
+        Set(ByVal value As String)
+            Dim dr As DataRow = dth.Rows(0)
+            dr.BeginEdit()
+            dr("sqhnum_0") = If(value.Trim = "", " ", value)
+            dr.EndEdit()
+        End Set
+    End Property
     Public Property Sector() As String
         Get
             Dim dr As DataRow = dth.Rows(0)

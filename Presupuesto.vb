@@ -224,8 +224,8 @@ Public Class Presupuesto
         dr("XDETDESC_0") = 0
         dr("licitatyp_0") = ctz.TipoLicitacion
         dr("licitanum_0") = IIf(ctz.NumeroLicitacion = "", " ", ctz.NumeroLicitacion)
-
         dr("tcambio_0") = 0
+        dr("comi_0") = 0
 
         dt1.Rows.Add(dr)
 
@@ -697,6 +697,20 @@ Public Class Presupuesto
             End If
         End Set
     End Property
+    Public ReadOnly Property TotalAI() As Double
+        Get
+            Dim dr As DataRow
+            Dim x As Double
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                x = CDbl(dr("quoinvnot_0"))
+            End If
+
+            Return x
+        End Get
+
+    End Property
     Public ReadOnly Property TotalII() As Double
         Get
             Dim dr As DataRow
@@ -972,6 +986,26 @@ Public Class Presupuesto
 
             dr.BeginEdit()
             dr("tcambio_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property Comision() As Double
+        Get
+            Dim i As Double = 0
+
+            If dt1.Rows.Count > 0 Then
+                Dim dr As DataRow = dt1.Rows(0)
+                i = CDbl(dr("comi_0"))
+            End If
+
+            Return i
+        End Get
+        Set(ByVal value As Double)
+            If dt1.Rows.Count = 0 Then Exit Property
+            Dim dr As DataRow = dt1.Rows(0)
+
+            dr.BeginEdit()
+            dr("comi_0") = value
             dr.EndEdit()
         End Set
     End Property
