@@ -70,6 +70,14 @@ Public Class Inspeccion
         dr("vidrio_0") = 1
         dr("llave_0") = 1
         dr("obs_0") = " "
+        dr("baliza_0") = 0
+        dr("gabinetes_0") = 0
+        dr("emergencia_0") = 0
+        dr("escalera_0") = 0
+        dr("riesgo_0") = 0
+        dr("ascensor_0") = 0
+        dr("altura2_0") = 0
+
         dt.Rows.Add(dr)
 
     End Function
