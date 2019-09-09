@@ -633,9 +633,9 @@ Public Class Intervencion
         End With
 
         With eMail
-            .Remitente("nfreyre@matafuegosgeorgia.com", "Matafuegos Georgia")
-            .AgregarDestinatario("contados@matafuegosgeorgia.com", True)
-            .ResponderA("contados@matafuegosgeorgia.com")
+            .Remitente("nfreyre@georgia.com.ar", "Matafuegos Georgia")
+            .AgregarDestinatario("contados@georgia.com.ar", True)
+            .ResponderA("contados@georgia.com.ar")
             .AgregarDestinatario(Me.Cliente.MailFC)
 
             .Asunto = "Entrega de Recargas"
@@ -747,7 +747,7 @@ Public Class Intervencion
                 '.AgregarDestinatarioCopia("ioeyen@matafuegosgeorgia.com")
                 .AgregarDestinatario(rep.Mail.ToString)
                 .AgregarDestinatario(rep.Analista.Mail.ToString)
-                .AgregarDestinatario("glorenzo@matafuegosgeorgia.com")
+                .AgregarDestinatario("glorenzo@georgia.com.ar")
                 .Asunto = "Intervencion a Resolver"
                 .EsHtml = True
                 .Cuerpo = txt
