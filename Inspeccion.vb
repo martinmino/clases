@@ -137,7 +137,7 @@ Public Class Inspeccion
         End Get
         Set(ByVal value As String)
             dr.BeginEdit()
-            dr("itn_0") = value
+            dr("itn_0") = If(value.Trim = "", " ", value)
             dr.EndEdit()
         End Set
     End Property
@@ -177,7 +177,7 @@ Public Class Inspeccion
         End Get
         Set(ByVal value As String)
             dr.BeginEdit()
-            dr("nro_0") = value
+            dr("nro_0") = If(value.Trim = "", " ", value)
             dr.EndEdit()
         End Set
     End Property
@@ -386,7 +386,7 @@ Public Class Inspeccion
         End Get
         Set(ByVal value As String)
             dr.BeginEdit()
-            dr("equipo_0") = value
+            dr("equipo_0") = If(value.Trim = "", " ", value)
             dr.EndEdit()
         End Set
     End Property
@@ -396,7 +396,7 @@ Public Class Inspeccion
         End Get
         Set(ByVal value As String)
             dr.BeginEdit()
-            dr("agente_0") = value
+            dr("agente_0") = If(value.Trim = "", " ", value)
             dr.EndEdit()
         End Set
     End Property
@@ -406,7 +406,7 @@ Public Class Inspeccion
         End Get
         Set(ByVal value As String)
             dr.BeginEdit()
-            dr("capacidad_0") = value
+            dr("capacidad_0") = If(value.Trim = "", " ", value)
             dr.EndEdit()
         End Set
     End Property
@@ -416,7 +416,7 @@ Public Class Inspeccion
         End Get
         Set(ByVal value As String)
             dr.BeginEdit()
-            dr("cilindro_0") = value
+            dr("cilindro_0") = If(value.Trim = "", " ", value)
             dr.EndEdit()
         End Set
     End Property
@@ -647,7 +647,7 @@ Public Class Inspeccion
         End Get
         Set(ByVal value As String)
             dr.BeginEdit()
-            dr("nombre_0") = value
+            dr("nombre_0") = If(value.Trim = "", " ", value)
             dr.EndEdit()
         End Set
     End Property
