@@ -1127,6 +1127,7 @@ Public Class Parque
 
             dr.BeginEdit()
             dr("ynrocil_0") = EsNumerico(value)
+            If dr("ynrocil_0").ToString = "" Then dr("ynrocil_0") = " "
             dr.EndEdit()
         End Set
     End Property
@@ -1233,6 +1234,7 @@ Public Class Parque
     End Property
     Public ReadOnly Property FrecuenciaPH() As Integer
         Get
+            Dim s As String = Me.Serie
             Return CInt(dt3.Rows(1).Item("ydayfreq_0"))
         End Get
     End Property
@@ -1348,7 +1350,12 @@ Public Class Parque
                 Return value
             End If
         Next
-        Return (CLng(value)).ToString
+
+        If value = "" Then
+            Return ""
+        Else
+            Return (CLng(value)).ToString
+        End If
 
     End Function
 End Class

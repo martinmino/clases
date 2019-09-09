@@ -741,27 +741,8 @@ Public Class Remito
             Catch ex As Exception
             End Try
         Else
-            txt &= "<p>" & Me.Cliente.Nombre & "</p> "
-            txt &= "<p>Me comunico desde Matafuegos Georgia para notificarle que el pedido esta listo para ser retirado<strong>, "
-            txt &= "</strong>para lo cual deber&aacute; anunciarse en Manuel A. Rodr&iacute;guez 2838, donde le har&aacute;n entrega "
-            txt &= "de su documentaci&oacute;n para&nbsp;retirar por nuestro dep&oacute;sito de lunes a viernes, en el&nbsp; "
-            txt &= "<strong>horario de 9 a 12.30 y de 14 a 16.30 hs</strong>.</p> "
-            txt &= "<p>Cordialmente,</p> "
-            txt &= "<p>{vendedor}</p> "
-            txt &= "<p>Matafuegos Georgia</p> "
-
-            'Reemplazo de marcas
-            'txt = txt.Replace("{fecha}", Me..ToString("dd/MM/yyyy"))
-            txt = txt.Replace("{itn}", Me.Numero)
-            If rep.Codigo = "17" Then
-                txt = txt.Replace("{vendedor}", rep.Analista.Nombre.ToUpper)
-                txt = txt.Replace("{interno}", "")
-            Else
-                txt = txt.Replace("{vendedor}", rep.Nombre.ToUpper)
-                txt = txt.Replace("{interno}", rep.Interno)
-            End If
-
             Dim rpt As New ReportDocument
+
             With rpt
                 .Load(RPTX3 & "XFACT_ELEC.rpt") 'Reporte normal
                 .SetDatabaseLogon(DB_USR, DB_PWD)
@@ -775,23 +756,39 @@ Public Class Remito
 
             Try
                 With eMail
+                    .Nuevo()
                     .Remitente(rep.Mail, rep.Nombre)
                     .AgregarDestinatario(Me.Cliente.MailFC)
                     .AgregarDestinatarioCopia(rep.Mail)
                     .Asunto = "Aviso de pedido listo"
                     .EsHtml = True
-                    .Cuerpo = txt
+                    .CuerpoDesdeArchivo("plantillas\aviso-pedido-listo.html")
+
+                    .Cuerpo = .Cuerpo.Replace("{CLIENTE}", Me.Cliente.Nombre)
+                    If rep.Codigo = "17" Then
+                        .Cuerpo = .Cuerpo.Replace("{VENDEDOR}", rep.Analista.Nombre.ToUpper)
+                        .Cuerpo = .Cuerpo.Replace("{INTERNO}", "")
+                        .Cuerpo = .Cuerpo.Replace("{MAIL}", "info@georgia.com.ar")
+                    Else
+                        .Cuerpo = .Cuerpo.Replace("{VENDEDOR}", rep.Nombre.ToUpper)
+                        .Cuerpo = .Cuerpo.Replace("{INTERNO}", rep.Interno)
+                        .Cuerpo = .Cuerpo.Replace("{MAIL}", rep.Mail)
+                    End If
+
                     .AdjuntarArchivo(sih.Numero & ".pdf")
                     If .CantidadTo > 0 Then .Enviar(True)
                 End With
 
             Catch ex As Exception
             End Try
+
             Try
                 File.Delete(sih.Numero & ".pdf")
 
             Catch ex As Exception
             End Try
+
         End If
     End Sub
+
 End Class
