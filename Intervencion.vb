@@ -662,34 +662,35 @@ Public Class Intervencion
         Dim eMail As New CorreoElectronico
         Dim sih As New Factura(cn)
         Dim rep As New Vendedor(cn)
+        Dim sr As New StreamReader("plantillas\entrega-de-recargas.html")
 
         'Salgo si no encuentro la factura
         If Not sih.AbrirPorSolicitud(Me.SolicitudAsociada.Numero) Then
             Exit Sub
         End If
 
-        txt &= "<p>" & Me.Cliente.Nombre & "</p>" & vbCrLf
-        txt &= "<p>Me comunico desde Matafuegos Georgia para notificarle que los equipos que nos trajo el día {fecha}, ingresados con intervención {itn} ya se encuentran listos para ser retirados en nuestra fábrica, sita en Manuel A. Rodriguez 2838 (entre Trelles y Juan A. García) en Paternal, Capital Federal, de 9 a 12:30 o de 14 a 15 Hs.</p>"
+        txt = sr.ReadToEnd
+        txt = txt.Replace("{cliente}", Me.Cliente.Nombre)
+        txt = txt.Replace("{fecha}", Me.FechaCreacion.ToString("dd/MM/yyyy"))
+        txt = txt.Replace("{itn}", Me.Numero)
+
         If ExisteConsumo("601003") Then
             'Esta linea se agrega si la intervencion contiene consumo de sustituto
-            txt &= "<p>Por favor, no olvide traer con usted los matafuegos de préstamo que le entregamos cuando nos dejó sus equipos.</p>"
+            txt = txt.Replace("<!--PRESTAMOS-->", "Por favor, no olvide traer con usted los matafuegos de préstamo que le entregamos cuando nos dejó sus equipos.")
         End If
-        txt &= "<p>Tenga presente que cuenta con 30 días corridos, a partir del día de hoy, para realizar el retiro. Pasado este período, los equipos ya no podrán ser reclamados sin excepción.</p>"
-        txt &= "<p>Cordialmente,</p>" & vbCrLf
-        txt &= "<p>{vendedor}<br>Matafuegos Georgia<br>4585-4400 int. {interno}</p>"
 
         rep = Me.Cliente.Vendedor 'Obtengo vendedor
 
-        'Reemplazo de marcas
-        txt = txt.Replace("{fecha}", Me.FechaCreacion.ToString("dd/MM/yyyy"))
-        txt = txt.Replace("{itn}", Me.Numero)
         If rep.Codigo = "17" Then
             txt = txt.Replace("{vendedor}", rep.Analista.Nombre.ToUpper)
             txt = txt.Replace("{interno}", "")
+            txt = txt.Replace("{mail}", rep.Mail)
         Else
             txt = txt.Replace("{vendedor}", rep.Nombre.ToUpper)
             txt = txt.Replace("{interno}", rep.Interno)
+            txt = txt.Replace("{mail}", rep.Mail)
         End If
+
         Dim rpt As New ReportDocument
         With rpt
             .Load(RPTX3 & "XFACT_ELEC.rpt") 'Reporte normal
