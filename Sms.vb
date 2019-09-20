@@ -88,6 +88,12 @@ Public Class Sms
             Return _Tos
         End Get
         Set(ByVal value As String)
+            'Quito espacios
+            value = value.Replace(" ", "")
+            'cambio 15 x 11
+            If Strings.Left(value, 2) = "15" Then
+                value = "11" & value.Substring(2)
+            End If
             _Tos = value
         End Set
     End Property
