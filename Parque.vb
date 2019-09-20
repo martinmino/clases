@@ -361,7 +361,7 @@ Public Class Parque
         Dim sw As StreamWriter
 
         'Cargo modelo de etiqueta segun tipo de parque
-        st = File.Open(Path & "\rechazo.txt", FileMode.Open, FileAccess.Read, FileShare.Read)
+        st = File.Open(Path & "\PLANTILLAS\\rechazo.txt", FileMode.Open, FileAccess.Read, FileShare.Read)
 
         sr = New StreamReader(st)
         Etiqueta = sr.ReadToEnd
@@ -415,7 +415,13 @@ Public Class Parque
 
         With Cliente
             Etiqueta = Etiqueta.Replace("%codigo_cliente%", .Codigo)
-            Etiqueta = Etiqueta.Replace("%nombre_cliente%", .Nombre)
+
+            If .Nombre.Length > 13 Then
+                Etiqueta = Etiqueta.Replace("%nombre_cliente%", .Nombre.Substring(0, 13))
+            Else
+                Etiqueta = Etiqueta.Replace("%nombre_cliente%", .Nombre)
+            End If
+
         End With
 
         If EsManguera Then
