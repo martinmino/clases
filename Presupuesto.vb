@@ -51,7 +51,7 @@ Public Class Presupuesto
 
         dr = dt1.NewRow
         dr("sqhnum_0") = "0"
-        dr("salfcy_0") = cpy.PlantaVenta
+        dr("salfcy_0") = cpy.PlantaVenta(ctz.SaleDesdeMunro)
         dr("bpcord_0") = bpc.Cliente.Codigo
         dr("cusquoref_0") = " "
         dr("quodat_0") = Date.Today
@@ -313,7 +313,7 @@ Public Class Presupuesto
         dr = dt2.NewRow
         dr("sqhnum_0") = CInt(dt1.Rows(0).Item("sqhnum_0"))
         dr("sqdlin_0") = linea
-        dr("salfcy_0") = ctz.Sociedad.PlantaVenta
+        dr("salfcy_0") = ctz.Sociedad.PlantaVenta(ctz.SaleDesdeMunro)
         dr("bpcord_0") = ctz.ClienteCodigo
         dr("quodat_0") = Date.Today
         dr("daylti_0") = "5"

@@ -67,7 +67,7 @@ Public Class Pedido
         If bpc.Vendedor.Codigo = "28" AndAlso cpy.Codigo = "GRU" Then
             dr("salfcy_0") = "G02"
         Else
-            dr("salfcy_0") = cpy.PlantaVenta
+            dr("salfcy_0") = cpy.PlantaVenta(ctz.SaleDesdeMunro)
         End If
         dr("bpcord_0") = bpc.Codigo
         dr("bpcinv_0") = bpc.TerceroFactura
@@ -259,7 +259,6 @@ Public Class Pedido
         dr("xsector_0") = EnvioAutomaticoSectorPedido(ctz)
         dr("xitnrecha_0") = ctz.IntervencionRechazo
         dr("xvtaantes_0") = IIf(ctz.AVentasAntesEntregar, 2, 1)
-
         dr("tcambio_0") = 0
 
         dth.Rows.Add(dr)
@@ -291,7 +290,10 @@ Public Class Pedido
                 dap.Update(dtp)
 
                 'Comisiones
-                CargarComisiones()
+                Try
+                    CargarComisiones()
+                Catch ex As Exception
+                End Try
 
             End If
             dah.Update(dth)
@@ -366,7 +368,7 @@ Public Class Pedido
         dr("soplin_0") = linea
         dr("soqseq_0") = linea
         dr("sohcat_0") = 1
-        dr("salfcy_0") = ctz.Sociedad.PlantaVenta
+        dr("salfcy_0") = ctz.Sociedad.PlantaVenta(ctz.SaleDesdeMunro)
         dr("bpcord_0") = ctz.ClienteCodigo
         dr("bpaadd_0") = ctz.SucursalCodigo
         dr("itmref_0") = itm.Codigo
@@ -469,7 +471,7 @@ Public Class Pedido
         dr("cndnam_0") = " "
         dr("bpcinv_0") = ctz.Cliente.TerceroFactura
         dr("stofcy_0") = ctz.Sociedad.PlantaStock
-        dr("salfcy_0") = ctz.Sociedad.PlantaVenta
+        dr("salfcy_0") = ctz.Sociedad.PlantaVenta(ctz.SaleDesdeMunro)
         dr("itmref_0") = itm.Codigo
         dr("itmdes1_0") = itm.Descripcion
         dr("itmdes_0") = itm.Descripcion
@@ -745,6 +747,8 @@ Public Class Pedido
         Dim drp As DataRow
         Dim comi As New Comision(cn)
         Dim itm As New Articulo(cn)
+
+        If DB_USR <> "GEOPROD" Then Exit Sub
 
         sql = "SELECT * FROM xvcrcom WHERE vcrnum_0 = :vcrnum"
         da = New OracleDataAdapter(sql, cn)

@@ -93,11 +93,16 @@ Public Class Sociedad
     End Sub
 
     'PROPERTY
-    Public ReadOnly Property PlantaVenta() As String
+    Public ReadOnly Property PlantaVenta(ByVal SaleDesdeMunro As Boolean) As String
         Get
             Select Case Codigo
                 Case "DNY"
-                    Return "D02"
+                    If SaleDesdeMunro Then
+                        Return "D04"
+                    Else
+                        Return "D02"
+                    End If
+
                 Case "MON"
                     Return "M01"
                 Case "GRU"

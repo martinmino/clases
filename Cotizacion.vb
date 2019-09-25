@@ -108,6 +108,7 @@ Public Class Cotizacion
         dr("xitnrecha_0") = " "
         dr("xvtaantes_0") = 0
         dr("tcambio_0") = 0 'tar.CotizacionDolar
+        dr("xmunro_0") = 1
         dth.Rows.Add(dr)
 
         bpc = Nothing
@@ -377,6 +378,7 @@ Public Class Cotizacion
                 dr("yhhasta1_0") = bpa.TurnoMananaHasta
                 dr("yhdesde2_0") = bpa.TurnoTardeDesde
                 dr("yhhasta2_0") = bpa.TurnoTardeHasta
+                dr("xmunro_0") = IIf(bpa.SaleDesdeMunro, 2, 1)
             Else
                 dr("bpaadd_0") = " "
                 'dr("mdl_0") = "0"
@@ -384,6 +386,7 @@ Public Class Cotizacion
                 dr("yhdesde2_0") = " "
                 dr("yhhasta1_0") = " "
                 dr("yhhasta2_0") = " "
+                dr("xmunro_0") = 0
             End If
             dr.EndEdit()
         End If
@@ -1540,6 +1543,18 @@ Public Class Cotizacion
                 dr.EndEdit()
             End If
 
+        End Set
+    End Property
+    Public Property SaleDesdeMunro() As Boolean
+        Get
+            Dim dr As DataRow = dth.Rows(0)
+            Return CInt(dr("xmunro_0")) = 2
+        End Get
+        Set(ByVal value As Boolean)
+            Dim dr As DataRow = dth.Rows(0)
+            dr.BeginEdit()
+            dr("xmunro_0") = IIf(value, 2, 1)
+            dr.EndEdit()
         End Set
     End Property
     Shared Sub Exportar(ByVal cn As OracleConnection, ByVal Archivo As String)

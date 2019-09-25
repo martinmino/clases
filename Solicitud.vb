@@ -407,10 +407,10 @@ Public Class Solicitud
         dt.Clear()
         dr = dt.NewRow
 
-        dr("srenum_0") = NuevoNumero(cpy.PlantaVenta, False)
+        dr("srenum_0") = NuevoNumero(cpy.PlantaVenta(False), False)
         dr("srenumbpc_0") = OrdenStr(bpc.Codigo)
         dr("sreinumbpc_0") = OrdenInt(bpc.Codigo)
-        dr("salfcy_0") = cpy.PlantaVenta
+        dr("salfcy_0") = cpy.PlantaVenta(False)
         dr("sredoo_0") = " "
         dr("srebpc_0") = bpc.Codigo
         dr("srebpaadd_0") = " "
