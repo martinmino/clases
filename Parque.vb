@@ -984,7 +984,7 @@ Public Class Parque
             If dt2.Rows.Count >= 1 Then
                 Return CDate(dt2.Rows(0).Item("datnext_0"))
             Else
-                Return #12/31/1599#
+                Return Me.FabricacionLargo.AddYears(1)
             End If
         End Get
         Set(ByVal value As Date)
@@ -1020,7 +1020,7 @@ Public Class Parque
             If dt2.Rows.Count > 1 Then
                 Return CDate(dt2.Rows(1).Item("datnext_0"))
             Else
-                Return #12/31/1599#
+                Return Me.FabricacionLargo.AddYears(5)
             End If
 
         End Get
