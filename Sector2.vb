@@ -73,10 +73,9 @@ Public Class Sector2
     Public Sub Eliminar()
         dr.Delete()
     End Sub
-
     Public Sub Grabar()
         If dr.RowState <> DataRowState.Deleted Then
-            If CInt(dr("id_0")) = 0 Then
+            If IsDBNull(dr("id_0")) OrElse CInt(dr("id_0")) = 0 Then
                 dr.BeginEdit()
                 dr("id_0") = SiguienteId()
                 dr.EndEdit()
@@ -102,7 +101,6 @@ Public Class Sector2
         End If
 
     End Function
-
     Public ReadOnly Property Id() As Integer
         Get
             Return CInt(dr("id_0"))
