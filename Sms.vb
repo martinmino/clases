@@ -90,6 +90,7 @@ Public Class Sms
         Set(ByVal value As String)
             'Quito espacios
             value = value.Replace(" ", "")
+            value = value.Replace("-", "")
             'cambio 15 x 11
             If Strings.Left(value, 2) = "15" Then
                 value = "11" & value.Substring(2)
