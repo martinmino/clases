@@ -673,6 +673,7 @@ Public Class Intervencion
         txt = txt.Replace("{cliente}", Me.Cliente.Nombre)
         txt = txt.Replace("{fecha}", Me.FechaCreacion.ToString("dd/MM/yyyy"))
         txt = txt.Replace("{itn}", Me.Numero)
+        txt = txt.Replace("{importe}", sih.ImporteII.ToString("N2"))
 
         If ExisteConsumo("601003") Then
             'Esta linea se agrega si la intervencion contiene consumo de sustituto
