@@ -1,14 +1,17 @@
 ﻿Imports System.Data.OracleClient
 
 Public Class Factura
+
     Private cn As OracleConnection
     Private da1 As OracleDataAdapter
     Private da2 As OracleDataAdapter
     Private da3 As OracleDataAdapter
+    Private da4 As OracleDataAdapter
 
-    Private dt1 As New DataTable
-    Private dt2 As New DataTable
-    Private dt3 As New DataTable
+    Private dt1 As New DataTable    'sinvoice
+    Private dt2 As New DataTable    'sinvoiced
+    Private dt3 As New DataTable    'sinvoicev
+    Private dt4 As New DataTable    'gaccdudate
 
     Public Sub New(ByVal cn As OracleConnection)
         Me.cn = cn
@@ -36,11 +39,16 @@ Public Class Factura
         da3 = New OracleDataAdapter(Sql, cn)
         da3.SelectCommand.Parameters.Add("num_0", OracleType.VarChar)
 
+        Sql = "SELECT * FROM gaccdudate WHERE num_0 = :num_0 AND dudlig_0 = 1"
+        da4 = New OracleDataAdapter(Sql, cn)
+        da4.SelectCommand.Parameters.Add("num_0", OracleType.VarChar)
+
     End Sub
     Public Function Abrir(ByVal Nro As String) As Boolean
         dt1.Clear()
         dt2.Clear()
         dt3.Clear()
+        dt4.Clear()
 
         da1.SelectCommand.Parameters("num_0").Value = Nro
         da2.SelectCommand.Parameters("num_0").Value = Nro
@@ -199,12 +207,22 @@ Public Class Factura
             Return s
         End Get
     End Property
-    Public ReadOnly Property DocOrigen() As String
+    Public ReadOnly Property CbteOrigenNumero() As String
         Get
             Dim dr As DataRow = dt3.Rows(0)
 
             Return dr("sihorinum_0").ToString
 
+        End Get
+    End Property
+    Public ReadOnly Property CbteOrigen() As Factura
+        Get
+            Dim f As New Factura(cn)
+            If f.Abrir(Me.CbteOrigenNumero) Then
+                Return f
+            Else
+                Return Nothing
+            End If
         End Get
     End Property
     Public ReadOnly Property Numero() As String
@@ -326,7 +344,7 @@ Public Class Factura
             Return dr("scuvcr_0").ToString
         End Get
     End Property
-    Public ReadOnly Property tieneRemito() As String
+    Public ReadOnly Property TieneRemito() As String
         Get
             Dim dr As DataRow = dt2.Rows(0)
             Return dr("SIHORINUM_0").ToString
@@ -338,5 +356,144 @@ Public Class Factura
             Return CDate(dr("accdat_0"))
         End Get
     End Property
+    Public ReadOnly Property CantImpuestos() As Integer
+        Get
+            Dim dr As DataRow
+            Dim i As Integer = 0
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                i = CInt(dr("nbrtax_0"))
+            End If
+
+            Return i
+        End Get
+    End Property
+    Public ReadOnly Property TipoImpuesto(ByVal idx As Integer) As String
+        Get
+            Dim dr As DataRow
+            Dim i As String = ""
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                i = dr("tax_" & idx.ToString).ToString
+            End If
+
+            Return i
+        End Get
+    End Property
+    Public ReadOnly Property ImpuestoImporte(ByVal idx As Integer) As Double
+        Get
+            Dim dr As DataRow
+            Dim i As Double = 0
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                i = CDbl(dr("amttax_" & idx.ToString))
+            End If
+
+            Return i
+        End Get
+    End Property
+    Public ReadOnly Property ImpuestoBase(ByVal idx As Integer) As Double
+        Get
+            Dim dr As DataRow
+            Dim i As Double = 0
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                i = CDbl(dr("bastax_" & idx.ToString))
+            End If
+
+            Return i
+        End Get
+    End Property
+    'Propiedades para Factura de Crédito Electrónica
+    Public ReadOnly Property FechaVtoPago() As Date
+        Get
+            Dim dr As DataRow
+
+            If dt4.Rows.Count = 0 Then
+                da4.SelectCommand.Parameters("num_0").Value = Me.Numero
+                da4.Fill(dt4)
+                dr = dt4.Rows(0)
+                Return CDate(dr("duddat_0"))
+            End If
+
+            Return Nothing
+
+        End Get
+    End Property
+    Public ReadOnly Property BancoCodigo() As String
+        Get
+            Dim dr As DataRow
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                Return dr("xbanfce_0").ToString.Trim
+            Else
+                Return ""
+            End If
+
+        End Get
+    End Property
+    Public ReadOnly Property DivisaCodigo() As String
+        Get
+            Dim dr As DataRow
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                Return dr("cur_0").ToString.Trim
+            Else
+                Return ""
+            End If
+
+        End Get
+    End Property
+    Public ReadOnly Property Divisa() As Divisa
+        Get
+            Dim d As Divisa = Nothing
+
+            If Me.DivisaCodigo <> "" Then
+                d = New Divisa(cn)
+                d.Abrir(Me.DivisaCodigo)
+            End If
+
+            Return d
+        End Get
+    End Property
+    Public ReadOnly Property Banco() As Banco
+        Get
+            Dim ban As New Banco(cn)
+            ban.Abrir(Me.BancoCodigo)
+            Return ban
+        End Get
+    End Property
+    Public ReadOnly Property Cotizacion() As Double
+        Get
+            Dim dr As DataRow
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                Return CDbl(dr("ratcur_0"))
+            Else
+                Return 1
+            End If
+        End Get
+    End Property
+    Public ReadOnly Property FCEAnula() As Boolean
+        Get
+            Dim b As Boolean = False
+
+            If dt1.Rows.Count > 0 Then
+                Dim dr As DataRow
+                dr = dt1.Rows(0)
+                b = CBool(IIf(CInt(dr("xanufce_0")) <> 2, False, True))
+            End If
+
+            Return b
+        End Get
+    End Property
+
 
 End Class
