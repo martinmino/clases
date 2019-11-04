@@ -633,9 +633,8 @@ Public Class Intervencion
         End With
 
         With eMail
-            .Remitente("nfreyre@georgia.com.ar", "Matafuegos Georgia")
+            .Remitente("contados@georgia.com.ar", "Georgia Seguridad contra Incendios")
             .AgregarDestinatario("contados@georgia.com.ar", True)
-            .ResponderA("contados@georgia.com.ar")
             .AgregarDestinatario(Me.Cliente.MailFC)
 
             .Asunto = "Entrega de Recargas"
@@ -744,7 +743,7 @@ Public Class Intervencion
 
         Try
             With eMail
-                .Remitente("noreply@matafuegosgeorgia.com", "Matafuegos Georgia")
+                .Remitente("noreply@matafuegosgeorgia.com", "Georgia Seguridad contra Incendios")
                 '.AgregarDestinatario("mbarcudes@matafuegosgeorgia.com")
                 '.AgregarDestinatarioCopia("ioeyen@matafuegosgeorgia.com")
                 .AgregarDestinatario(rep.Mail.ToString)
