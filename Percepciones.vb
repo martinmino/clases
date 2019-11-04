@@ -61,6 +61,8 @@ Public Class Percepciones
             dr("creusr_0") = " "
             dr("upddat_0") = #12/31/1599#
             dr("updusr_0") = " "
+            dr("xfceflg_0") = 0
+            dr("xfcemonto_0") = 0
 
             dt.Rows.Add(dr)
 
@@ -129,4 +131,5 @@ Public Class Percepciones
 
         End Get
     End Property
+
 End Class
