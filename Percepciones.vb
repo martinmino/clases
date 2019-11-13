@@ -7,14 +7,18 @@ Public Class Percepciones
     Private da As OracleDataAdapter
     Private bpc As Cliente
 
-    Public Sub New(ByVal cn As OracleConnection, ByVal bpc As Cliente)
+    Public Sub New(ByVal cn As OracleConnection, ByVal bpc As Cliente, Optional ByVal Tipo As Integer = 1)
         Me.cn = cn
         Me.bpc = bpc
 
         Dim Sql As String
-        Sql = "SELECT * FROM xbprinfo WHERE bprnum_0 = :bprnum"
+        Sql = "SELECT * "
+        Sql &= "FROM xbprinfo "
+        Sql &= "WHERE bprnum_0 = :bprnum and "
+        Sql &= "      bprtyp_0 = :bprtyp"
         da = New OracleDataAdapter(Sql, cn)
         da.SelectCommand.Parameters.Add("bprnum", OracleType.VarChar)
+        da.SelectCommand.Parameters.Add("bprtyp", OracleType.Number)
         da.InsertCommand = New OracleCommandBuilder(da).GetInsertCommand
         da.UpdateCommand = New OracleCommandBuilder(da).GetUpdateCommand
         da.DeleteCommand = New OracleCommandBuilder(da).GetDeleteCommand
@@ -24,6 +28,7 @@ Public Class Percepciones
 
         Try
             da.SelectCommand.Parameters("bprnum").Value = bpc.Codigo
+            da.SelectCommand.Parameters("bprtyp").Value = bpc.Tipo
             da.Fill(dt)
 
         Catch ex As Exception
@@ -93,7 +98,6 @@ Public Class Percepciones
 
         End Try
     End Sub
-
     Public ReadOnly Property Alicuota(ByVal Codigo As String) As Double
         Get
             Dim dr As DataRow
