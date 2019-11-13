@@ -162,6 +162,9 @@ Public Class Inspeccion
         End Set
     End Property
     Public Property Tipo() As Integer
+        '1=Puesto Sector
+        '2=Puesto Extintor
+        '3=Puesto Hidrante
         Get
             Return CInt(dr("tipo_0"))
         End Get
