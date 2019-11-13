@@ -39,6 +39,7 @@ Public Class Puesto2
         dr("agente_0") = " "
         dr("capacidad_0") = " "
         dr("equipo_0") = " "
+        dr("cilindro_0") = " "
         dr("inspeccion_0") = " "
         dt.Rows.Add(dr)
     End Function
@@ -65,7 +66,6 @@ Public Class Puesto2
     Public Sub Eliminar()
         dr.Delete()
     End Sub
-
     Public Sub Grabar()
         If dr.RowState <> DataRowState.Deleted Then
             If CInt(dr("id_0")) = 0 Then
@@ -192,6 +192,16 @@ Public Class Puesto2
             mac.Abrir(Me.EquipoId)
             Return mac
         End Get
+    End Property
+    Public Property Cilindro() As String
+        Get
+            Return dr("cilindro_0").ToString
+        End Get
+        Set(ByVal value As String)
+            dr.BeginEdit()
+            dr("cilindro_0") = value
+            dr.EndEdit()
+        End Set
     End Property
     Public Property UltimaInspeccion() As String
         Get
