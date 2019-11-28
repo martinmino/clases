@@ -720,12 +720,19 @@ Public Class Parque
 
     End Function
     Public Function ExisteCilindro(ByVal Cilindro As String) As Boolean
-        Dim da As New OracleDataAdapter("SELECT * FROM machines WHERE macnum_0 <> :macnum_0 AND bpcnum_0 = :bpcnum_0 AND ynrocil_0 = :ynrocil_0", cn)
+        Dim Sql As String
+        Dim da As OracleDataAdapter
         Dim dt As New DataTable
 
+        Sql = "SELECT * "
+        Sql &= "FROM machines "
+        Sql &= "WHERE macnum_0 <> :macnum_0 AND "
+        Sql &= "      bpcnum_0 = :bpcnum_0 AND "
+        Sql &= "      ynrocil_0 = :ynrocil_0"
+        da = New OracleDataAdapter(Sql, cn)
         da.SelectCommand.Parameters.Add("macnum_0", OracleType.VarChar).Value = Serie
         da.SelectCommand.Parameters.Add("bpcnum_0", OracleType.VarChar).Value = ClienteNumero
-        da.SelectCommand.Parameters.Add("ynrocil_0", OracleType.VarChar).Value = Cilindro
+        da.SelectCommand.Parameters.Add("ynrocil_0", OracleType.VarChar).Value = Cilindro.Trim
 
         Try
             'Recupero los cilindros
