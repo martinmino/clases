@@ -40,6 +40,29 @@ Public Class Camioneta
             Return dr("bptnum_0").ToString
         End Get
     End Property
+    Public Property ChoferInterno() As Boolean
+        Get
+            Dim dr As DataRow
+            Dim f As Boolean = False
+
+            If dt.Rows.Count > 0 Then
+                dr = dt.Rows(0)
+                f = CBool(IIf(CInt(dr("interno")) <> 2, False, True))
+            End If
+
+            Return f
+        End Get
+        Set(ByVal value As Boolean)
+            Dim dr As DataRow
+
+            If dt.Rows.Count > 0 Then
+                dr = dt.Rows(0)
+                dr.BeginEdit()
+                dr("interno") = IIf(value, 2, 1)
+                dr.EndEdit()
+            End If
+        End Set
+    End Property
     Public ReadOnly Property Patente() As String
         Get
             Dim dr As DataRow = dt.Rows(0)
