@@ -47,7 +47,7 @@ Public Class Camioneta
 
             If dt.Rows.Count > 0 Then
                 dr = dt.Rows(0)
-                f = CBool(IIf(CInt(dr("interno")) <> 2, False, True))
+                f = CBool(IIf(CInt(dr("interno_0")) <> 2, False, True))
             End If
 
             Return f
@@ -58,7 +58,7 @@ Public Class Camioneta
             If dt.Rows.Count > 0 Then
                 dr = dt.Rows(0)
                 dr.BeginEdit()
-                dr("interno") = IIf(value, 2, 1)
+                dr("interno_0") = IIf(value, 2, 1)
                 dr.EndEdit()
             End If
         End Set
