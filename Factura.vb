@@ -199,6 +199,20 @@ Public Class Factura
         dr.EndEdit()
 
     End Sub
+    Public ReadOnly Property CAE() As String
+        Get
+            Dim dr As DataRow
+            Dim txt As String = ""
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                txt = dr("xcae_0").ToString.Trim
+            End If
+
+            Return txt
+
+        End Get
+    End Property
     Public ReadOnly Property Sociedad() As Clases.Sociedad
         Get
             Dim dr As DataRow = dt1.Rows(0)

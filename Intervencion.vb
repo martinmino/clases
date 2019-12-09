@@ -668,6 +668,27 @@ Public Class Intervencion
             Exit Sub
         End If
 
+        Try
+            'Verifico que la factura tenga CAE
+            If sih.CAE = "" Then
+                txt = "El usuario {USR} transfirió la intervención " & Me.Numero
+                txt &= vbCrLf & vbCrLf
+                txt &= "La factura asociada " & sih.Numero & " NO tiene CAE"
+                txt &= vbCrLf & vbCrLf
+                txt &= "Mail enviado al clilente, tiene factura adjunta en blanco"
+
+                eMail.Nuevo()
+                eMail.Remitente("info@matafuegosgeorgia.com")
+                eMail.AgregarDestinatarioArchivo("MAILS\sin-cae.txt")
+                eMail.Cuerpo = txt
+                eMail.EsHtml = False
+                eMail.Enviar()
+                Exit Sub
+            End If
+        Catch ex As Exception
+        End Try
+
+
         txt = sr.ReadToEnd
         txt = txt.Replace("{cliente}", Me.Cliente.Nombre)
         txt = txt.Replace("{fecha}", Me.FechaCreacion.ToString("dd/MM/yyyy"))
