@@ -670,8 +670,8 @@ Public Class Intervencion
 
         Try
             'Verifico que la factura tenga CAE
-            If sih.CAE = "" Then
-                txt = "El usuario {USR} transfirió la intervención " & Me.Numero
+            If sih.EsFacturaElectronica AndAlso sih.CAE = "" Then
+                txt = "Se transfirio la intervención " & Me.Numero
                 txt &= vbCrLf & vbCrLf
                 txt &= "La factura asociada " & sih.Numero & " NO tiene CAE"
                 txt &= vbCrLf & vbCrLf
