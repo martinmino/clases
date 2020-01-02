@@ -68,5 +68,14 @@ Public Class Sectores2
             If s.Abrir(dr) Then Me.Add(s)
         Next
     End Sub
+    Public Function BuscarSectorPorId(ByVal id As Integer) As Sector2
+        Dim p As Sector2
+
+        For Each p In Me
+            If p.Id = id Then Return p
+        Next
+
+        Return Nothing
+    End Function
 
 End Class

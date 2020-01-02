@@ -77,6 +77,8 @@ Public Class Inspeccion
         dr("riesgo_0") = 0
         dr("ascensor_0") = 0
         dr("altura2_0") = 0
+        dr("baldes_0") = 0
+        dr("martillos_0") = 0
 
         dt.Rows.Add(dr)
 
@@ -217,7 +219,7 @@ Public Class Inspeccion
         End Get
         Set(ByVal value As Integer)
             dr.BeginEdit()
-            dr("balizas_0") = value
+            dr("baliza_0") = value
             dr.EndEdit()
         End Set
     End Property

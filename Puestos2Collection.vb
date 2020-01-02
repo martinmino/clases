@@ -22,6 +22,23 @@ Public Class Puestos2Collection
         ArmarColeccion(dt)
 
     End Function
+    Public Function Abrir(ByVal idCliente As String, ByVal idSucursal As String) As Boolean
+        Dim da As OracleDataAdapter
+        Dim Sql As String
+        Dim dt As New DataTable
+
+        Sql = "select p.* "
+        Sql &= "from xpuestos2 p inner join "
+        Sql &= "	 xsectores2 s on (p.idsector_0 = s.id_0) "
+        Sql &= "where s.bpcnum_0 = :idCliente and s.fcyitn_0 = :idSucursal"
+        da = New OracleDataAdapter(Sql, cn)
+        da.SelectCommand.Parameters.Add("idCliente", OracleType.Number).Value = idCliente
+        da.SelectCommand.Parameters.Add("idSucursal", OracleType.Number).Value = idSucursal
+        da.Fill(dt)
+
+        ArmarColeccion(dt)
+
+    End Function
     Private Sub ArmarColeccion(ByVal dt As DataTable)
         Me.Clear()
 
