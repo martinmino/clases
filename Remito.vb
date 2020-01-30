@@ -730,7 +730,7 @@ Public Class Remito
             txt &= "<p>Le informamos que el cliente " & Me.Cliente.Nombre & ", tiene un pedido (" & Me.Pedido.Numero & ") listo para retirar </p> "
             Try
                 With eMail
-                    .Remitente("noreply@matafuegosgeorgia.com")
+                    .Remitente("no-responder@georgia.com.ar")
                     .AgregarDestinatario(rep.Mail)
                     .Asunto = "Aviso de pedido listo"
                     .EsHtml = True

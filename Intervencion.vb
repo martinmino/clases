@@ -764,7 +764,7 @@ Public Class Intervencion
 
         Try
             With eMail
-                .Remitente("noreply@matafuegosgeorgia.com", "Georgia Seguridad contra Incendios")
+                .Remitente("no-responder@georgia.com.ar", "Georgia Seguridad contra Incendios")
                 '.AgregarDestinatario("mbarcudes@matafuegosgeorgia.com")
                 '.AgregarDestinatarioCopia("ioeyen@matafuegosgeorgia.com")
                 .AgregarDestinatario(rep.Mail.ToString)

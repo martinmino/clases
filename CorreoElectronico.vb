@@ -117,7 +117,7 @@ Public Class CorreoElectronico
 
         With eMail
             If .To.Count > 0 Or .CC.Count > 0 Or .Bcc.Count > 0 Then
-                If Archivar Then .Bcc.Add("noreply@matafuegosgeorgia.com")
+                If Archivar Then .Bcc.Add("no-responder@georgia.com.ar")
                 smtp.Send(eMail)
             End If
 
