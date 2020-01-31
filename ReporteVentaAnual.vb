@@ -30,7 +30,7 @@ Public Class ReporteVentaAnual
 
         If AnoConsulta = Date.Today.Year Then
             Desde = New Date(Today.Year, 1, 1)
-            Hasta = New Date(Today.Year, Today.Month, 1)
+            Hasta = Today.AddDays(1)
         Else
             Desde = New Date(AnoConsulta, 1, 1)
             Hasta = Desde.AddYears(1)
