@@ -494,7 +494,7 @@ Public Class Presupuesto
 
         EsAdmin = per.AccesoSecundario(73, "V")
 
-        Sql = "select sqh.sqhnum_0, sqh.quodat_0, sqh.bpcord_0, sqh.bpaadd_0, sqh.bpcnam_0, sqh.bpdaddlig_0, bpc.rep_0, sqh.quoinvati_0, sqh.xaprob_0, sqh.xtiposist_0, bpa.xhidrante_0, sqh.xdeteccion_0, sqh.x415_0 "
+        Sql = "select sqh.sqhnum_0, sqh.quodat_0, sqh.bpcord_0, sqh.bpaadd_0, sqh.bpcnam_0, sqh.bpdaddlig_0, bpc.rep_0, sqh.quoinvati_0, sqh.xaprob_0, sqh.xtiposist_0, bpa.xhidrante_0, sqh.xdeteccion_0, sqh.x415_0, sqh.xflgren_0 "
         Sql &= "FROM squote sqh INNER JOIN "
         Sql &= "     bpcustomer bpc ON (sqh.bpcord_0 = bpc.bpcnum_0) INNER JOIN "
         Sql &= "     bpaddress  bpa ON (sqh.bpcord_0 = bpa.bpanum_0 AND sqh.bpaadd_0 = bpa.bpaadd_0) "
