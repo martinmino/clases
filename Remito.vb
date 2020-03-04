@@ -215,28 +215,50 @@ Public Class Remito
                 If CantidadExtintores Mod itmbpc.CantidadPorCaja > 0 Then TotalBultos += 1
 
                 'Cabecera del archivo ZEBRA
+                'txt = "I8,A,001" & vbCrLf
+                'txt &= "Q328,024 " & vbCrLf
+                'txt &= "q831" & vbCrLf
+                'txt &= "rN" & vbCrLf
+                'txt &= "S4" & vbCrLf
+                'txt &= "D7" & vbCrLf
+                'txt &= "ZT" & vbCrLf
+                'txt &= "JF" & vbCrLf
+
                 txt = "I8,A,001" & vbCrLf
-                txt &= "Q328,024 " & vbCrLf
+                txt &= "Q280,024" & vbCrLf
                 txt &= "q831" & vbCrLf
                 txt &= "rN" & vbCrLf
-                txt &= "S4" & vbCrLf
+                txt &= "S3" & vbCrLf
                 txt &= "D7" & vbCrLf
                 txt &= "ZT" & vbCrLf
                 txt &= "JF" & vbCrLf
+                txt &= "O" & vbCrLf
+                txt &= "R120,0" & vbCrLf
+                txt &= "f100" & vbCrLf
 
                 'DETALLE DEL ARCHIVO ZEBRA
                 For i As Integer = 1 To TotalBultos
-                    txt &= "OD" & vbCrLf
-                    txt &= "R191,0" & vbCrLf
+                    'txt &= "OD" & vbCrLf
+                    'txt &= "R191,0" & vbCrLf
                     txt &= "N" & vbCrLf
-                    txt &= "A5,9,0,4,1,1,N,""NRO. PEDIDO: {PEDIDO}""" & vbCrLf
-                    txt &= "A5,35,0,4,1,1,N,""NRO. REMITO: {REMITO}""" & vbCrLf
-                    txt &= "A5,81,0,4,1,1,N,""{COD_CLIENTE}""" & vbCrLf
-                    txt &= "A5,108,0,4,1,1,N,""{NOM_CLIENTE}""" & vbCrLf
-                    txt &= "A5,154,0,4,1,1,N,""{DOMICILIO}""" & vbCrLf
-                    txt &= "A5,183,0,4,1,1,N,""{CIUDAD}""" & vbCrLf
-                    txt &= "A5,246,0,4,2,2,N,""BULTO: {BULTO_NRO}/{BULTO_TOTAL}""" & vbCrLf
-                    txt &= "A5,310,0,4,1,1,N,""{ARTICULO}""" & vbCrLf
+                    'txt &= "A5,9,0,4,1,1,N,""NRO. PEDIDO: {PEDIDO}""" & vbCrLf
+                    'txt &= "A5,35,0,4,1,1,N,""NRO. REMITO: {REMITO}""" & vbCrLf
+                    'txt &= "A5,81,0,4,1,1,N,""{COD_CLIENTE}""" & vbCrLf
+                    'txt &= "A5,108,0,4,1,1,N,""{NOM_CLIENTE}""" & vbCrLf
+                    'txt &= "A5,154,0,4,1,1,N,""{DOMICILIO}""" & vbCrLf
+                    'txt &= "A5,183,0,4,1,1,N,""{CIUDAD}""" & vbCrLf
+                    'txt &= "A5,246,0,4,2,2,N,""BULTO: {BULTO_NRO}/{BULTO_TOTAL}""" & vbCrLf
+                    'txt &= "A5,310,0,4,1,1,N,""{ARTICULO}""" & vbCrLf
+
+                    txt &= "A583,166,2,2,1,1,N,""NRO. PEDIDO: {PEDIDO}""" & vbCrLf
+                    txt &= "A583,149,2,2,1,1,N,""NRO. REMITO: {REMITO}""" & vbCrLf
+                    txt &= "A583,131,2,2,1,1,N,""{COD_CLIENTE}""" & vbCrLf
+                    txt &= "A583,110,2,2,1,1,N,""{NOM_CLIENTE}""" & vbCrLf
+                    txt &= "A583,90,2,2,1,1,N,""{DOMICILIO}""" & vbCrLf
+                    txt &= "A583,69,2,2,1,1,N,""{CIUDAD}""" & vbCrLf
+                    txt &= "A583,51,2,2,1,1,N,""BULTO: {BULTO_NRO}/{BULTO_TOTAL}""" & vbCrLf
+                    txt &= "A583,33,2,2,1,1,N,""{ARTICULO}""" & vbCrLf
+
                     txt &= "P2" & vbCrLf
 
                     txt = txt.Replace("{PEDIDO}", Ped)
