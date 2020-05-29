@@ -96,7 +96,6 @@ Public Class Temporal
     End Sub
     Public Sub Grabar()
         Try
-            Dim n As Integer = dt.Rows.Count
             da.Update(dt)
         Catch ex As Exception
 
@@ -106,6 +105,8 @@ Public Class Temporal
         For Each dr As DataRow In dt.Rows
             If dr.RowState <> DataRowState.Deleted Then dr.Delete()
         Next
+        'dt.Rows.Clear()
+
     End Sub
     Public Property Numero(ByVal idx As Integer) As Double
         Get
