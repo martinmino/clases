@@ -146,7 +146,9 @@
     <Compile Include="Puesto.vb" />
     <Compile Include="Puesto2.vb" />
     <Compile Include="Puestos2Collection.vb" />
+    <Compile Include="Registro.vb" />
     <Compile Include="Remito.vb" />
+    <Compile Include="ReporteRecargas.vb" />
     <Compile Include="ReporteVentaAnual.vb" />
     <Compile Include="Ruta.vb" />
     <Compile Include="RutaAviso.vb" />
