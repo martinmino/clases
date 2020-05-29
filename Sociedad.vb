@@ -104,7 +104,12 @@ Public Class Sociedad
                     End If
 
                 Case "MON"
-                    Return "M01"
+                    If SaleDesdeMunro Then
+                        Return "M04"
+                    Else
+                        Return "M01"
+                    End If
+
                 Case "GRU"
                     Return "G01"
                 Case "LIA"
