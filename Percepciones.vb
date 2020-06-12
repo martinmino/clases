@@ -68,6 +68,7 @@ Public Class Percepciones
             dr("updusr_0") = " "
             dr("xfceflg_0") = 0
             dr("xfcemonto_0") = 0
+            dr("xpadcfeflg_0") = 0
 
             dt.Rows.Add(dr)
 
