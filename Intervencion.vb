@@ -750,7 +750,7 @@ Public Class Intervencion
 
         txt &= "<p> En la siguiente intervencion: {intervencion}, del tipo: {tipo}, tuvimos un rebote en la ruta</p>" & vbCrLf
         txt &= "<p>El cliente es {cliente}, de la sucursal: {sucursal}</p>" & vbCrLf
-        txt &= "<p>La ruta es la: {ruta}, motivo: {motivo} y las observaciones: {obs} , por favor , informar a Noelia como debe continuar con la intervencion</p>"
+        txt &= "<p>La ruta es: {ruta}, motivo: {motivo} y las observaciones: {obs}</p>"
 
         'Reemplazo de marcas
         txt = txt.Replace("{intervencion}", Me.Numero)
@@ -765,8 +765,6 @@ Public Class Intervencion
         Try
             With eMail
                 .Remitente("no-responder@georgia.com.ar", "Georgia Seguridad contra Incendios")
-                '.AgregarDestinatario("mbarcudes@matafuegosgeorgia.com")
-                '.AgregarDestinatarioCopia("ioeyen@matafuegosgeorgia.com")
                 .AgregarDestinatario(rep.Mail.ToString)
                 .AgregarDestinatario(rep.Analista.Mail.ToString)
                 .AgregarDestinatario("glorenzo@georgia.com.ar")
