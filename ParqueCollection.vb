@@ -8,6 +8,9 @@ Public Class ParqueCollection
     Private da As OracleDataAdapter
     Private dt As New DataTable
 
+    Private Cliente As String
+    Private Sucursal As String
+
     Public Sub New(ByVal cn As OracleConnection)
         Me.cn = cn
 
@@ -21,6 +24,9 @@ Public Class ParqueCollection
 
     End Sub
     Public Sub AbrirParqueCliente(ByVal Cliente As String, ByVal Sucursal As String)
+        Me.Cliente = Cliente
+        Me.Sucursal = Sucursal
+
         da.SelectCommand.Parameters("bpcnum").Value = Cliente
         da.SelectCommand.Parameters("fcyitn").Value = Sucursal
 
@@ -35,13 +41,13 @@ Public Class ParqueCollection
         Next
 
     End Sub
-    Public Function VtoGeneral(ByVal Cliente As String, ByVal Sucursal As String) As Date
-        Return Vencimiento(Cliente, Sucursal, 10)
+    Public Function VtoGeneral() As Date
+        Return Vencimiento(10)
     End Function
-    Public Function VtoPhGeneral(ByVal Cliente As String, ByVal Sucursal As String) As Date
-        Return Vencimiento(Cliente, Sucursal, 20)
+    Public Function VtoPhGeneral() As Date
+        Return Vencimiento(20)
     End Function
-    Private Function Vencimiento(ByVal Cliente As String, ByVal Sucural As String, ByVal Tipo As Integer) As Date
+    Private Function Vencimiento(ByVal Tipo As Integer) As Date
         Dim Sql As String
         Dim da As OracleDataAdapter
         Dim dt As New DataTable
@@ -58,7 +64,7 @@ Public Class ParqueCollection
 
         da = New OracleDataAdapter(Sql, cn)
         da.SelectCommand.Parameters.Add("cli", OracleType.VarChar).Value = Cliente
-        da.SelectCommand.Parameters.Add("suc", OracleType.VarChar).Value = Sucural
+        da.SelectCommand.Parameters.Add("suc", OracleType.VarChar).Value = Sucursal
         da.SelectCommand.Parameters.Add("tipo", OracleType.Number).Value = Tipo
 
         Try
@@ -81,4 +87,5 @@ Public Class ParqueCollection
         End Try
 
     End Function
+
 End Class
