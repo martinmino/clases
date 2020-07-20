@@ -35,5 +35,50 @@ Public Class ParqueCollection
         Next
 
     End Sub
+    Public Function VtoGeneral(ByVal Cliente As String, ByVal Sucursal As String) As Date
+        Return Vencimiento(Cliente, Sucursal, 10)
+    End Function
+    Public Function VtoPhGeneral(ByVal Cliente As String, ByVal Sucursal As String) As Date
+        Return Vencimiento(Cliente, Sucursal, 20)
+    End Function
+    Private Function Vencimiento(ByVal Cliente As String, ByVal Sucural As String, ByVal Tipo As Integer) As Date
+        Dim Sql As String
+        Dim da As OracleDataAdapter
+        Dim dt As New DataTable
+        Dim dr As DataRow
 
+        Sql = "select ymc.datnext_0, count(datnext_0) as cant "
+        Sql &= "from machines mac inner join "
+        Sql &= "	 ymacitm ymc on (mac.macnum_0 = ymc.macnum_0) inner join "
+        Sql &= "	 bomd bmb on (mac.macpdtcod_0 = bmb.itmref_0 and ymc.cpnitmref_0 = bmb.cpnitmref_0 and bomalt_0 = 99 and bomseq_0 = :tipo) "
+        Sql &= "where mac.bpcnum_0 = :cli and "
+        Sql &= "	  mac.fcyitn_0 = :suc "
+        Sql &= "group by datnext_0 "
+        Sql &= "order by cant desc"
+
+        da = New OracleDataAdapter(Sql, cn)
+        da.SelectCommand.Parameters.Add("cli", OracleType.VarChar).Value = Cliente
+        da.SelectCommand.Parameters.Add("suc", OracleType.VarChar).Value = Sucural
+        da.SelectCommand.Parameters.Add("tipo", OracleType.Number).Value = Tipo
+
+        Try
+            da.Fill(dt)
+            If dt.Rows.Count > 0 Then
+                dr = dt.Rows(0)
+
+                If IsDBNull(dr(0)) Then
+                    Return Today.Date
+
+                Else
+                    Return CDate(dr(0))
+                End If
+
+            End If
+
+        Catch ex As Exception
+            Return #12/31/1599#
+
+        End Try
+
+    End Function
 End Class
