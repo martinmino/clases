@@ -661,7 +661,7 @@ Public Class Intervencion
         Dim eMail As New CorreoElectronico
         Dim sih As New Factura(cn)
         Dim rep As New Vendedor(cn)
-        Dim sr As New StreamReader("plantillas\entrega-de-recargas.html")
+        Dim sr As New StreamReader("plantillas\aviso-de-recargas-listas.html")
 
         'Salgo si no encuentro la factura
         If Not sih.AbrirPorSolicitud(Me.SolicitudAsociada.Numero) Then
@@ -678,7 +678,7 @@ Public Class Intervencion
                 txt &= "Mail enviado al clilente, tiene factura adjunta en blanco"
 
                 eMail.Nuevo()
-                eMail.Remitente("info@matafuegosgeorgia.com")
+                eMail.Remitente("info@georgia.com.ar")
                 eMail.AgregarDestinatarioArchivo("MAILS\sin-cae.txt")
                 eMail.Cuerpo = txt
                 eMail.EsHtml = False
