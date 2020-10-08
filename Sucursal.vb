@@ -13,6 +13,7 @@ Public Class Sucursal
     Private dr1 As DataRow  'Sucursal
     Private dr2 As DataRow  'Sucursal Entregas
 
+    Private _Pais As Pais = Nothing
     Private disposedValue As Boolean = False ' Para detectar llamadas redundantes
 
     'NEW
@@ -31,6 +32,8 @@ Public Class Sucursal
 
     'SUB
     Public Function Abrir(ByVal Tercero As String, ByVal Sucursal As String) As Boolean
+        _Pais = Nothing
+
         dt1.Clear()
         dt2.Clear()
         da1.SelectCommand.Parameters("bpanum_0").Value = Tercero
@@ -45,6 +48,41 @@ Public Class Sucursal
         da2.Fill(dt2)
         If dt2.Rows.Count = 1 Then dr2 = dt2.Rows(0)
         Return dt1.Rows.Count > 0
+
+    End Function
+    Friend Function Abrir(ByVal drSuc As DataRow, ByVal drEnt As DataRow) As Boolean
+        _Pais = Nothing
+
+        'Sucursal
+        dt1 = Nothing
+        dt1 = drSuc.Table.Clone
+
+        dr1 = dt1.NewRow
+
+        For i = 0 To dt1.Columns.Count - 1
+            dr1(i) = drSuc(i)
+        Next
+
+        dt1.Rows.Add(dr1)
+        dt1.AcceptChanges()
+
+        'Sucursal Entrega
+        If drEnt IsNot Nothing Then
+            dt2 = Nothing
+            dt2 = drEnt.Table.Clone
+
+            dr2 = dt2.NewRow
+
+            For i = 0 To dt2.Columns.Count - 1
+                dr2(i) = drEnt(i)
+            Next
+
+            dt2.Rows.Add(dr2)
+            dt2.AcceptChanges()
+
+        End If
+
+        Return True
     End Function
     Private Sub Adaptadores()
         Dim Sql As String
@@ -132,6 +170,8 @@ Public Class Sucursal
         End Try
     End Sub
     Public Sub Nuevo(ByVal Cliente As String)
+        _Pais = Nothing
+
         Dim dr As DataRow
         dr = dt1.NewRow
         dr("BPATYP_0") = 1
@@ -453,7 +493,11 @@ Public Class Sucursal
     End Property
     Public ReadOnly Property Pais() As Pais
         Get
-            Return New Pais(cn, dr1("cry_0").ToString)
+            If _Pais Is Nothing Then
+                _Pais = New Pais(cn, dr1("cry_0").ToString)
+            End If
+
+            Return _Pais
         End Get
     End Property
     Public Property CallejeroGCBA() As String

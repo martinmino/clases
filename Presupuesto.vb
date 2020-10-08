@@ -52,7 +52,7 @@ Public Class Presupuesto
         dr = dt1.NewRow
         dr("sqhnum_0") = "0"
         dr("salfcy_0") = cpy.PlantaVenta(ctz.SaleDesdeMunro)
-        dr("bpcord_0") = bpc.Cliente.Codigo
+        dr("bpcord_0") = bpc.Codigo
         dr("cusquoref_0") = " "
         dr("quodat_0") = Date.Today
         dr("vlydat_0") = Date.Today.AddDays(7)
@@ -292,19 +292,6 @@ Public Class Presupuesto
         Next
 
     End Sub
-    Public Sub AprobarPresupuesto(ByVal usr As Usuario)
-        Dim dr As DataRow
-
-        If dt1.Rows.Count > 0 Then
-            dr = dt1.Rows(0)
-            dr.BeginEdit()
-            dr("XAPROB_0") = 2
-            dr("XUSRAPROB_0") = usr.Codigo
-            dr("XDATAPROB_0") = Date.Today
-            dr.EndEdit()
-        End If
-
-    End Sub
     Private Sub AgregarLinea(ByVal itm As Articulo, ByVal Cantidad As Double, ByVal Precio As Double, ByVal ctz As Cotizacion)
         Dim dr As DataRow
         Dim linea As Long = LineaSiguiente()
@@ -401,7 +388,22 @@ Public Class Presupuesto
         dr("updusr_0") = " "
         dr("upddat_0") = #12/31/1599#
         dt2.Rows.Add(dr)
+
     End Sub
+    Public Sub AprobarPresupuesto(ByVal usr As Usuario)
+        Dim dr As DataRow
+
+        If dt1.Rows.Count > 0 Then
+            dr = dt1.Rows(0)
+            dr.BeginEdit()
+            dr("XAPROB_0") = 2
+            dr("XUSRAPROB_0") = usr.Codigo
+            dr("XDATAPROB_0") = Date.Today
+            dr.EndEdit()
+        End If
+
+    End Sub
+    
     Private Function LineaSiguiente() As Long
         Dim i As Long = 0
         Dim dr As DataRow

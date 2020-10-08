@@ -989,8 +989,14 @@ Public Class Cliente
         Get
             Dim dr As DataRow = dt.Rows(0)
             Dim bpc As New Cliente(cn)
-            bpc.Abrir(dr("bpcpyr_0").ToString)
+            bpc.Abrir(TerceroPagadorCodigo)
             Return bpc
+        End Get
+    End Property
+    Public ReadOnly Property TerceroPagadorCodigo() As String
+        Get
+            Dim dr As DataRow = dt.Rows(0)
+            Return dr("bpcpyr_0").ToString
         End Get
     End Property
     Public Overloads Property Nombre() As String

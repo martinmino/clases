@@ -8,6 +8,8 @@ Public Class Tercero
     Private dt As New DataTable
     Private disposedValue As Boolean = False        ' Para detectar llamadas redundantes
 
+    Private _SucursalDefault As Sucursal = Nothing
+
     'NEW
     Public Sub New(ByVal cn As OracleConnection)
         Me.cn = cn
@@ -31,6 +33,8 @@ Public Class Tercero
         da.SelectCommand.Parameters("bprnum_0").Value = Codigo
         dt.Clear()
         da.Fill(dt)
+
+        _SucursalDefault = Nothing
 
         Return dt.Rows.Count > 0
     End Function
@@ -150,8 +154,12 @@ Public Class Tercero
 
     Public ReadOnly Property SucursalDefault() As Sucursal
         Get
-            Dim dr As DataRow = dt.Rows(0)
-            Return New Sucursal(cn, dr("bprnum_0").ToString, dr("bpaadd_0").ToString)
+            If _SucursalDefault Is Nothing Then
+                Dim dr As DataRow = dt.Rows(0)
+                _SucursalDefault = New Sucursal(cn, dr("bprnum_0").ToString, dr("bpaadd_0").ToString)
+            End If
+
+            Return _SucursalDefault
         End Get
     End Property
 

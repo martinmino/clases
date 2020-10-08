@@ -1072,6 +1072,13 @@ Public Class Parque
             Me.FabricacionCorto = value.Year
         End Set
     End Property
+    Public ReadOnly Property FechaCreacion() As Date
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+            Return CDate(dr("credat_0"))
+        End Get
+    End Property
+
     Public ReadOnly Property Cliente() As Cliente
         Get
             If bpc Is Nothing Then

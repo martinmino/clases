@@ -76,6 +76,7 @@ Public Class Articulo
 
     End Function
     Public Function Costo() As Double
+        'TODO: pendiente lazy loading
         Dim Sql As String
         Dim dt As New DataTable
         Dim da As OracleDataAdapter

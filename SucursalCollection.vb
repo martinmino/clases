@@ -5,7 +5,8 @@ Public Class SucursalCollection
     Inherits BindingList(Of Sucursal)
 
     Private cn As OracleConnection
-    Public dt As New DataTable
+    Public dt1 As New DataTable 'Sucursal
+    Public dt2 As New DataTable 'Sucursal Entregas
 
     Public Sub New(ByVal cn As OracleConnection)
         Me.cn = cn
@@ -13,18 +14,37 @@ Public Class SucursalCollection
 
     Public Sub CargarSucursales(ByVal Codigo As String)
         Dim Sql As String
-        Dim da As OracleDataAdapter
+        Dim da1 As OracleDataAdapter
+        Dim da2 As OracleDataAdapter
 
-        Sql = "SELECT bpanum_0, bpaadd_0, bpaaddlig_0, bpaadd_0 || ' - ' || bpaaddlig_0 as direccion FROM bpaddress WHERE bpanum_0 = :bpanum ORDER BY bpaadd_0"
-        da = New OracleDataAdapter(Sql, Me.cn)
-        da.SelectCommand.Parameters.Add("bpanum", OracleType.VarChar).Value = Codigo
+        'Sucursales
+        Sql = "SELECT * FROM bpaddress WHERE bpanum_0 = :bpanum ORDER BY bpaadd_0"
+        da1 = New OracleDataAdapter(Sql, Me.cn)
+        da1.SelectCommand.Parameters.Add("bpanum", OracleType.VarChar).Value = Codigo
+
+        Sql = "SELECT * FROM bpdlvcust WHERE bpcnum_0 = :bpcnum_0"
+        da2 = New OracleDataAdapter(Sql, cn)
+        da2.SelectCommand.Parameters.Add("bpcnum_0", OracleType.VarChar).Value = Codigo
 
         Try
-            da.Fill(dt)
+            da1.Fill(dt1)
+            da2.Fill(dt2)
 
-            For Each dr As DataRow In dt.Rows
+            Dim dr1 As DataRow 'Sucursal
+            Dim dr2 As DataRow 'SucursalEntrega
+
+            For Each dr1 In dt1.Rows
+                'Busco el registro de sucursal-entrega
+                dr2 = Nothing
+                For Each drx As DataRow In dt2.Rows
+                    If drx("bpaadd_0").ToString = dr1("bpaadd_0").ToString Then
+                        dr2 = drx
+                        Exit For
+                    End If
+                Next
+
                 Dim s As New Sucursal(cn)
-                If s.Abrir(dr("bpanum_0").ToString, dr("bpaadd_0").ToString) Then Me.Add(s)
+                If s.Abrir(dr1, dr2) Then Me.Add(s)
             Next
 
         Catch ex As Exception

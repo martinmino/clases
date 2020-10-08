@@ -71,7 +71,7 @@ Public Class Pedido
         End If
         dr("bpcord_0") = bpc.Codigo
         dr("bpcinv_0") = bpc.TerceroFactura
-        dr("bpcpyr_0") = bpc.TerceroPagador.Codigo
+        dr("bpcpyr_0") = bpc.TerceroPagadorCodigo
         dr("bpcgru_0") = bpc.TerceroGrupoCodigo
         dr("bpaadd_0") = bpa.Sucursal
         dr("cusordref_0") = IIf(ctz.H, "H", ctz.OC).ToString
@@ -116,9 +116,9 @@ Public Class Pedido
         dr("bpdcry_0") = bpa.Pais.Codigo
         dr("bpdcrynam_0") = bpa.Pais.Nombre
         dr("cndnam_0") = " " '--------------- VER COMO PONER PERSONA CONTACTO
-        dr("rep_0") = bpc.Vendedor.Codigo
-        dr("rep_1") = bpc.Vendedor2.Codigo
-        dr("rep_2") = bpc.Vendedor3.Codigo
+        dr("rep_0") = bpc.Vendedor1Codigo
+        dr("rep_1") = bpc.Vendedor2Codigo
+        dr("rep_2") = bpc.Vendedor3Codigo
         dr("cur_0") = "ARS"
         dr("chgtyp_0") = 1
         dr("chgrat_0") = 1
@@ -466,8 +466,8 @@ Public Class Pedido
         dr("sohcat_0") = 1
         dr("strdat_0") = #12/31/1599#
         dr("enddat_0") = Date.Today
-        dr("bpcord_0") = ctz.Cliente.Codigo
-        dr("bpaadd_0") = ctz.Sucursal.Sucursal
+        dr("bpcord_0") = ctz.ClienteCodigo
+        dr("bpaadd_0") = ctz.SucursalCodigo
         dr("cndnam_0") = " "
         dr("bpcinv_0") = ctz.Cliente.TerceroFactura
         dr("stofcy_0") = ctz.Sociedad.PlantaStock
@@ -479,9 +479,9 @@ Public Class Pedido
         dr("vacitm_0") = vac.Tipo
         dr("vacitm_1") = " "
         dr("vacitm_2") = " "
-        dr("rep1_0") = ctz.Cliente.Vendedor.Codigo
-        dr("rep2_0") = ctz.Cliente.Vendedor2.Codigo
-        dr("rep3_0") = ctz.Cliente.Vendedor3.Codigo
+        dr("rep1_0") = ctz.Cliente.Vendedor1Codigo
+        dr("rep2_0") = ctz.Cliente.Vendedor2Codigo
+        dr("rep3_0") = ctz.Cliente.Vendedor3Codigo
         dr("reprat1_0") = 0
         dr("reprat2_0") = 0
         dr("reprat3_0") = 0
