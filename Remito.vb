@@ -60,7 +60,7 @@ Public Class Remito
         da3.SelectCommand.Parameters.Add("num", OracleType.VarChar)
 
     End Sub
-    Public Function Abrir(ByVal Nro As String) As Boolean
+    Public Function Abrir(ByVal Nro As String) As Boolean Implements IRuteable.Abrir
         dt1.Clear()
         dt2.Clear()
         dt3 = Nothing
@@ -93,6 +93,36 @@ Public Class Remito
     End Function
     Public Sub Grabar()
         da1.Update(dt1)
+    End Sub
+    Private Sub AnalizarRemito()
+        Dim dr As DataRow
+        Dim itm As New Articulo(cn)
+
+        'Rutina de análisis de Remitos de nuevos
+        For Each dr In dt2.Rows
+            Dim Qty As Integer = CInt(dr("qty_0"))
+
+            itm.Abrir(dr("itmref_0").ToString)
+
+            If itm.Categoria = "10" Then
+                l_Equipos += Qty
+                l_Peso += Qty * itm.peso
+                l_Peso2 += Qty * itm.peso
+
+            ElseIf itm.LineaProducto = "651" Then
+                l_TieneInstalacion = True
+                l_Instalaciones += Qty
+
+            Else
+                l_Peso += Qty * itm.peso
+                l_Peso2 += Qty * itm.peso
+
+                l_Varios = True
+
+            End If
+
+        Next
+
     End Sub
     Public Function EtiquetasEntrega(ByVal Archivo As String, ByVal Imprimir As Boolean) As Boolean
         Select Case Me.Cliente.Codigo
@@ -284,7 +314,6 @@ Public Class Remito
         Next
 
     End Function
-
     Public Function ExisteArticulo(ByVal Articulo As String) As Boolean
         Dim flg As Boolean = False
 
@@ -342,12 +371,27 @@ Public Class Remito
             Return dr("sohnum_0").ToString
         End Get
     End Property
-    Public ReadOnly Property Cliente() As Cliente Implements IRuteable.Cliente
+    Public ReadOnly Property Tercero() As Tercero Implements IRuteable.Tercero
         Get
             Dim dr As DataRow = dt1.Rows(0)
             Dim bpc As New Cliente(cn)
             bpc.Abrir(dr("bpcord_0").ToString)
             Return bpc
+        End Get
+    End Property
+    Public ReadOnly Property CodigoTercero() As String Implements IRuteable.CodigoTercero
+        Get
+            Return Me.Cliente.Codigo
+        End Get
+    End Property
+    Public ReadOnly Property NombreTercero() As String Implements IRuteable.NombreTercero
+        Get
+            Return Me.Cliente.Nombre
+        End Get
+    End Property
+    Public ReadOnly Property Cliente() As Cliente
+        Get
+            Return CType(Me.Tercero, Cliente)
         End Get
     End Property
     Public ReadOnly Property Pedido() As Pedido Implements IRuteable.Pedido
@@ -368,7 +412,7 @@ Public Class Remito
             Return bpa
         End Get
     End Property
-    Public ReadOnly Property SucursalCodigo() As String
+    Public ReadOnly Property SucursalCodigo() As String Implements IRuteable.SucursalCodigo
         Get
             Dim dr As DataRow = dt1.Rows(0)
             Return dr("bpaadd_0").ToString
@@ -402,7 +446,7 @@ Public Class Remito
         End Get
 
     End Property
-    Public ReadOnly Property ModoEntrega() As String
+    Public Property ModoEntrega() As String Implements IRuteable.ModoEntrega
         Get
             Dim dr As DataRow
 
@@ -416,7 +460,16 @@ Public Class Remito
             End If
 
         End Get
+        Set(ByVal value As String)
+            Dim dr As DataRow
 
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                dr.BeginEdit()
+                dr("mdl_0") = value
+                dr.EndEdit()
+            End If
+        End Set
     End Property
     Public Property Ruta() As String
         Get
@@ -637,36 +690,77 @@ Public Class Remito
         Set(ByVal value As String)
         End Set
     End Property
-    Private Sub AnalizarRemito()
-        Dim dr As DataRow
-        Dim itm As New Articulo(cn)
+    Public ReadOnly Property FechaEntrega() As Date Implements IRuteable.FechaEntrega
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
 
-        'Rutina de análisis de Remitos de nuevos
-        For Each dr In dt2.Rows
-            Dim Qty As Integer = CInt(dr("qty_0"))
+            Return CDate(dr("dlvdat_0"))
 
-            itm.Abrir(dr("itmref_0").ToString)
+        End Get
+    End Property
+    Public ReadOnly Property Domicilio() As String Implements IRuteable.Domicilio
+        Get
+            Dim txt As String = ""
 
-            If itm.Categoria = "10" Then
-                l_Equipos += Qty
-                l_Peso += Qty * itm.peso
-                l_Peso2 += Qty * itm.peso
-
-            ElseIf itm.LineaProducto = "651" Then
-                l_TieneInstalacion = True
-                l_Instalaciones += Qty
-
-            Else
-                l_Peso += Qty * itm.peso
-                l_Peso2 += Qty * itm.peso
-
-                l_Varios = True
-
+            If dt1.Rows.Count > 0 Then
+                Dim dr As DataRow = dt1.Rows(0)
+                txt = dr("bpdaddlig_0").ToString
             End If
 
-        Next
+            Return txt
 
-    End Sub
+        End Get
+    End Property
+    Public ReadOnly Property Localidad() As String Implements IRuteable.Localidad
+        Get
+            Dim txt As String = ""
+
+            If dt1.Rows.Count > 0 Then
+                Dim dr As DataRow = dt1.Rows(0)
+                txt = dr("bpdcty_0").ToString
+            End If
+
+            Return txt
+
+        End Get
+    End Property
+    Public ReadOnly Property Instalaciones() As Integer Implements IRuteable.Instalaciones
+        Get
+            Return l_Instalaciones
+        End Get
+    End Property
+    Public ReadOnly Property CondicionPagoCodigo() As String
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+
+            Return dr("pte_0").ToString
+        End Get
+    End Property
+    Public ReadOnly Property Cobranza() As Boolean Implements IRuteable.Cobranza
+        Get
+            Select Case Me.CondicionPagoCodigo
+                Case "001", "002"
+                    Return True
+                Case Else
+                    Return False
+            End Select
+        End Get
+    End Property
+    Public ReadOnly Property Varios() As Boolean Implements IRuteable.Varios
+        Get
+            Return l_Varios
+        End Get
+    End Property
+    Public ReadOnly Property Hora() As String Implements IRuteable.Hora
+        Get
+            Return " "
+        End Get
+    End Property
+    Public ReadOnly Property Peso() As Double Implements IRuteable.Peso
+        Get
+            Return l_Peso
+        End Get
+    End Property
     Public ReadOnly Property TieneCarro() As Boolean Implements IRuteable.TieneCarro
         Get
             Dim Sql As String

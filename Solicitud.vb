@@ -852,6 +852,12 @@ Public Class Solicitud
             Return New CondicionPago(cn, dr("srepte_0").ToString)
         End Get
     End Property
+    Public ReadOnly Property CondicionPagoCodigo() As String
+        Get
+            Dim dr As DataRow = dt.Rows(0)
+            Return dr("srepte_0").ToString
+        End Get
+    End Property
     Public Property Contrato() As ContratoServicio
         Get
             Dim dr As DataRow

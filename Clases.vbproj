@@ -136,6 +136,7 @@
     <Compile Include="ParqueCollection.vb" />
     <Compile Include="ParteCobranza.vb" />
     <Compile Include="Pedido.vb" />
+    <Compile Include="PedidoCompra.vb" />
     <Compile Include="Percepciones.vb" />
     <Compile Include="Permisos.vb" />
     <Compile Include="PersonaContacto.vb" />

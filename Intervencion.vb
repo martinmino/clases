@@ -18,6 +18,7 @@ Public Class Intervencion
     Private l_RechazosExt As Integer = 0
     Private l_RechazosMan As Integer = 0
     Private l_TieneCarro As Boolean = False
+    Private l_Varios As Boolean = False
 
     Private l_Cliente As Cliente = Nothing
     Private l_Sucursal As Sucursal = Nothing
@@ -640,7 +641,7 @@ Public Class Intervencion
             .Asunto = "Entrega de Recargas"
             .EsHtml = True
             .CuerpoDesdeArchivo("plantillas\entrega-de-recargas.html")
-            .Cuerpo = .Cuerpo.Replace("{cliente}", Me.Cliente.Nombre)
+            .Cuerpo = .Cuerpo.Replace("{cliente}", Me.Tercero.Nombre)
             .Cuerpo = .Cuerpo.Replace("{importe}", sih.ImporteII.ToString("N2"))
             .AdjuntarArchivo(sih.Numero & ".pdf")
 
@@ -690,7 +691,7 @@ Public Class Intervencion
 
 
         txt = sr.ReadToEnd
-        txt = txt.Replace("{cliente}", Me.Cliente.Nombre)
+        txt = txt.Replace("{cliente}", Me.Tercero.Nombre)
         txt = txt.Replace("{fecha}", Me.FechaCreacion.ToString("dd/MM/yyyy"))
         txt = txt.Replace("{itn}", Me.Numero)
         txt = txt.Replace("{importe}", sih.ImporteII.ToString("N2"))
@@ -700,7 +701,7 @@ Public Class Intervencion
             txt = txt.Replace("<!--PRESTAMOS-->", "Por favor, no olvide traer con usted los matafuegos de préstamo que le entregamos cuando nos dejó sus equipos.")
         End If
 
-        rep = Me.Cliente.Vendedor 'Obtengo vendedor
+        rep = CType(Me.Cliente, Cliente).Vendedor 'Obtengo vendedor
 
         If rep.Codigo = "17" Then
             txt = txt.Replace("{vendedor}", rep.Analista.Nombre.ToUpper)
@@ -910,7 +911,7 @@ Public Class Intervencion
     End Sub
 
     'FUNCTION
-    Public Function Abrir(ByVal Numero As String) As Boolean
+    Public Function Abrir(ByVal id As String) As Boolean Implements IRuteable.Abrir
         dt1.Clear()
         dt2.Clear()
         dt3.Clear()
@@ -929,25 +930,26 @@ Public Class Intervencion
         l_RechazosExt = 0
         l_RechazosMan = 0
         l_TieneCarro = False
+        l_Varios = False
 
         'Abro una intervencion
-        da1.SelectCommand.Parameters("num_0").Value = Numero.ToUpper
+        da1.SelectCommand.Parameters("num_0").Value = id.ToUpper
         da1.Fill(dt1)
 
         'Abro el detalle
-        da2.SelectCommand.Parameters("num_0").Value = Numero.ToUpper
+        da2.SelectCommand.Parameters("num_0").Value = id.ToUpper
         da2.Fill(dt2)
 
         'Abro las observaciones de la intervencion
-        da3.SelectCommand.Parameters("num_0").Value = Numero.ToUpper
+        da3.SelectCommand.Parameters("num_0").Value = id.ToUpper
         da3.Fill(dt3)
 
         'Abro para agregar los comentarios en el fichero
-        da4.SelectCommand.Parameters("ident1_0").Value = Numero.ToUpper
+        da4.SelectCommand.Parameters("ident1_0").Value = id.ToUpper
         da4.Fill(dt4)
 
         'Abro tabla de consumos
-        da5.SelectCommand.Parameters("itnnum_0").Value = Numero.ToUpper
+        da5.SelectCommand.Parameters("itnnum_0").Value = id.ToUpper
         da5.Fill(dt5)
 
         If dt1.Rows.Count = 1 Then
@@ -1022,6 +1024,7 @@ Public Class Intervencion
 
         l_Cliente = Nothing
         l_Sucursal = Nothing
+        l_Varios = False
 
         'Valido si la sucursal es de entrega
         If Suc.SucursalEntregaActiva Then
@@ -1416,7 +1419,7 @@ Public Class Intervencion
 
         End Get
     End Property
-    Public ReadOnly Property SucursalCodigo() As String
+    Public ReadOnly Property SucursalCodigo() As String Implements IRuteable.SucursalCodigo
         Get
             Dim dr As DataRow = dt1.Rows(0)
 
@@ -1452,7 +1455,7 @@ Public Class Intervencion
 
         End Get
     End Property
-    Public ReadOnly Property Cliente() As Cliente Implements IRuteable.Cliente
+    Public ReadOnly Property Tercero() As Tercero Implements IRuteable.Tercero
         Get
             If l_Cliente Is Nothing Then
                 Dim dr As DataRow = dt1.Rows(0)
@@ -1462,6 +1465,11 @@ Public Class Intervencion
             End If
 
             Return l_Cliente
+        End Get
+    End Property
+    Public ReadOnly Property Cliente() As Cliente
+        Get
+            Return CType(Me.Tercero, Cliente)
         End Get
     End Property
     Public Property Tipo() As String Implements IRuteable.Tipo
@@ -1955,13 +1963,13 @@ Public Class Intervencion
             dr.EndEdit()
         End Set
     End Property
-    Public Property ModoEntrega() As Integer
+    Public Property ModoEntrega() As String Implements IRuteable.ModoEntrega
         Get
             Dim dr As DataRow
             dr = dt1.Rows(0)
-            Return CInt(dr("mdl_0"))
+            Return dr("mdl_0").ToString
         End Get
-        Set(ByVal value As Integer)
+        Set(ByVal value As String)
             Dim dr As DataRow
             dr = dt1.Rows(0)
             dr.BeginEdit()
@@ -2024,6 +2032,11 @@ Public Class Intervencion
             dr("yhhasta2_0") = value
             dr.EndEdit()
         End Set
+    End Property
+    Public ReadOnly Property FechaEntrega() As Date Implements IRuteable.FechaEntrega
+        Get
+            Return Me.FechaFin
+        End Get
     End Property
     Private Function TextRTf(ByVal txt As String) As String
         Dim texto As String = "{\rtf1\ansi\ansicpg1252\deff0\deflang3082{\fonttbl{\f0\fswiss\fprq2\fcharset0 MS Sans Serif;}}\viewkind4\uc1\pard\f0\fs17" & txt & "\par}}"
@@ -2394,6 +2407,7 @@ Public Class Intervencion
         Next
 
     End Sub
+
     Public ReadOnly Property Equipos() As Integer Implements IRuteable.Equipos
         Get
             Return l_Equipos
@@ -2464,5 +2478,97 @@ Public Class Intervencion
         Return flg
 
     End Function
+    Public ReadOnly Property Domicilio() As String Implements IRuteable.Domicilio
+        Get
+            Dim txt As String = ""
+
+            If dt1.Rows.Count > 0 Then
+                Dim dr As DataRow = dt1.Rows(0)
+                txt = dr("add_0").ToString
+            End If
+
+            Return txt
+
+        End Get
+    End Property
+    Public ReadOnly Property Localidad() As String Implements IRuteable.Localidad
+        Get
+            Dim txt As String = ""
+
+            If dt1.Rows.Count > 0 Then
+                Dim dr As DataRow = dt1.Rows(0)
+                txt = dr("cty_0").ToString
+            End If
+
+            Return txt
+
+        End Get
+    End Property
+    Public ReadOnly Property CodigoTercero() As String Implements IRuteable.CodigoTercero
+        Get
+            Return dt1.Rows(0).Item("bpc_0").ToString
+        End Get
+    End Property
+    Public ReadOnly Property NombreTercero() As String Implements IRuteable.NombreTercero
+        Get
+            Return Me.Cliente.Nombre
+        End Get
+    End Property
+    Public ReadOnly Property Instalaciones() As Integer Implements IRuteable.Instalaciones
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property Cobranzas() As Boolean Implements IRuteable.Cobranza
+        Get
+            Dim flg As Boolean = False
+
+            If Me.Remito.Trim <> "" Then
+                Select Case Me.SolicitudAsociada.CondicionPagoCodigo 'dtSolicitud.Rows(0).Item("srepte_0").ToString
+                    Case "001", "002"
+                        flg = (Me.PrioridadEntrga = 1)
+                End Select
+            End If
+
+            Return flg
+        End Get
+    End Property
+    ReadOnly Property PrioridadEntrga() As Integer
+        Get
+            Dim x As Integer = 0
+
+            Dim dr As DataRow = dt1.Rows(0)
+            x = CInt(dr("dlvpio_0"))
+
+            Return x
+        End Get
+    End Property
+    Public ReadOnly Property Varios() As Boolean Implements IRuteable.Varios
+        Get
+            Return l_varios
+        End Get
+    End Property
+    Public ReadOnly Property Hora() As String Implements IRuteable.Hora
+        Get
+            Dim txt As String = " "
+
+            If Me.Franja1Desde <> "0000" And Me.Franja1Hasta <> "0000" Then
+                txt = String.Format("{0} a {1}", Me.Franja1Desde, Me.Franja1Hasta)
+
+                If Me.Franja2Desde <> "0000" And Me.Franja2Hasta <> "0000" Then
+                    txt &= " y "
+                    txt &= String.Format("{0} a {1}", Me.Franja2Desde, Me.Franja2Hasta)
+                End If
+
+            End If
+
+            Return txt
+        End Get
+    End Property
+    Public ReadOnly Property Peso() As Double Implements IRuteable.Peso
+        Get
+
+        End Get
+    End Property
 
 End Class

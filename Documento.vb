@@ -483,7 +483,6 @@ Public Class Documento
 
     End Function
 
-#Region " Propiedades "
     Public ReadOnly Property Tipo() As String
         Get
 
@@ -771,7 +770,6 @@ Public Class Documento
             End If
         End Get
     End Property
-#End Region
 
 End Class
 
