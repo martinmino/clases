@@ -495,7 +495,7 @@ Public Class Factura
             End If
         End Get
     End Property
-    Public ReadOnly Property FCEAnula() As Boolean
+    Public Property FCEAnula() As Boolean
         Get
             Dim b As Boolean = False
 
@@ -507,6 +507,15 @@ Public Class Factura
 
             Return b
         End Get
+        Set(ByVal value As Boolean)
+            If dt1.Rows.Count > 0 Then
+                Dim dr As DataRow
+                dr = dt1.Rows(0)
+                dr.BeginEdit()
+                dr("xanufce_0") = IIf(value, 2, 1)
+                dr.EndEdit()
+            End If
+        End Set
     End Property
 
 
