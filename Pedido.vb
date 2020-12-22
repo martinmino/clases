@@ -4,7 +4,7 @@ Imports System.IO
 Public Class Pedido
 
     Private cn As OracleConnection
-    Private dah As OracleDataAdapter 'SORDER
+    Private WithEvents dah As OracleDataAdapter 'SORDER
     Private daq As OracleDataAdapter 'SORDERQ
     Private dap As OracleDataAdapter 'SORDERP
     Private dth As New DataTable
@@ -1048,4 +1048,12 @@ Public Class Pedido
         End Set
     End Property
 
+    Private Sub dah_RowUpdated(ByVal sender As Object, ByVal e As System.Data.OracleClient.OracleRowUpdatedEventArgs) Handles dah.RowUpdated
+        If e.StatementType = StatementType.Insert Then
+            Dim a As New Auditoria(cn)
+            Dim dr As DataRow = e.Row
+
+            a.Grabar(dr("creusr_0").ToString, "GESSOH", "SORDER", 1, dr("sohnum_0").ToString)
+        End If
+    End Sub
 End Class

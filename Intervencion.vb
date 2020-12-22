@@ -1348,6 +1348,13 @@ Public Class Intervencion
     Private Sub da1_RowUpdating(ByVal sender As Object, ByVal e As System.Data.OracleClient.OracleRowUpdatingEventArgs) Handles da1.RowUpdating
         If e.Status = UpdateStatus.ErrorsOccurred Then Exit Sub
 
+        If e.StatementType = StatementType.Insert Then
+            Dim a As New Auditoria(cn)
+            Dim dr As DataRow = e.Row
+
+            a.Grabar(dr("creusr_0").ToString, "GESITN", "INTERVEN", 1, dr("num_0").ToString)
+        End If
+
         If e.StatementType = StatementType.Update Then
             e.Row.BeginEdit()
             e.Row("upddat_0") = Date.Today

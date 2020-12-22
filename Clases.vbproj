@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Articulo.vb" />
     <Compile Include="ArticuloCliente.vb" />
+    <Compile Include="Auditoria.vb" />
     <Compile Include="Banco.vb" />
     <Compile Include="Barrios.vb" />
     <Compile Include="Bloqueo.vb" />

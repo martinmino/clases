@@ -4,7 +4,7 @@ Public Class Presupuesto
     Const REPORT_NAME As String = "DEVTTC2.rpt"
 
     Private cn As OracleConnection
-    Private da1 As OracleDataAdapter 'SQUOTE 
+    Private WithEvents da1 As OracleDataAdapter 'SQUOTE 
     Private da2 As OracleDataAdapter 'SQUOTED
     Private dt1 As New DataTable
     Private dt2 As New DataTable
@@ -1011,5 +1011,14 @@ Public Class Presupuesto
             dr.EndEdit()
         End Set
     End Property
+
+    Private Sub da1_RowUpdated(ByVal sender As Object, ByVal e As System.Data.OracleClient.OracleRowUpdatedEventArgs) Handles da1.RowUpdated
+        If e.StatementType = StatementType.Insert Then
+            Dim a As New Auditoria(cn)
+            Dim dr As DataRow = e.Row
+
+            a.Grabar(dr("creusr_0").ToString, "GESSQH", "SQUOTE", 1, dr("sqhnum_0").ToString)
+        End If
+    End Sub
 
 End Class
