@@ -1262,19 +1262,6 @@ Public Class Cliente
             End If
         End Set
     End Property
-    Public Property Estado() As Integer
-        Get
-            Dim dr As DataRow = dt.Rows(0)
-            Return CInt(dr("bpcsta_0"))
-        End Get
-        Set(ByVal value As Integer)
-            Dim dr As DataRow = dt.Rows(0)
-            dr = dt.Rows(0)
-            dr.BeginEdit()
-            dr("bpcsta_0") = value
-            dr.EndEdit()
-        End Set
-    End Property
     Public ReadOnly Property Bloqueado() As Boolean
         Get
             Dim dr As DataRow = dt.Rows(0)
