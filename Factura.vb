@@ -1,6 +1,7 @@
 ﻿Imports System.Data.OracleClient
 
 Public Class Factura
+    Implements IRuteable
 
     Private cn As OracleConnection
     Private da1 As OracleDataAdapter
@@ -44,7 +45,7 @@ Public Class Factura
         da4.SelectCommand.Parameters.Add("num_0", OracleType.VarChar)
 
     End Sub
-    Public Function Abrir(ByVal Nro As String) As Boolean
+    Public Function Abrir(ByVal Nro As String) As Boolean Implements IRuteable.Abrir
         dt1.Clear()
         dt2.Clear()
         dt3.Clear()
@@ -239,7 +240,7 @@ Public Class Factura
             End If
         End Get
     End Property
-    Public ReadOnly Property Numero() As String
+    Public ReadOnly Property Numero() As String Implements IRuteable.Numero
         Get
             Dim dr As DataRow = dt1.Rows(0)
             Return dr("num_0").ToString
@@ -518,5 +519,205 @@ Public Class Factura
         End Set
     End Property
 
+    Public Property CarritoFecha() As Date Implements IRuteable.CarritoFecha
+        Get
+
+        End Get
+        Set(ByVal value As Date)
+
+        End Set
+    End Property
+    Public ReadOnly Property Cobranza() As Boolean Implements IRuteable.Cobranza
+        Get
+
+        End Get
+    End Property
+    Public ReadOnly Property CodigoTercero() As String Implements IRuteable.CodigoTercero
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+            Return dr("bpr_0").ToString
+        End Get
+    End Property
+    Public ReadOnly Property Domicilio() As String Implements IRuteable.Domicilio
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+            Return dr("bpaaddlig_0").ToString
+        End Get
+    End Property
+    Public ReadOnly Property Equipos() As Integer Implements IRuteable.Equipos
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property FechaEntrega() As Date Implements IRuteable.FechaEntrega
+        Get
+            Return Me.Fecha
+        End Get
+    End Property
+    Public ReadOnly Property FechaUnigis() As Date Implements IRuteable.FechaUnigis
+        Get
+            Return Me.Fecha
+        End Get
+    End Property
+    Public Property Franja1Desde() As String Implements IRuteable.Franja1Desde
+        Get
+            Return "0900"
+        End Get
+        Set(ByVal value As String)
+
+        End Set
+    End Property
+    Public Property Franja1Hasta() As String Implements IRuteable.Franja1Hasta
+        Get
+            Return "1800"
+        End Get
+        Set(ByVal value As String)
+
+        End Set
+    End Property
+    Public Property Franja2Desde() As String Implements IRuteable.Franja2Desde
+        Get
+            Return "0000"
+        End Get
+        Set(ByVal value As String)
+
+        End Set
+    End Property
+    Public Property Franja2Hasta() As String Implements IRuteable.Franja2Hasta
+        Get
+            Return "0000"
+        End Get
+        Set(ByVal value As String)
+
+        End Set
+    End Property
+    Public ReadOnly Property Hora() As String Implements IRuteable.Hora
+        Get
+            Dim txt As String = " "
+
+            If Me.Franja1Desde <> "0000" And Me.Franja1Hasta <> "0000" Then
+                txt = String.Format("{0} a {1}", Me.Franja1Desde, Me.Franja1Hasta)
+
+                If Me.Franja2Desde <> "0000" And Me.Franja2Hasta <> "0000" Then
+                    txt &= " y "
+                    txt &= String.Format("{0} a {1}", Me.Franja2Desde, Me.Franja2Hasta)
+                End If
+
+            End If
+
+            Return txt
+        End Get
+    End Property
+    Public ReadOnly Property Instalaciones() As Integer Implements IRuteable.Instalaciones
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property Localidad() As String Implements IRuteable.Localidad
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+            Return dr("cty_0").ToString
+        End Get
+    End Property
+    Public ReadOnly Property Mangueras() As Integer Implements IRuteable.Mangueras
+        Get
+            Return 0
+        End Get
+    End Property
+    Public Property ModoEntrega() As String Implements IRuteable.ModoEntrega
+        Get
+            Return "1"
+        End Get
+        Set(ByVal value As String)
+
+        End Set
+    End Property
+    Public ReadOnly Property NombreTercero() As String Implements IRuteable.NombreTercero
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+            Return dr("bprnam_0").ToString
+        End Get
+    End Property
+    Public ReadOnly Property Pedido() As Pedido Implements IRuteable.Pedido
+        Get
+            Return Nothing
+        End Get
+    End Property
+    Public ReadOnly Property Peso() As Double Implements IRuteable.Peso
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property PesoUnigis() As Double Implements IRuteable.PesoUnigis
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property PrestamosExtintores() As Integer Implements IRuteable.PrestamosExtintores
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property PrestamosMangueras() As Integer Implements IRuteable.PrestamosMangueras
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property RechazosExtintor() As Integer Implements IRuteable.RechazosExtintor
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property RechazosManguera() As Integer Implements IRuteable.RechazosManguera
+        Get
+            Return 0
+        End Get
+    End Property
+    Public ReadOnly Property Remito() As String Implements IRuteable.Remito
+        Get
+            Return " "
+        End Get
+    End Property
+    Public ReadOnly Property Sucursal() As Sucursal Implements IRuteable.Sucursal
+        Get
+            Dim bpa As New Sucursal(cn)
+            bpa.Abrir(Me.CodigoTercero, Me.SucursalCodigo)
+            Return bpa
+        End Get
+    End Property
+    Public ReadOnly Property SucursalCodigo() As String Implements IRuteable.SucursalCodigo
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+            Return dr("bpainv_0").ToString
+        End Get
+    End Property
+    Public ReadOnly Property Tercero() As Tercero Implements IRuteable.Tercero
+        Get
+            Return Me.Cliente
+        End Get
+    End Property
+    Public ReadOnly Property TieneCarro() As Boolean Implements IRuteable.TieneCarro
+        Get
+            Return False
+        End Get
+    End Property
+    Public Property Tipo() As String Implements IRuteable.Tipo
+        Get
+            Return ""
+        End Get
+        Set(ByVal value As String)
+
+        End Set
+    End Property
+    Public ReadOnly Property TipoTarea() As String Implements IRuteable.TipoTarea
+        Get
+            Return "FAC"
+        End Get
+    End Property
+    Public ReadOnly Property Varios() As Boolean Implements IRuteable.Varios
+        Get
+            Return False
+        End Get
+    End Property
 
 End Class
