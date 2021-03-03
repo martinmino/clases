@@ -101,6 +101,7 @@
     <Compile Include="Factura.vb" />
     <Compile Include="Feriados.vb" />
     <Compile Include="Foto.vb" />
+    <Compile Include="GeneradorQrAfip.vb" />
     <Compile Include="Impresora.vb" />
     <Compile Include="Impuesto.vb" />
     <Compile Include="Inspeccion.vb" />

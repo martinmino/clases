@@ -257,7 +257,12 @@ Public Class Parque
         dr("UPDDAT_0") = Date.Today
         dr.EndEdit()
 
+        '*********************************************************************
         'Si el equipo figura en algun puesto de abonados, dejo el puesto vacio
+        '
+        '25.02.2021 A pedido de Juan se deja el equipo rechazado en el puesto
+        'del cliente abonado
+        '
         Sql = "UPDATE xpuestos SET macnum_0 = ' ', estado_0 = '00' WHERE macnum_0 = :macnum_0"
         cm = New OracleCommand(Sql, cn)
         cm.Parameters.Add("macnum_0", OracleType.VarChar).Value = Me.Serie
