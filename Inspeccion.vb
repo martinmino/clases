@@ -79,6 +79,8 @@ Public Class Inspeccion
         dr("altura2_0") = 0
         dr("baldes_0") = 0
         dr("martillos_0") = 0
+        dr("sustituto_0") = 0
+
 
         dt.Rows.Add(dr)
 
@@ -592,6 +594,16 @@ Public Class Inspeccion
         Set(ByVal value As Boolean)
             dr.BeginEdit()
             dr("otro_0") = IIf(value, 2, 1)
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property HaySustituto() As Boolean
+        Get
+            Return CBool(IIf(CInt(dr("sustituto_0")) = 2, True, False))
+        End Get
+        Set(ByVal value As Boolean)
+            dr.BeginEdit()
+            dr("sustituto_0") = IIf(value, 2, 1)
             dr.EndEdit()
         End Set
     End Property

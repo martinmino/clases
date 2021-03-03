@@ -246,6 +246,12 @@ Public Class Factura
             Return dr("num_0").ToString
         End Get
     End Property
+    Public ReadOnly Property NumeroComprobante() As String
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+            Return dr("num_0").ToString
+        End Get
+    End Property
     Public ReadOnly Property Cliente() As Cliente
         Get
             Dim dr As DataRow = dt1.Rows(0)
@@ -708,6 +714,32 @@ Public Class Factura
         Set(ByVal value As String)
 
         End Set
+    End Property
+    Public ReadOnly Property TipoComprobanteAfip() As Integer
+        Get
+            Dim dr As DataRow
+            Dim dato As Integer = 0
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                dato = CInt(dr("xafipcod_0"))
+            End If
+
+            Return dato
+        End Get
+    End Property
+    Public ReadOnly Property NumeroComprobanteAfip() As Integer
+        Get
+            Dim dr As DataRow
+            Dim dato As Integer = 0
+
+            If dt1.Rows.Count > 0 Then
+                dr = dt1.Rows(0)
+                dato = CInt(dr("seqvcr_0"))
+            End If
+
+            Return dato
+        End Get
     End Property
     Public ReadOnly Property TipoTarea() As String Implements IRuteable.TipoTarea
         Get
