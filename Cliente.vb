@@ -563,6 +563,7 @@ Public Class Cliente
         dr("MAILVTA_0") = 2
         dr("XPINTURA_0") = 1
         dr("ABCPLUS_0") = 1
+        dr("XCOMPLEJ_0") = " "
 
         dt.Rows.Add(dr)
 

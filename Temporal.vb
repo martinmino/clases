@@ -58,9 +58,9 @@ Public Class Temporal
         da.FillSchema(dt, SchemaType.Mapped)
 
     End Sub
-    Public Sub New(ByVal cn As OracleConnection, ByVal Usuario As String, ByVal Tipo As String)
+    Public Sub New(ByVal cn As OracleConnection, ByVal Usr As Usuario, ByVal Tipo As String)
         Me.New(cn)
-        Me.Usuario = Usuario
+        Me.Usuario = Usr.Codigo
         Me.Tipo = Tipo
     End Sub
 
@@ -108,6 +108,21 @@ Public Class Temporal
         'dt.Rows.Clear()
 
     End Sub
+    Public Function Buscar(ByVal Idx As Integer, ByVal Numero As Double) As Boolean
+        Dim dr As DataRow = Nothing
+        Dim flg As Boolean = False
+
+        For Each dr In dt.Rows
+            If dr.RowState = DataRowState.Deleted Then Continue For
+            If CDbl(dr("n_" & Idx.ToString)) = Numero Then
+                Me.dr = dr
+                flg = True
+                Exit For
+            End If
+        Next
+
+        Return flg
+    End Function
     Public Property Numero(ByVal idx As Integer) As Double
         Get
             Return CDbl(dr("n_" & idx.ToString))

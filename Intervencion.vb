@@ -742,7 +742,7 @@ Public Class Intervencion
 
 
     End Sub
-    Public Sub EnvioMailAviso(ByVal ruta As Integer, ByVal motivo As String, ByVal obs As String)
+    Public Sub EnvioMailAviso(ByVal ruta As Long, ByVal motivo As String, ByVal obs As String)
         Dim txt As String = ""
         Dim eMail As New CorreoElectronico
         Dim sih As New Factura(cn)
@@ -768,7 +768,6 @@ Public Class Intervencion
                 .Remitente("no-responder@georgia.com.ar", "Georgia Seguridad contra Incendios")
                 .AgregarDestinatario(rep.Mail.ToString)
                 .AgregarDestinatario(rep.Analista.Mail.ToString)
-                .AgregarDestinatario("glorenzo@georgia.com.ar")
                 .Asunto = "Intervencion a Resolver"
                 .EsHtml = True
                 .Cuerpo = txt
