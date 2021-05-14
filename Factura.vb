@@ -222,17 +222,58 @@ Public Class Factura
             Return s
         End Get
     End Property
-    Public ReadOnly Property CbteOrigenNumero() As String
+    Public ReadOnly Property TipoCbte() As Integer
+        Get
+            Dim dr As DataRow = dt1.Rows(0)
+            Return CInt(dr("invtyp_0"))
+        End Get
+    End Property
+    Public Property TipoCbteOrigen() As Integer
+        Get
+            Dim dr As DataRow
+            Dim i As Integer = 0
+
+            If dt3.Rows.Count > 0 Then
+                dr = dt3.Rows(0)
+                i = CInt(dr("sihori_0"))
+            End If
+
+            Return i
+        End Get
+        Set(ByVal value As Integer)
+            Dim dr As DataRow
+
+            If dt3.Rows.Count > 0 Then
+                dr = dt3.Rows(0)
+                dr.BeginEdit()
+                dr("sihori_0") = value
+                dr.EndEdit()
+            End If
+        End Set
+    End Property
+    Public Property CbteOrigenNumero() As String
         Get
             Dim dr As DataRow = dt3.Rows(0)
 
             Return dr("sihorinum_0").ToString
 
         End Get
+        Set(ByVal value As String)
+            Dim dr As DataRow
+
+            If dt3.Rows.Count > 0 Then
+                dr = dt3.Rows(0)
+                dr.BeginEdit()
+                dr("sihorinum_0") = IIf(value.Trim = "", " ", value)
+                dr.EndEdit()
+            End If
+
+        End Set
     End Property
     Public ReadOnly Property CbteOrigen() As Factura
         Get
             Dim f As New Factura(cn)
+
             If f.Abrir(Me.CbteOrigenNumero) Then
                 Return f
             Else
