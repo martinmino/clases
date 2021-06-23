@@ -2465,7 +2465,14 @@ Public Class Intervencion
                 Return "ENT"
 
             Else
-                Return IIf(l_EsTarea, "CTL", "RET").ToString
+
+                If l_EsTarea Then
+                    Return IIf(Tipo = "T1", "TAR", "CTL").ToString
+
+                Else
+                    Return "RET"
+
+                End If
 
             End If
 
