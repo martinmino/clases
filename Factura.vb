@@ -39,6 +39,7 @@ Public Class Factura
         Sql = "SELECT * FROM sinvoicev WHERE num_0 = :num_0"
         da3 = New OracleDataAdapter(Sql, cn)
         da3.SelectCommand.Parameters.Add("num_0", OracleType.VarChar)
+        da3.UpdateCommand = New OracleCommandBuilder(da3).GetUpdateCommand
 
         Sql = "SELECT * FROM gaccdudate WHERE num_0 = :num_0 AND dudlig_0 = 1"
         da4 = New OracleDataAdapter(Sql, cn)
@@ -130,6 +131,7 @@ Public Class Factura
     Public Function Grabar() As Boolean
         Try
             da1.Update(dt1)
+            da3.Update(dt3)
             Return True
 
         Catch ex As Exception
