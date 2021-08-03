@@ -515,6 +515,9 @@ Public Class Cotizacion
 
         _Alertas.Clear()
 
+        '2021-08-02 No se valida para presupuestos
+        If Modo = 2 Then Return _Alertas
+
         'Chequeo si los precios no superan el PORCENTAJE AUTORIZADO DE DESCUENTO
         For Each dr As DataRow In dtd.Rows
             Dim p1, p2 As Double
@@ -565,8 +568,7 @@ Public Class Cotizacion
                 Else
                     If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO AndAlso _
                        bpc.EsAbonado = False AndAlso _
-                       bpc.TipoAbcStr.Contains("A") = False _
-                       AndAlso TieneArticulosTipoCotizacion() AndAlso _
+                       bpc.TipoAbcStr.Contains("A") = False AndAlso _
                        ExisteFleteYAcarreo() = False Then
 
                         txt = "-> Importe mínimo para Entrega Georgia es " & IMPORTE_MINIMO_PEDIDO.ToString("N2")
@@ -577,7 +579,6 @@ Public Class Cotizacion
                 If PrecioTotalAI < IMPORTE_MINIMO_PEDIDO AndAlso _
                    bpc.EsAbonado = False AndAlso _
                    bpc.TipoAbcStr.Contains("A") = False AndAlso _
-                   TieneArticulosTipoCotizacion() AndAlso _
                    ExisteFleteYAcarreo() = False Then
 
                     txt = "-> Importe mínimo para Entrega Georgia es " & IMPORTE_MINIMO_PEDIDO.ToString("N2")
@@ -775,7 +776,6 @@ Public Class Cotizacion
                 _Errores.Add("No se puede usar la sociedad " & Me.SociedadCodigo)
 
         End Select
-
 
         itm.Dispose()
         itm = Nothing
