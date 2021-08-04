@@ -92,7 +92,6 @@
     <Compile Include="Cotizacion.vb" />
     <Compile Include="Correo.vb" />
     <Compile Include="CorreoElectronico.vb" />
-    <Compile Include="CotizacionInterna.vb" />
     <Compile Include="Devolucion.vb" />
     <Compile Include="DiaCalle.vb" />
     <Compile Include="Divisa.vb" />
