@@ -102,7 +102,7 @@ Public Class Sucursal
         Sql &= "XMAILFC_0 =:XMAILFC_0,XBPASTA_0 =:XBPASTA_0,IRAM_OK_0 =:IRAM_OK_0,XPORTERO_0 =:XPORTERO_0,XPOR_ADD_0 =:XPOR_ADD_0,XPOR_TEL_0=:XPOR_TEL_0, "
         Sql &= "XPOR_MAIL_0 =:XPOR_MAIL_0,XTIPOSIST_0 =:XTIPOSIST_0,XHIDRANTE_0 =:XHIDRANTE_0,XTOMAS_0 =:XTOMAS_0,XESCLUSA_0 =:XESCLUSA_0,XBOMBAS_0 =:XBOMBAS_0, "
         Sql &= "XHIDRO_0 =:XHIDRO_0,XROCIADO_0 =:XROCIADO_0,XSISTOTRO_0 =:XSISTOTRO_0,XINISERVI_0 =:XINISERVI_0, XPH_0 =:XPH_0, XPLANO_0 = :XPLANO_0, "
-        Sql &= "XFILTRO_0 = :XFILTRO_0, XCOMBUST_0 = :XCOMBUST_0, XBOMBISTA_0 = :XBOMBISTA_0, XCURVA_0 = :XCURVA_0 "
+        Sql &= "XFILTRO_0 = :XFILTRO_0, XCOMBUST_0 = :XCOMBUST_0, XBOMBISTA_0 = :XBOMBISTA_0, XCURVA_0 = :XCURVA_0, XFINEG_0 = :XFINEG_0 "
         Sql &= "where bpanum_0 = :bpanum_0 and bpaadd_0 =  :bpaadd_0"
         da1.UpdateCommand = New OracleCommand(Sql, cn)
 
@@ -156,6 +156,7 @@ Public Class Sucursal
             Parametro(.UpdateCommand, "XCOMBUST_0", OracleType.Number, DataRowVersion.Current)
             Parametro(.UpdateCommand, "XBOMBISTA_0", OracleType.Number, DataRowVersion.Current)
             Parametro(.UpdateCommand, "XCURVA_0", OracleType.Number, DataRowVersion.Current)
+            Parametro(.UpdateCommand, "XFINEG_0", OracleType.Number, DataRowVersion.Current)
         End With
 
         Sql = "SELECT * FROM bpdlvcust WHERE bpcnum_0 = :bpcnum_0 AND bpaadd_0 = :bpaadd_0"
@@ -229,6 +230,7 @@ Public Class Sucursal
         dr("XCOMBUST_0") = 0
         dr("XBOMBISTA_0") = 0
         dr("XCURVA_0") = 0
+        dr("XFINEG_0") = " "
 
         dt1.Rows.Add(dr)
 
