@@ -24,7 +24,7 @@ Public Class CorreoElectronico
         If eMail IsNot Nothing Then eMail.Dispose()
         eMail = New MailMessage
     End Sub
-    Public Sub Remitente(ByVal eMail As String, Optional ByVal Nombre As String = "Georgia Seguridad contra Incendios")
+    Public Sub Remitente(ByVal eMail As String, Optional ByVal Nombre As String = "Grupo Gerogia - Prevención y extinción de incendios")
         Try
             If Me.ValidarMail(eMail) Then
                 Me.eMail.From = New MailAddress(eMail, Nombre)
