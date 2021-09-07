@@ -326,7 +326,8 @@ Public Class ReporteVentaAnual
         Sql &= "     itmmaster itm ON (sid.itmref_0 = itm.itmref_0) "
         Sql &= "WHERE accdat_0 >= :desde AND "
         Sql &= "      accdat_0 < :hasta AND "
-        Sql &= "      sivtyp_0 <> 'PRF' "
+        Sql &= "      sivtyp_0 <> 'PRF' and "
+        Sql &= "      linacc_0 <> '411106' and "
         Sql &= "ORDER BY accdat_0"
 
         If Iva Then
