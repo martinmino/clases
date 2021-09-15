@@ -168,10 +168,9 @@ Public Class Sucursal
 
     End Sub
     Public Sub Grabar()
-        da1.Update(dt1)
-        da2.Update(dt2)
         Try
-
+            da1.Update(dt1)
+            da2.Update(dt2)
         Catch ex As Exception
 
         End Try
