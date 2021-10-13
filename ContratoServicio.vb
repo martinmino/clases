@@ -381,6 +381,7 @@ Public Class ContratoServicio
         dr = dt3.NewRow
         dr("connum_0") = Numero
         dr("bpaadd_0") = CodigoSucursal
+        dr("bpcnum_0") = Me.Cliente
         dt3.Rows.Add(dr)
     End Sub
     Public Sub AgregarSucursales(ByVal dt As DataTable)
