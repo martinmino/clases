@@ -487,10 +487,7 @@ Public Class Documento
         Get
 
             If EsIntervencion Then
-                If TipoIntervencion = "B2" Then
-                    Return "CAN"
-
-                ElseIf TieneRemito OrElse TipoIntervencion = "G1" Then
+                If TieneRemito OrElse TipoIntervencion = "G1" Then
                     Return "ENT"
 
                 Else
