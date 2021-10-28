@@ -327,7 +327,7 @@ Public Class ReporteVentaAnual
         Sql &= "WHERE accdat_0 >= :desde AND "
         Sql &= "      accdat_0 < :hasta AND "
         Sql &= "      sivtyp_0 <> 'PRF' and "
-        Sql &= "      linacc_0 <> '411106' and "
+        Sql &= "      linacc_0 = '411106'  "
         Sql &= "ORDER BY accdat_0"
 
         If Iva Then
