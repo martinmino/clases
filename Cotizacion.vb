@@ -4,7 +4,7 @@ Imports System.IO
 Imports System.Collections
 
 Public Class Cotizacion
-    Public PORCENTAJE_DESCUENTO_AUTORIZADO As Double = 0.95
+    Public PORCENTAJE_DESCUENTO_AUTORIZADO As Double = 0.9
 
     Public IMPORTE_MINIMO_PEDIDO As Double = 12000 'Usado para autorizacion automatica
     'Minimo para H con entrega georgia
