@@ -515,8 +515,13 @@ Public Class Cotizacion
 
         _Alertas.Clear()
 
-        '2021-08-02 No se valida para presupuestos
-        If Modo = 2 Then Return _Alertas
+        If Modo = 2 Then
+            If Me.PrecioTotalAI >= IMPORTE_MAXIMO_PRESUPUESTO Then
+                txt = "Supera $" & IMPORTE_MAXIMO_PRESUPUESTO.ToString("N2")
+
+                _Alertas.Add(txt)
+            End If
+        End If
 
         'Chequeo si los precios no superan el PORCENTAJE AUTORIZADO DE DESCUENTO
         For Each dr As DataRow In dtd.Rows

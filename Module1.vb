@@ -4,6 +4,8 @@ Public Module Module1
 
     Friend USER As String = "ADM"
 
+    'Presupuestos con este monto deben pasar por aprobacion
+    Friend Const IMPORTE_MAXIMO_PRESUPUESTO As Double = 800000
     Friend Const ARTICULO_PRESTAMO_EXT As String = "601003"
     Friend Const ARTICULO_PRESTAMO_MAN As String = "607003"
     Friend Const ARTICULO_FLETE_Y_ACARREO As String = "653005"
