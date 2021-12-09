@@ -221,7 +221,7 @@ Public Class ContratoServicio
         dr("ypctpres_0") = 0
         dr("xsuspend_0") = 1
         dr("xunifi_0") = 0
-
+        dr("xrenova_0") = 1
         dt1.Rows.Add(dr)
 
     End Sub
@@ -1174,6 +1174,24 @@ Public Class ContratoServicio
             dr = dt1.Rows(0)
             dr.BeginEdit()
             dr("nexinvamt_0") = value
+            dr.EndEdit()
+        End Set
+    End Property
+    Public Property Renovacion() As Boolean
+        Get
+            Dim dr As DataRow
+            Dim i As Integer
+
+            dr = dt1.Rows(0)
+            i = CInt(dr("xrenova_0"))
+
+            Return i = 2
+        End Get
+        Set(ByVal value As Boolean)
+            Dim dr As DataRow
+            dr = dt1.Rows(0)
+            dr.BeginEdit()
+            dr("xrenova_0") = IIf(value, 2, 1)
             dr.EndEdit()
         End Set
     End Property

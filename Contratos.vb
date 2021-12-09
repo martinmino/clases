@@ -110,6 +110,7 @@ Public Class Contratos
         dr("obs_0") = " "
         dr("connum_0") = " "
         dr("srenum_0") = " "
+        dr("xrenova_0") = 1
         dth.Rows.Add(dr)
 
     End Sub
@@ -1186,6 +1187,24 @@ Public Class Contratos
                 dr.EndEdit()
 
             End If
+        End Set
+    End Property
+    Public Property Renovacion() As Boolean
+        Get
+            Dim dr As DataRow
+            Dim i As Integer
+
+            dr = dth.Rows(0)
+            i = CInt(dr("xrenova_0"))
+
+            Return i = 2
+        End Get
+        Set(ByVal value As Boolean)
+            Dim dr As DataRow
+            dr = dth.Rows(0)
+            dr.BeginEdit()
+            dr("xrenova_0") = IIf(value, 2, 1)
+            dr.EndEdit()
         End Set
     End Property
 
