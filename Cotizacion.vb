@@ -109,6 +109,8 @@ Public Class Cotizacion
         dr("xvtaantes_0") = 0
         dr("tcambio_0") = 0 'tar.CotizacionDolar
         dr("xmunro_0") = 1
+        dr("demdlvdat_0") = Date.Today
+
         dth.Rows.Add(dr)
 
         bpc = Nothing
@@ -1565,6 +1567,30 @@ Public Class Cotizacion
             dr.EndEdit()
         End Set
     End Property
+    Public Property FechaSolicitudEntrega() As Date
+        Get
+            Dim dr As DataRow
+            Dim d As Date
+
+            If dth.Rows.Count > 0 Then
+                dr = dth.Rows(0)
+                d = CDate(dr("demdlvdat_0"))
+            End If
+
+            Return d
+        End Get
+        Set(ByVal value As Date)
+            Dim dr As DataRow
+
+            If dth.Rows.Count > 0 Then
+                dr = dth.Rows(0)
+                dr.BeginEdit()
+                dr("demdlvdat_0") = value
+                dr.EndEdit()
+            End If
+        End Set
+    End Property
+
     Shared Sub Exportar(ByVal cn As OracleConnection, ByVal Archivo As String)
         Dim Sql As String
         Dim da As OracleDataAdapter

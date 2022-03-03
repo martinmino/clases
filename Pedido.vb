@@ -260,6 +260,7 @@ Public Class Pedido
         dr("xitnrecha_0") = ctz.IntervencionRechazo
         dr("xvtaantes_0") = IIf(ctz.AVentasAntesEntregar, 2, 1)
         dr("tcambio_0") = 0
+        dr("demdlvdat_0") = IIf(ctz.FechaSolicitudEntrega < Today, Today, ctz.FechaSolicitudEntrega)
 
         dth.Rows.Add(dr)
 
