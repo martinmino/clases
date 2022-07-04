@@ -1,4 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
+Imports System.Data.OracleClient
 
 Public Class Utiles
 
@@ -102,5 +103,29 @@ Public Class Utiles
         Return (e = "")
 
     End Function
+    Shared Function ValorParametro(ByVal cn As OracleConnection, ByVal Capitulo As String, ByVal Parametro As String) As Integer
+        Dim Sql As String
+        Dim da As OracleDataAdapter
+        Dim i As Integer
+        Dim dt As New DataTable
 
+        Sql = "select val.valeur_0 "
+        Sql &= "from adopar par inner join "
+        Sql &= "     adoval val on (par.param_0 = val.param_0) "
+        Sql &= "where par.chapitre_0 = :capitulo and "
+        Sql &= "      par.param_0 = :parametro"
+
+        da = New OracleDataAdapter(Sql, cn)
+        da.SelectCommand.Parameters.Add("capitulo", OracleType.VarChar).Value = Capitulo
+        da.SelectCommand.Parameters.Add("parametro", OracleType.VarChar).Value = Parametro
+        da.Fill(dt)
+
+        i = CInt(dt.Rows(0).Item(0))
+
+        dt.Dispose() : dt = Nothing
+        da.Dispose() : dt = Nothing
+
+        Return i
+
+    End Function
 End Class
