@@ -777,12 +777,12 @@ Public Class Cotizacion
             Case "MON"
                 If Not Me.H Then _Errores.Add("La sociedad MON solo se puede usar en H")
 
-            Case "SCH"
-                If bpc.RegimenImpuesto = "RI" OrElse bpc.RegimenImpuesto = "RIE" Then
-                    _Errores.Add("La sociedad SCH no puede usarse con clientes RI")
-                End If
+                'Case "SCH"
+                '    If bpc.RegimenImpuesto = "RI" OrElse bpc.RegimenImpuesto = "RIE" Then
+                '        _Errores.Add("La sociedad SCH no puede usarse con clientes RI")
+                '    End If
 
-            Case "GRU", "LIA"
+            Case "GRU", "LIA", "SCH"
                 _Errores.Add("No se puede usar la sociedad " & Me.SociedadCodigo)
 
         End Select
