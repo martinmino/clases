@@ -4,7 +4,7 @@ Imports System.IO
 Imports System.Collections
 
 Public Class Cotizacion
-    Public PORCENTAJE_DESCUENTO_AUTORIZADO As Double = 0.9
+    Public PORCENTAJE_DESCUENTO_AUTORIZADO As Double = 1
 
     Public IMPORTE_MINIMO_PEDIDO As Double = 12000 'Usado para autorizacion automatica
     'Minimo para H con entrega georgia
@@ -63,6 +63,9 @@ Public Class Cotizacion
 
         tar = New Tarifa(cn)
 
+        '2022.07.04 Calculo de descuento autorizado
+        Dim Porcentaje As Integer = Utiles.ValorParametro(cn, "TC", "DESCAUT")
+        PORCENTAJE_DESCUENTO_AUTORIZADO = (100 - Porcentaje) / 100
     End Sub
     Public Sub New(ByVal cn As OracleConnection, ByVal bpc As Cliente, ByVal cpy As String, ByVal EsH As Boolean, ByVal tipo As Integer)
         Me.cn = cn
