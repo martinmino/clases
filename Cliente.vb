@@ -1072,6 +1072,12 @@ Public Class Cliente
 
         End Set
     End Property
+    Public ReadOnly Property Representante() As String
+        Get
+            Dim dr As DataRow = dt.Rows(0)
+            Return dr("rep_0").ToString
+        End Get
+    End Property
     Public Property RegimenImpuesto() As String
         Get
             Dim dr As DataRow = dt.Rows(0)
