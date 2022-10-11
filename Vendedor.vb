@@ -128,5 +128,11 @@ Public Class Vendedor
             Return dr("xinterno_0").ToString.Trim
         End Get
     End Property
+    Public ReadOnly Property Telefono() As String
+        Get
+            Dim dr As DataRow = dt.Rows(0)
+            Return dr("tel_0").ToString.Trim
+        End Get
+    End Property
 
 End Class
